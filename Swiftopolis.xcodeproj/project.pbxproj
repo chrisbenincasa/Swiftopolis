@@ -1,0 +1,416 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		146ABA661A4F0EE0002A1B6B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146ABA651A4F0EE0002A1B6B /* AppDelegate.swift */; };
+		146ABA681A4F0EE0002A1B6B /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146ABA671A4F0EE0002A1B6B /* GameScene.swift */; };
+		146ABA6A1A4F0EE0002A1B6B /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 146ABA691A4F0EE0002A1B6B /* GameScene.sks */; };
+		146ABA6C1A4F0EE0002A1B6B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 146ABA6B1A4F0EE0002A1B6B /* Images.xcassets */; };
+		146ABA6F1A4F0EE0002A1B6B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 146ABA6D1A4F0EE0002A1B6B /* MainMenu.xib */; };
+		146ABA7B1A4F0EE0002A1B6B /* SwiftopolisTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146ABA7A1A4F0EE0002A1B6B /* SwiftopolisTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		146ABA751A4F0EE0002A1B6B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146ABA581A4F0EE0002A1B6B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 146ABA5F1A4F0EE0002A1B6B;
+			remoteInfo = Swiftopolis;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		146ABA601A4F0EE0002A1B6B /* Swiftopolis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Swiftopolis.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		146ABA641A4F0EE0002A1B6B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		146ABA651A4F0EE0002A1B6B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		146ABA671A4F0EE0002A1B6B /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		146ABA691A4F0EE0002A1B6B /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
+		146ABA6B1A4F0EE0002A1B6B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		146ABA6E1A4F0EE0002A1B6B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		146ABA741A4F0EE0002A1B6B /* SwiftopolisTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftopolisTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		146ABA791A4F0EE0002A1B6B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		146ABA7A1A4F0EE0002A1B6B /* SwiftopolisTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftopolisTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		146ABA5D1A4F0EE0002A1B6B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		146ABA711A4F0EE0002A1B6B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		146ABA571A4F0EE0002A1B6B = {
+			isa = PBXGroup;
+			children = (
+				146ABA621A4F0EE0002A1B6B /* Swiftopolis */,
+				146ABA771A4F0EE0002A1B6B /* SwiftopolisTests */,
+				146ABA611A4F0EE0002A1B6B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		146ABA611A4F0EE0002A1B6B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				146ABA601A4F0EE0002A1B6B /* Swiftopolis.app */,
+				146ABA741A4F0EE0002A1B6B /* SwiftopolisTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		146ABA621A4F0EE0002A1B6B /* Swiftopolis */ = {
+			isa = PBXGroup;
+			children = (
+				146ABA651A4F0EE0002A1B6B /* AppDelegate.swift */,
+				146ABA671A4F0EE0002A1B6B /* GameScene.swift */,
+				146ABA691A4F0EE0002A1B6B /* GameScene.sks */,
+				146ABA6B1A4F0EE0002A1B6B /* Images.xcassets */,
+				146ABA6D1A4F0EE0002A1B6B /* MainMenu.xib */,
+				146ABA631A4F0EE0002A1B6B /* Supporting Files */,
+			);
+			path = Swiftopolis;
+			sourceTree = "<group>";
+		};
+		146ABA631A4F0EE0002A1B6B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				146ABA641A4F0EE0002A1B6B /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		146ABA771A4F0EE0002A1B6B /* SwiftopolisTests */ = {
+			isa = PBXGroup;
+			children = (
+				146ABA7A1A4F0EE0002A1B6B /* SwiftopolisTests.swift */,
+				146ABA781A4F0EE0002A1B6B /* Supporting Files */,
+			);
+			path = SwiftopolisTests;
+			sourceTree = "<group>";
+		};
+		146ABA781A4F0EE0002A1B6B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				146ABA791A4F0EE0002A1B6B /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		146ABA5F1A4F0EE0002A1B6B /* Swiftopolis */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 146ABA7E1A4F0EE0002A1B6B /* Build configuration list for PBXNativeTarget "Swiftopolis" */;
+			buildPhases = (
+				146ABA5C1A4F0EE0002A1B6B /* Sources */,
+				146ABA5D1A4F0EE0002A1B6B /* Frameworks */,
+				146ABA5E1A4F0EE0002A1B6B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Swiftopolis;
+			productName = Swiftopolis;
+			productReference = 146ABA601A4F0EE0002A1B6B /* Swiftopolis.app */;
+			productType = "com.apple.product-type.application";
+		};
+		146ABA731A4F0EE0002A1B6B /* SwiftopolisTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 146ABA811A4F0EE0002A1B6B /* Build configuration list for PBXNativeTarget "SwiftopolisTests" */;
+			buildPhases = (
+				146ABA701A4F0EE0002A1B6B /* Sources */,
+				146ABA711A4F0EE0002A1B6B /* Frameworks */,
+				146ABA721A4F0EE0002A1B6B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				146ABA761A4F0EE0002A1B6B /* PBXTargetDependency */,
+			);
+			name = SwiftopolisTests;
+			productName = SwiftopolisTests;
+			productReference = 146ABA741A4F0EE0002A1B6B /* SwiftopolisTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		146ABA581A4F0EE0002A1B6B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = "Christian Benincasa";
+				TargetAttributes = {
+					146ABA5F1A4F0EE0002A1B6B = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+					146ABA731A4F0EE0002A1B6B = {
+						CreatedOnToolsVersion = 6.1.1;
+						TestTargetID = 146ABA5F1A4F0EE0002A1B6B;
+					};
+				};
+			};
+			buildConfigurationList = 146ABA5B1A4F0EE0002A1B6B /* Build configuration list for PBXProject "Swiftopolis" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 146ABA571A4F0EE0002A1B6B;
+			productRefGroup = 146ABA611A4F0EE0002A1B6B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				146ABA5F1A4F0EE0002A1B6B /* Swiftopolis */,
+				146ABA731A4F0EE0002A1B6B /* SwiftopolisTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		146ABA5E1A4F0EE0002A1B6B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				146ABA6A1A4F0EE0002A1B6B /* GameScene.sks in Resources */,
+				146ABA6C1A4F0EE0002A1B6B /* Images.xcassets in Resources */,
+				146ABA6F1A4F0EE0002A1B6B /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		146ABA721A4F0EE0002A1B6B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		146ABA5C1A4F0EE0002A1B6B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				146ABA681A4F0EE0002A1B6B /* GameScene.swift in Sources */,
+				146ABA661A4F0EE0002A1B6B /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		146ABA701A4F0EE0002A1B6B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				146ABA7B1A4F0EE0002A1B6B /* SwiftopolisTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		146ABA761A4F0EE0002A1B6B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 146ABA5F1A4F0EE0002A1B6B /* Swiftopolis */;
+			targetProxy = 146ABA751A4F0EE0002A1B6B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		146ABA6D1A4F0EE0002A1B6B /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				146ABA6E1A4F0EE0002A1B6B /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		146ABA7C1A4F0EE0002A1B6B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		146ABA7D1A4F0EE0002A1B6B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		146ABA7F1A4F0EE0002A1B6B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Swiftopolis/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		146ABA801A4F0EE0002A1B6B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Swiftopolis/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		146ABA821A4F0EE0002A1B6B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = SwiftopolisTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Swiftopolis.app/Contents/MacOS/Swiftopolis";
+			};
+			name = Debug;
+		};
+		146ABA831A4F0EE0002A1B6B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = SwiftopolisTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Swiftopolis.app/Contents/MacOS/Swiftopolis";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		146ABA5B1A4F0EE0002A1B6B /* Build configuration list for PBXProject "Swiftopolis" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				146ABA7C1A4F0EE0002A1B6B /* Debug */,
+				146ABA7D1A4F0EE0002A1B6B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		146ABA7E1A4F0EE0002A1B6B /* Build configuration list for PBXNativeTarget "Swiftopolis" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				146ABA7F1A4F0EE0002A1B6B /* Debug */,
+				146ABA801A4F0EE0002A1B6B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		146ABA811A4F0EE0002A1B6B /* Build configuration list for PBXNativeTarget "SwiftopolisTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				146ABA821A4F0EE0002A1B6B /* Debug */,
+				146ABA831A4F0EE0002A1B6B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 146ABA581A4F0EE0002A1B6B /* Project object */;
+}
