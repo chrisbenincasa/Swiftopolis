@@ -56,6 +56,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             self.skView!.showsFPS = true
             self.skView!.showsNodeCount = true
             
+//            self.skView!.asynchronous = true
+            
             window.acceptsMouseMovedEvents = true
             window.makeFirstResponder(self.skView.scene)
         }

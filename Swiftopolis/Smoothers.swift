@@ -12,8 +12,10 @@ class Smoothers {
 
     class func smooth(inout tem: [[Int]]) {
         let h = tem.count, w = tem[0].count
-        for y in 0...h - 1 {
-            for x in 0...w - 1 {
+        var i = 0
+        let start = NSDate()
+        for var y = 0; y < h; y++ {
+            for var x = 0; x < w; x++ {
                 var z = tem[y][x]
                 if x > 0 {
                     z += tem[y][x - 1]
@@ -37,29 +39,26 @@ class Smoothers {
                     z = 255
                 }
                 
+                i++
                 tem[y][x] = z
             }
         }
+        
+        let timeInterval: Double = NSDate().timeIntervalSinceDate(start)
+        println("smooth (\(i) iterations) took \(timeInterval) seconds");
     }
     
     class func smoothN(inout tem: [[Int]], n: Int = 2) {
-//        var tem2 = tem
-        for _ in 0...n - 1 {
+        for var i = 0; i < n; i++ {
             smooth(&tem)
         }
-        
-//        return tem2
     }
     
-    class func smoothTerrain(tem: [[Int]]) -> [[Int]] {
+    class func smoothTerrain(inout tem: [[Int]]) {
         let h = tem.count, w = tem[0].count
-        var tem2: [[Int]] = []
-        for _ in 0...h {
-            tem2.append([Int](count: w, repeatedValue: 0))
-        }
         
-        for y in 0...h - 1 {
-            for x in 0...w - 1 {
+        for var y = 0; y < h; y++ {
+            for var x = 0; x < w; x++ {
                 var z = tem[y][x]
                 if x > 0 {
                     z += tem[y][x - 1]
@@ -76,20 +75,12 @@ class Smoothers {
                 if y + 1 < h {
                     z += tem[y + 1][x]
                 }
-                
-                tem2[y][x] = (z / 4) + (tem[y][x] / 2)
             }
         }
-        
-        return tem2
     }
     
-    class func smoothFirePoliceMap(tem: [[Int]]) -> [[Int]] {
+    class func smoothFirePoliceMap(inout tem: [[Int]]) {
         let h = tem.count, w = tem[0].count
-        var tem2: [[Int]] = []
-        for _ in 0...h {
-            tem2.append([Int](count: w, repeatedValue: 0))
-        }
         
         for y in 0...h - 1 {
             for x in 0...w - 1 {
@@ -111,10 +102,8 @@ class Smoothers {
                 }
                 
                 z = (z / 4) + tem[y][x]
-                tem2[y][x] = z / 2
+                tem[y][x] = z / 2
             }
         }
-        
-        return tem2
     }
 }

@@ -12,6 +12,7 @@ class GameScene: SKScene {
     private let TILE_SIZE: Int = 16
     private var tool: SKSpriteNode?
     private let city = City()
+    private let barrier = dispatch_queue_create("com.chrisbenincasa.micropolis", DISPATCH_QUEUE_CONCURRENT)
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -24,12 +25,12 @@ class GameScene: SKScene {
     private func startSimulationTimer() {
         let delay: Double = Double(self.city.speed.delay) / 1000.0
         var wait = SKAction.waitForDuration(delay)
-        var run = SKAction.runBlock {
+        var run = SKAction.runBlock({
             let speed = self.city.speed
             for _ in 0...speed.steps - 1 {
                 self.city.animate()
             }
-        }
+        }, queue: barrier)
         self.runAction(SKAction.repeatActionForever(SKAction.sequence([wait, run])), withKey: "simulation")
     }
     

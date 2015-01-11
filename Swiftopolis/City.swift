@@ -162,10 +162,10 @@ class City {
             pollutionTerrainScan()
             break
         case 13:
-            
+            crimeScan()
             break
         case 14:
-            
+            populationDensityScan()
             break
         case 15:
             
@@ -276,11 +276,11 @@ class City {
         let qX = (map.width + 3) / 4,
             qY = (map.height + 3) / 4
         
-        var qtem: [[Int]] = []
-        Utils.initializeMatrix(&qtem, width: qY, height: qX, value: 0)
-            
-        var landValueTotal = 0,
+        var qtem: [[Int]] = [],
+            landValueTotal = 0,
             landValueCount = 0
+        
+        Utils.initializeMatrix(&qtem, width: qY, height: qX, value: 0)
         
         let HWLDX = (map.width + 1) / 2
         let HWLDY = (map.height + 1) / 2
@@ -289,15 +289,17 @@ class City {
         
         var start = NSDate()
         
-        for x in 0...HWLDX - 1 {
-            for y in 0...HWLDY - 1 {
+        var i = 0
+        for var x = 0; x < HWLDX; x++ {
+            for var y = 0; y < HWLDY; y++ {
                 var pLevel = 0,
                     landValueFlag = 0,
-                    zx = 2 * x,
-                    zy = 2 * y
+                    zx = x << 1,
+                    zy = y << 1
                 
-                for mx in zx...zx + 1 {
-                    for my in zy...zy + 1 {
+                for var mx = zx; mx <= zx + 1; mx++ {
+                    for var my = zy; my <= zy + 1; my++ {
+                        i++
                         let tile = map.getTile(x: mx, y: my)!
                         if tile != TileConstants.DIRT {
                             if tile < TileConstants.RUBBLE {
@@ -351,22 +353,24 @@ class City {
         }
         
         var timeInterval: Double = NSDate().timeIntervalSinceDate(start)
-        println("big for-loop took \(timeInterval) seconds");
+        println("big for-loop (\(i) iterations) took \(timeInterval) seconds");
         
         // TODO: set land value average
         
         start = NSDate()
         
         Smoothers.smoothN(&tem, n: 2)
-        var pCount = 0, pTotal = 0, pMax = 0
         
         timeInterval = NSDate().timeIntervalSinceDate(start)
         println("smootnN took \(timeInterval) seconds")
         
         start = NSDate()
         
-        for x in 0...HWLDX - 1 {
-            for y in 0...HWLDY - 1 {
+        var pCount = 0, pTotal = 0, pMax = 0
+        i = 0
+        for var x = 0; x < HWLDX; x++ {
+            for var y = 0; y < HWLDY; y++ {
+                i++
                 let z = tem[y][x]
                 map.setPollutionLevelAtLocation(x: x, y: y, value: UInt16(z), factor: 1)
                 
@@ -382,27 +386,30 @@ class City {
         }
         
         timeInterval = NSDate().timeIntervalSinceDate(start)
-        println("second double-for took \(timeInterval) seconds")
+        println("second double-for (\(i) iterations) took \(timeInterval) seconds")
         
         // TODO: set pollution average
         
         start = NSDate()
-        
-        map.setTerrainFeatures(Smoothers.smoothTerrain(tem))
-        
+        Smoothers.smoothTerrain(&tem)
         timeInterval = NSDate().timeIntervalSinceDate(start)
-        println("setTerrainFeatures took \(timeInterval) seconds")
+        println("smoothTerrain took \(timeInterval) seconds")
+        
+        map.setTerrainFeatures(tem)
         
         // TODO: send event for pollution map
         // TODO: send event for land value map
     }
     
     private func crimeScan() {
+        var policeMap = self.map.policeMap
         for _ in 0...2 {
-            map.setPoliceMap(Smoothers.smoothFirePoliceMap(map.policeMap))
+            Smoothers.smoothFirePoliceMap(&policeMap)
         }
         
-        map.setPoliceReachMap(map.policeMap)
+        map.setPoliceMap(policeMap)
+        
+        map.setPoliceReachMap(policeMap)
         
         var count = 0, sum = 0, cmax = 0
         map.foreachLandValue { (value: UInt16, index: (Int, Int)) in
@@ -429,6 +436,10 @@ class City {
         crimeAverage = count != 0 ? sum / count : 0
         
         // TODO: send Police overlay map change event
+    }
+    
+    private func populationDensityScan() {
+        
     }
     
     // MARK: Power API
