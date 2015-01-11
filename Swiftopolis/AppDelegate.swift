@@ -33,7 +33,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var skView: SKView!
     
     func applicationDidFinishLaunching(aNotification: NSNotification) {
-        /* Pick a size for the scene */
+        
+        let barrier = dispatch_queue_create("com.chrisbenincasa.micropolis", DISPATCH_QUEUE_CONCURRENT)
+        dispatch_async(barrier) {
+            let start = NSDate()
+            let tileLoader = TileJsonLoader()
+            tileLoader.readTiles(NSBundle.mainBundle().pathForResource("tiles", ofType: "json")!)
+            let end = NSDate()
+            let timeInterval: Double = end.timeIntervalSinceDate(start)
+            println("Time to evaluate JSON: \(timeInterval) seconds");
+        }
+        
         if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
             /* Set the scale mode to scale to fit the window */
             scene.scaleMode = .AspectFill
@@ -45,6 +55,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
             self.skView!.showsFPS = true
             self.skView!.showsNodeCount = true
+            
+            window.acceptsMouseMovedEvents = true
+            window.makeFirstResponder(self.skView.scene)
         }
     }
     
