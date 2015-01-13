@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class GameScene: SKScene {
+class GameScene: SKScene, Subscriber {
     private let TILE_SIZE: Int = 16
     private var tool: SKSpriteNode?
     private let city = City()
@@ -18,6 +18,7 @@ class GameScene: SKScene {
         super.init(coder: aDecoder)
         let cityMap = MapGenerator(city: self.city, width: self.city.map.width, height: self.city.map.height).generateNewCity()
         city.setCityMap(cityMap)
+        city.addSubscriber(self)
         initCursor()
         startSimulationTimer()
     }
@@ -81,5 +82,13 @@ class GameScene: SKScene {
     private func getPoint(point: CGPoint) -> CGPoint {
         let (newX, newY) = (Int(point.x / CGFloat(TILE_SIZE)), Int(point.y / CGFloat(TILE_SIZE)))
         return CGPoint(x: newX, y: newY)
+    }
+    
+    // MARK: Subscriber Protocol
+    
+    func citySoundFired(data: [NSObject : AnyObject]) {
+        if let sound = data["sound"] as? CitySound {
+            println(sound)
+        }
     }
 }

@@ -9,14 +9,19 @@
 import Cocoa
 
 class City {
-    var map: Map = Map()
+    private(set) var map: Map = Map()
     let budget: Budget = Budget()
+    let history: CityHistory = CityHistory()
+    private lazy var disasters: DisasterEngine = {
+        [unowned self] in return DisasterEngine(city: self)
+    }()
     
     private var evaluator = CityEvaluation()
     private var subscribers: [Subscriber] = []
     private var tileBehaviors: [String : TileBehavior] = [:]
     private(set) var demand: Demand = Demand()
     private(set) var census: Census = Census()
+    private(set) var specialSprites: [Sprite] = []
     
     private(set) var residentialZones: Int = 0
     private(set) var commercialZones: Int = 0
@@ -31,8 +36,11 @@ class City {
     private var fcycle = 0 // simulation steps
     private var acycle = 0 // animation
     
-    private(set) var disasterFree: Bool = true
+    private(set) var disasterFree: Bool = false
+    private(set) var floodTurnsRemaining: Int = 0
+    
     private(set) var powerPlants: [CityLocation] = []
+    private(set) var pollutionAverage: Int = 0
     
     private(set) var crimeAverage: Int = 0
     
@@ -53,7 +61,7 @@ class City {
 
     func setTile(x xpos: Int, y ypos: Int, tile newTile: UInt16) {
         if map.setTile(x: xpos, y: ypos, tile: newTile) {
-            onTileChanged()
+            onTileChanged(x: xpos, y: ypos)
         }
     }
     
@@ -168,7 +176,8 @@ class City {
             populationDensityScan()
             break
         case 15:
-            
+            fireAnalysis()
+            doDisasters()
             break
         default: fatalError("Unreachable")
         }
@@ -183,6 +192,24 @@ class City {
     // TODO: factor out scanners
     private func mapScan(x0: Int, x1: Int) {
         
+    }
+    
+    private func takeCensus() {
+        var resMax = 0, comMax = 0, indMax = 0
+        
+        for var i = 118; i >= 0; i-- {
+            if history.residential[i] > resMax {
+                resMax = history.residential[i]
+            }
+            
+            if history.commercial[i] > comMax {
+                comMax = history.commercial[i]
+            }
+            
+            if history.industrial[i] > indMax {
+                indMax = history.industrial[i]
+            }
+        }
     }
     
     private func powerScan() {
@@ -439,7 +466,125 @@ class City {
     }
     
     private func populationDensityScan() {
+        var xTotal = 0, yTotal = 0, zoneCount = 0
+        var tem: [[Int]] = []
+        Utils.initializeMatrix(&tem, width: (self.map.height + 1) / 2, height: (self.map.width + 1) / 2, value: 0)
         
+        for var x = 0; x < self.map.width; x++ {
+            for var y = 0; y < self.map.height; y++ {
+                let tile = map.getTile(x: x, y: y)!
+                if TileConstants.isZoneCenter(tile) {
+                    var den = computePopulationDensity(x: x, y: y, tile: tile)
+                    if den > 254 {
+                        den = 254
+                    }
+                    
+                    tem[y / 2][x / 2] = den
+                    xTotal += x
+                    yTotal += y
+                    zoneCount++
+                }
+            }
+        }
+        
+        Smoothers.smoothN(&tem, n: 3)
+        
+        for var x = 0; x < (self.map.width + 1) / 2; x++ {
+            for var y = 0; y < (self.map.height + 1) / 2; y++ {
+                map.setPopulationDensityAtLocation(x: x, y: y, value: UInt16(2 * tem[y][x]), factor: 1)
+            }
+        }
+        
+        // TODO: distIntMarket
+        
+        if zoneCount != 0 {
+            map.setMapCenterOfMass(x: xTotal / zoneCount, y: yTotal / zoneCount)
+        } else {
+            map.setMapCenterOfMass(x: (self.map.width + 1) / 2, y: (self.map.height + 1) / 2)
+        }
+        
+        // TODO: fire events
+    }
+    
+    private func fireAnalysis() {
+        var fireMap = map.fireMap
+        for _ in 0..<3 {
+            Smoothers.smoothFirePoliceMap(&fireMap)
+        }
+        map.setFireMap(fireMap)
+        map.setFireReachMap(fireMap)
+        
+        // TODO: fire events
+    }
+    
+    private func doDisasters() {
+        if floodTurnsRemaining > 0 {
+            floodTurnsRemaining--
+        }
+        
+        if disasterFree {
+            return
+        }
+        
+        if arc4random_uniform(UInt32(DifficultyLevel.disasterProbForDifficulty(self.difficultyLevel))) != 0 {
+            return
+        }
+        
+        switch arc4random_uniform(9) {
+        case 0...1:
+            if let fireLocation = self.disasters.setFire() {
+                onCityMessage(CityMessage(message: "FIRE!!!"), location: fireLocation)
+            }
+            break
+        case 2...3:
+            if let floodLocation = self.disasters.makeFlood() {
+                onCityMessage(CityMessage(message: "Flood!"), location: floodLocation)
+            }
+            break
+        case 4: break
+        case 5:
+            if let existingSprite = findSpriteOfKind(.Tornado) as? TornadoSprite {
+                existingSprite.setRemainingTurns(200)
+                return
+            }
+            let tornadoSprite = self.disasters.makeTornado()
+            self.specialSprites.append(tornadoSprite)
+            onCityMessage(CityMessage(message: "Tornado!!"), location: tornadoSprite.cityLocation)
+            break
+        case 6:
+            let centerOfMass = CityLocation(x: self.map.centerOfMassX, y: self.map.centerOfMassY)
+            onCitySound(EarthquakeSound(), location: centerOfMass)
+            onEarthquakeStarted()
+            onCityMessage(CityMessage(message: "EARTHquake!!"), location: centerOfMass)
+            self.disasters.makeEarthquake()
+            break
+        case 7...8:
+            if let existingMonster = findSpriteOfKind(.Monster) as? MonsterSprite {
+                existingMonster.soundCount = 1
+                existingMonster.setRemainingTurns(100)
+                existingMonster.wantsToReturnHome = false
+                existingMonster.setDestination(map.pollutionMaxLocation)
+            } else if pollutionAverage > 60 && findSpriteOfKind(.God) == nil {
+                let monster = self.disasters.makeMonster()
+                self.specialSprites.append(monster)
+            }
+            break
+        default: break
+        }
+    }
+    
+    private func computePopulationDensity(#x: Int, y: Int, tile: UInt16) -> Int {
+        if tile == TileConstants.RESCLR {
+            return doFreePop(x: x, y: y)
+        } else if tile < TileConstants.COMBASE {
+            return TileConstants.residentialZonePopulation(tile)
+        } else if tile < TileConstants.INDBASE {
+            return TileConstants.commercialZonePopulation(tile)
+        } else if tile < TileConstants.PORTBASE {
+            return TileConstants.industrialZonePopulation(tile)
+        } else {
+            return 0
+        }
     }
     
     // MARK: Power API
@@ -508,11 +653,22 @@ class City {
     }
 
     func killZone(x xpos: Int, y ypos: Int) {
-
+        
     }
 
     func makeExplosion(x xpos: Int, y ypos: Int) {
 
+    }
+    
+    // MARK: Sprites
+    private func findSpriteOfKind(kind: SpriteKind) -> Sprite? {
+        for sprite in specialSprites {
+            if sprite.kind == kind {
+                return sprite
+            }
+        }
+        
+        return nil
     }
     
     // MARK: Traffic API
@@ -573,26 +729,52 @@ class City {
     
     func addSubscriber(sub: Subscriber) {
         self.subscribers.append(sub)
+        self.onCitySound(EarthquakeSound(), location: nil)
     }
 
-    private func onCityMessage(message: CityMessage) {
-        let data: [NSObject : AnyObject] = [NSString(string: "message") : message]
+    private func onCityMessage(message: CityMessage, location: CityLocation?) {
+        var data: [NSObject : AnyObject] = [NSString(string: "message") : message]
+        if location != nil {
+            data[NSString(string: "location")] = location!
+        }
+        
         for subscriber in self.subscribers {
             subscriber.cityMessage?(data)
         }
     }
     
-    private func onCensusChanged() {
-
+    private func onCitySound(sound: CitySound, location: CityLocation?) {
+        var data: [NSObject : AnyObject] = [NSString(string: "sound") : sound]
+        if location != nil {
+            data[NSString(string: "location")] = location!
+        }
+        
+        for subscriber in self.subscribers {
+            subscriber.citySoundFired?(data)
+        }
     }
     
-    private func onTileChanged() {
-        
+    private func onCensusChanged() {
+        for subscriber in self.subscribers {
+            subscriber.censusChanged?([:])
+        }
+    }
+    
+    private func onTileChanged(#x: Int, y: Int) {
+        for subscriber in self.subscribers {
+            subscriber.tileChanged?(x, y)
+        }
     }
     
     private func onFundsChanged() {
         for subscriber in self.subscribers {
             subscriber.fundsChanged?([:])
+        }
+    }
+    
+    private func onEarthquakeStarted() {
+        for subscriber in self.subscribers {
+            subscriber.earthquakeStarted?([:])
         }
     }
     
@@ -605,4 +787,13 @@ class City {
 
 enum DifficultyLevel: Int {
     case Easy = 0, Medium = 1, Hard = 2
+    
+    static func disasterProbForDifficulty(difficulty: DifficultyLevel) -> Int {
+        switch difficulty {
+        case .Easy: return 480
+        case .Medium: return 240
+        case .Hard: return 60
+        default: return 0
+        }
+    }
 }

@@ -82,8 +82,8 @@ class Smoothers {
     class func smoothFirePoliceMap(inout tem: [[Int]]) {
         let h = tem.count, w = tem[0].count
         
-        for y in 0...h - 1 {
-            for x in 0...w - 1 {
+        for var y = 0; y < h; y++ {
+            for var x = 0; x < w; x++ {
                 var z = 0
                 if x > 0 {
                     z += tem[y][x - 1]

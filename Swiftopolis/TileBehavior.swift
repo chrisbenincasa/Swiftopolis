@@ -9,14 +9,12 @@
 import Cocoa
 
 protocol TileBehaviorProtocol {
-//    typealias BehaviorType
     typealias ResultType
 
     var city: City { get }
     var xPos: Int { get }
     var yPos: Int { get }
     var tile: UInt16 { get }
-//    var behavior: BehaviorType { get }
     
     init(city: City)
     
@@ -30,7 +28,6 @@ class TileBehavior: TileBehaviorProtocol {
     var yPos: Int = -1
     var tile: UInt16 = UInt16.max
     var city: City
-//    var behavior: T
     
     required init(city: City) {
         self.city = city

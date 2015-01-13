@@ -16,6 +16,8 @@ protocol Subscriber {
     
     optional func cityMessage(data: [NSObject: AnyObject]) -> Void
     
+    optional func citySoundFired(data: [NSObject : AnyObject]) -> Void
+    
     optional func censusChanged(data: [NSObject: AnyObject]) -> Void
     
     optional func demandChanged(data: [NSObject: AnyObject]) -> Void

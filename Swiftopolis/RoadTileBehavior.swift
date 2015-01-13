@@ -12,7 +12,7 @@ class RoadTileBehavior: TileBehavior {
     private let trafficDensity = [TileConstants.ROADBASE, TileConstants.LTRFBASE, TileConstants.HTRFBASE]
     
     override func apply() {
-        // city.roadTotal++
+        // TODO: city.roadTotal++
         
         if self.city.budget.roadEffect < 30 &&
             arc4random_uniform(512) == 0 &&

@@ -194,6 +194,14 @@ struct TileConstants {
         }
     }
     
+    static func isBulldozable(tile: UInt16) -> Bool {
+        if let t = Tiles.get(Int(tile)) {
+            return t.canBulldoze
+        } else {
+            return false
+        }
+    }
+    
     static func residentialZonePopulation(tile: UInt16) -> Int {
         assert(tile & LOMASK == tile, "Upper bits set!")
         
@@ -277,6 +285,26 @@ struct TileConstants {
     static func isRubble(tile: UInt16) -> Bool {
         assert(tile & LOMASK == tile, "Upper bits set!")
         return (tile >= RUBBLE && tile <= LASTRUBBLE)
+    }
+    
+    static func isRiverEdge(tile: UInt16) -> Bool {
+        assert(tile & LOMASK == tile, "Upper bits set!")
+        return (tile >= FIRSTRIVEDGE && tile <= LASTRIVEDGE)
+    }
+    
+    static func isArsonable(tile: UInt16) -> Bool {
+        assert(tile & LOMASK == tile, "Upper bits set!")
+        return !isZoneCenter(tile) && tile >= LHTHR && tile <= LASTZONE
+    }
+    
+    static func isFloodable(tile: UInt16) -> Bool {
+        assert(tile & LOMASK == tile, "Upper bits set!")
+        return tile == DIRT || (isBulldozable(tile) && isCombustable(tile))
+    }
+    
+    static func isVulnerable(tile: UInt16) -> Bool {
+        assert(tile & LOMASK == tile, "Upper bits set!")
+        return !(tile < RESBASE && tile > LASTZONE && isZoneCenter(tile))
     }
 
     static func isZoneCenter(tile: UInt16) -> Bool {

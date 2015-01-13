@@ -115,6 +115,11 @@ class Map {
         return z > 32 ? 32 : z
     }
     
+    func setMapCenterOfMass(x xpos: Int, y ypos: Int) {
+        self.centerOfMassX = xpos
+        self.centerOfMassY = ypos
+    }
+    
     // MARK: Power functions
     
     // Checks if the power bit is set
@@ -232,6 +237,10 @@ class Map {
         }
     }
     
+    func setPopulationDensityAtLocation(x xpos: Int, y ypos: Int, value: UInt16, factor: Int = 2) {
+        self.populationDensity[ypos / factor][xpos / factor] = value
+    }
+    
     func getCommercialRateAtLocation(x xpos: Int, y ypos: Int) -> UInt8 {
         if withinBounds(x: xpos, y: ypos) {
             return commercialRate[ypos / 8][xpos / 8]
@@ -245,6 +254,18 @@ class Map {
         if withinBounds(x: xpos, y: ypos) {
             fireMap[ypos / 8][xpos / 8] += amount
         }
+    }
+    
+    func setFireEffectAtLocation(#x: Int, y: Int, value: Int) {
+        self.fireReachMap[y][x] = value
+    }
+    
+    func setFireMap(map: [[Int]]) {
+        self.fireMap = map
+    }
+    
+    func setFireReachMap(map: [[Int]]) {
+        self.fireReachMap = map
     }
     
     // MARK: Police Map
