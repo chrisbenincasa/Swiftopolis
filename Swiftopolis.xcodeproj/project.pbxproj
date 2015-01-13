@@ -18,6 +18,8 @@
 		141D9C5A1A56FBCE00B053DF /* Speed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141D9C591A56FBCE00B053DF /* Speed.swift */; };
 		141D9C5C1A56FD4F00B053DF /* Simulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141D9C5B1A56FD4F00B053DF /* Simulation.swift */; };
 		141D9C5E1A583EC900B053DF /* CityProblem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141D9C5D1A583EC900B053DF /* CityProblem.swift */; };
+		142420BA1A6575F200CB273C /* Option_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142420B91A6575F200CB273C /* Option_Extensions.swift */; };
+		142420BC1A658BD800CB273C /* DifficultyLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142420BB1A658BD800CB273C /* DifficultyLevel.swift */; };
 		143059D21A5A1CFF009AF7C2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 143059D11A5A1CFF009AF7C2 /* Cocoa.framework */; };
 		143059D41A5A5C04009AF7C2 /* Tiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143059D31A5A5C04009AF7C2 /* Tiles.swift */; };
 		143059D61A5A5CE7009AF7C2 /* TileLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143059D51A5A5CE7009AF7C2 /* TileLoader.swift */; };
@@ -99,6 +101,8 @@
 		141D9C591A56FBCE00B053DF /* Speed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Speed.swift; sourceTree = "<group>"; };
 		141D9C5B1A56FD4F00B053DF /* Simulation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Simulation.swift; sourceTree = "<group>"; };
 		141D9C5D1A583EC900B053DF /* CityProblem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityProblem.swift; sourceTree = "<group>"; };
+		142420B91A6575F200CB273C /* Option_Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Option_Extensions.swift; sourceTree = "<group>"; };
+		142420BB1A658BD800CB273C /* DifficultyLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DifficultyLevel.swift; sourceTree = "<group>"; };
 		143059D11A5A1CFF009AF7C2 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		143059D31A5A5C04009AF7C2 /* Tiles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tiles.swift; sourceTree = "<group>"; };
 		143059D51A5A5CE7009AF7C2 /* TileLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileLoader.swift; sourceTree = "<group>"; };
@@ -233,6 +237,8 @@
 				14AB41A71A5B4BEE003A4F7D /* Tile Behaviors */,
 				14938FF51A647F270093AC02 /* CitySound.swift */,
 				14938FF91A64850B0093AC02 /* CityHistory.swift */,
+				142420B91A6575F200CB273C /* Option_Extensions.swift */,
+				142420BB1A658BD800CB273C /* DifficultyLevel.swift */,
 			);
 			path = Swiftopolis;
 			sourceTree = "<group>";
@@ -407,8 +413,10 @@
 			files = (
 				1454AC701A5EDA11008F35B6 /* CommercialTileBehavior.swift in Sources */,
 				1454AC7C1A5EEF94008F35B6 /* PoliceStationTileEffect.swift in Sources */,
+				142420BA1A6575F200CB273C /* Option_Extensions.swift in Sources */,
 				146ABABA1A509737002A1B6B /* ToolResult.swift in Sources */,
 				141617A41A5C708A0066E8F1 /* RailTerrainBehavior.swift in Sources */,
+				142420BC1A658BD800CB273C /* DifficultyLevel.swift in Sources */,
 				14450D181A5CAF7C00218A5E /* Zone.swift in Sources */,
 				148069371A5B6CC40004A7B0 /* ArrayExtensions.swift in Sources */,
 				14AB41AD1A5B4C42003A4F7D /* RadioactiveTerrainBehavior.swift in Sources */,

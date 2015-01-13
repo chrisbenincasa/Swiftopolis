@@ -13,17 +13,18 @@ struct CensusConstants {
 }
 
 class Census {
+    // Counts
     var poweredZoneCount: Int = 0
 	var unpoweredZoneCount: Int = 0
 	var roadTotal: Int = 0
 	var railTotal: Int = 0
 	var firePop: Int = 0
-	var resZoneCount: Int = 0
-	var comZoneCount: Int = 0
-	var indZoneCount: Int = 0
-	var resPop: Int = 0
-	var comPop: Int = 0
-	var indPop: Int = 0
+	var residentialZones: Int = 0
+	var commercialZones: Int = 0
+	var industrialZones: Int = 0
+	var residentialPopulation: Int = 0
+	var commercialPopulation: Int = 0
+	var industrialPopulation: Int = 0
 	var hospitalCount: Int = 0
 	var churchCount: Int = 0
 	var policeCount: Int = 0
@@ -33,4 +34,15 @@ class Census {
 	var nuclearCount: Int = 0
 	var seaportCount: Int = 0
     var airportCount: Int = 0
+    var totalPopulation: Int = 0
+    
+    // Averages
+    var crimeAverage: Int = 0
+    var pollutionAverage: Int = 0
+    var landValueAverage: Int = 0
+    var trafficAverage: Int = 0
+    
+    // Ramps?
+    var crimeRamp: Int = 0
+    var pollutionRamp: Int = 0
 }

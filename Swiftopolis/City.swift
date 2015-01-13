@@ -13,7 +13,7 @@ class City {
     let budget: Budget = Budget()
     let history: CityHistory = CityHistory()
     private lazy var disasters: DisasterEngine = {
-        [unowned self] in return DisasterEngine(city: self)
+        [weak self] in return DisasterEngine(city: self!) // Diasaster engine depends on City being initialized
     }()
     
     private var evaluator = CityEvaluation()
@@ -22,14 +22,6 @@ class City {
     private(set) var demand: Demand = Demand()
     private(set) var census: Census = Census()
     private(set) var specialSprites: [Sprite] = []
-    
-    private(set) var residentialZones: Int = 0
-    private(set) var commercialZones: Int = 0
-    private(set) var industrialZones: Int = 0
-    
-    private(set) var residentialPopulation: Int = 0
-    private(set) var commercialPopulation: Int = 0
-    private(set) var industrialPopulation: Int = 0
     
     private(set) var cityTime: Int = 0 // counts "weeks" (actually, 1/48'ths years)
     private var scycle = 0 // cityTime % 1024
@@ -40,9 +32,6 @@ class City {
     private(set) var floodTurnsRemaining: Int = 0
     
     private(set) var powerPlants: [CityLocation] = []
-    private(set) var pollutionAverage: Int = 0
-    
-    private(set) var crimeAverage: Int = 0
     
     private(set) var difficultyLevel: DifficultyLevel = .Easy
     private(set) var speed: Speed = NormalSpeed()
@@ -80,27 +69,27 @@ class City {
     // MARK: Populations
     
     func adjustResidentialPopulation(amount: Int = 1) {
-        residentialPopulation += amount
+        census.residentialPopulation += amount
     }
     
     func adjustCommercialPopulation(amount: Int = 1) {
-        commercialPopulation += amount
+        census.commercialPopulation += amount
     }
     
     func adjustIndustrialPopulation(amount: Int = 1) {
-        industrialPopulation += amount
+        census.industrialPopulation += amount
     }
     
     func adjustResidentialZones(amount: Int = 1) {
-        residentialZones += amount
+        census.residentialZones += amount
     }
     
     func adjustCommercialZones(amount: Int = 1) {
-        commercialZones += amount
+        census.commercialZones += amount
     }
     
     func adjustIndustrialZones(amount: Int = 1) {
-        industrialZones += amount
+        census.industrialZones += amount
     }
     
     // MARK: Budget APi
@@ -109,6 +98,8 @@ class City {
         budget.totalFunds -= amount
         
     }
+    
+    // MARK: Simulation
     
     func animate() {
         acycle = (acycle + 1) % 960
@@ -122,7 +113,6 @@ class City {
         simulate(fcycle % 16)
     }
     
-    // MARK: Simulation
     func simulate(phase: Int) {
         let start = NSDate()
         let band = map.width / 8
@@ -138,9 +128,9 @@ class City {
             break
         case 9:
             if cityTime % CensusConstants.CENSUS_RATE == 0 {
-                // takeCensus()
+                 takeCensus(false)
                 if cityTime % (CensusConstants.CENSUS_RATE * 12) == 0 {
-                    // takeCenesus2? wat
+                    takeCensus(true) // historical census
                 }
                 
                 onCensusChanged()
@@ -194,22 +184,82 @@ class City {
         
     }
     
-    private func takeCensus() {
+    private func takeCensus(historical: Bool) {
         var resMax = 0, comMax = 0, indMax = 0
+        let (start, end) = historical ? (238, 120) : (118, 0)
         
-        for var i = 118; i >= 0; i-- {
-            if history.residential[i] > resMax {
-                resMax = history.residential[i]
-            }
-            
-            if history.commercial[i] > comMax {
-                comMax = history.commercial[i]
-            }
-            
-            if history.industrial[i] > indMax {
-                indMax = history.industrial[i]
+        for var i = start; i >= end; i-- {
+            if !historical {
+                if history.residential[i] > resMax {
+                    resMax = history.residential[i]
+                }
+                
+                if history.commercial[i] > comMax {
+                    comMax = history.commercial[i]
+                }
+                
+                if history.industrial[i] > indMax {
+                    indMax = history.industrial[i]
+                }
             }
         }
+        
+        history.shiftResidential(value: census.residentialPopulation / 8, atIndex: end)
+        history.shiftCommercial(value: census.commercialPopulation, atIndex: end)
+        history.shiftIndustrial(value: census.industrialPopulation, atIndex: end)
+        
+        if !historical {
+            history.cityTime = cityTime
+            
+            census.crimeRamp += (census.crimeAverage - census.crimeRamp) / 4
+            history.shiftCrime(value: min(255, census.crimeRamp))
+            
+            census.pollutionRamp += (census.pollutionAverage - census.pollutionRamp) / 4
+            history.shiftPollution(value: min(255, census.pollutionRamp))
+            
+            var moneyScaled = budget.cashFlow / 20 + 128
+            if moneyScaled < 0 {
+                moneyScaled = 0
+            } else if moneyScaled > 255 {
+                moneyScaled = 255
+            }
+            
+            history.shiftMoney(value: moneyScaled)
+            
+            if census.hospitalCount < (census.residentialPopulation / 256) {
+                demand.setHospitalDemand(1)
+            } else if census.hospitalCount > (census.residentialPopulation / 256) {
+                demand.setHospitalDemand(-1)
+            } else {
+                demand.setHospitalDemand(0)
+            }
+            
+            if census.churchCount < (census.residentialPopulation / 256) {
+                demand.setChurchDemand(1)
+            } else if census.churchCount > (census.residentialPopulation / 256) {
+                demand.setChurchDemand(-1)
+            } else {
+                demand.setChurchDemand(0)
+            }
+        } else {
+            history.shiftPollution(value: history.pollution[0], atIndex: end)
+            history.shiftCrime(value: history.crime[0], atIndex: end)
+            history.shiftMoney(value: history.money[0], atIndex: end)
+        }
+    }
+    
+    private func collectTaxPartial() {
+        var budgetNumbers = generateBudgetNumbers(roadTotal: census.roadTotal, railTotal: census.railTotal, totalPopulation: census.totalPopulation, fireStationCount: census.fireStationCount, policeStationCount: census.policeCount)
+        
+        budget.taxFund += budgetNumbers.taxIncome
+        budget.roadFundEscrow -= budgetNumbers.roadFunded
+        budget.fireFundEscrow -= budgetNumbers.fireFunded
+        budget.policeFundEscrow -= budgetNumbers.policeFunded
+        
+        budget.taxEffect = budgetNumbers.taxRate
+        budget.roadEffect = budgetNumbers.roadRequest != 0 ? Int(floor(32.0 * Double(budgetNumbers.roadFunded) / Double(budgetNumbers.roadRequest))) : 32
+        budget.policeEffect = budgetNumbers.roadRequest != 0 ? Int(floor(1000.0 * Double(budgetNumbers.policeFunded) / Double(budgetNumbers.policeRequest))) : 1000
+        budget.fireEffect = budgetNumbers.roadRequest != 0 ? Int(floor(1000.0 * Double(budgetNumbers.fireFunded) / Double(budgetNumbers.fireRequest))) : 1000
     }
     
     private func powerScan() {
@@ -415,7 +465,7 @@ class City {
         timeInterval = NSDate().timeIntervalSinceDate(start)
         println("second double-for (\(i) iterations) took \(timeInterval) seconds")
         
-        // TODO: set pollution average
+        census.pollutionAverage = landValueCount != 0 ? (landValueTotal / landValueCount) : 0
         
         start = NSDate()
         Smoothers.smoothTerrain(&tem)
@@ -460,7 +510,7 @@ class City {
             }
         }
 
-        crimeAverage = count != 0 ? sum / count : 0
+        census.crimeAverage = count != 0 ? sum / count : 0
         
         // TODO: send Police overlay map change event
     }
@@ -564,7 +614,7 @@ class City {
                 existingMonster.setRemainingTurns(100)
                 existingMonster.wantsToReturnHome = false
                 existingMonster.setDestination(map.pollutionMaxLocation)
-            } else if pollutionAverage > 60 && findSpriteOfKind(.God) == nil {
+            } else if census.pollutionAverage > 60 && findSpriteOfKind(.God) == nil {
                 let monster = self.disasters.makeMonster()
                 self.specialSprites.append(monster)
             }
@@ -783,17 +833,64 @@ class City {
     private func initTileBehaviors() {
         let x = FireTerrainBehavior(city: self)
     }
-}
-
-enum DifficultyLevel: Int {
-    case Easy = 0, Medium = 1, Hard = 2
     
-    static func disasterProbForDifficulty(difficulty: DifficultyLevel) -> Int {
-        switch difficulty {
-        case .Easy: return 480
-        case .Medium: return 240
-        case .Hard: return 60
-        default: return 0
+    private func generateBudgetNumbers(#roadTotal: Int, railTotal: Int, totalPopulation: Int, fireStationCount: Int, policeStationCount: Int) -> BudgetNumbers {
+        var nums = BudgetNumbers()
+            
+        nums.taxRate = max(0, budget.cityTax)
+        nums.roadPercent = max(0.0, budget.roadPercent)
+        nums.firePercent = max(0.0, budget.firePercent)
+        nums.policePercent = max(0.0, budget.policePercent)
+            
+        nums.previousBalance = budget.totalFunds
+        let taxIncome = Double(totalPopulation * census.landValueAverage) / 120.0 * Double(nums.taxRate) * BudgetConstants.incomeMultipler(difficultyLevel)
+        nums.taxIncome = Int(round(taxIncome))
+        nums.roadRequest = Int(round(Double(roadTotal + railTotal) * 2.0) * BudgetConstants.roadMaintenanceMultiplier(difficultyLevel))
+        nums.fireRequest = BudgetConstants.FIRE_STATION_MAINTENANCE * fireStationCount
+        nums.policeRequest = BudgetConstants.POLICE_STATION_MAINTENANCE * policeStationCount
+        
+        nums.roadFunded = Int(round(Double(nums.roadRequest) * nums.roadPercent))
+        nums.fireFunded = Int(round(Double(nums.fireRequest) * nums.firePercent))
+        nums.policeFunded = Int(round(Double(nums.policeRequest) * nums.policePercent))
+        
+        
+        var yumDuckets = budget.totalFunds + nums.taxIncome
+        assert(yumDuckets >= 0, "wtf yumduckets")
+        
+        if yumDuckets >= nums.roadFunded {
+            yumDuckets -= nums.roadFunded
+            
+            if yumDuckets >= nums.fireFunded {
+                yumDuckets -= nums.fireFunded
+                
+                if yumDuckets >= nums.policeFunded {
+                    yumDuckets -= nums.policeFunded
+                } else {
+                    nums.policeFunded = yumDuckets
+                    nums.policePercent = Double(nums.policeFunded) / Double(nums.policeRequest)
+                    yumDuckets = 0
+                }
+            } else {
+                nums.fireFunded = yumDuckets
+                nums.firePercent = Double(nums.fireFunded) / Double(nums.fireRequest)
+                nums.policeFunded = 0
+                nums.policePercent = 0.0
+                yumDuckets = 0
+            }
+        } else {
+            nums.roadFunded = yumDuckets
+            nums.roadPercent = Double(nums.roadFunded) / Double(nums.roadRequest)
+            nums.fireFunded = 0
+            nums.firePercent = 0.0
+            nums.policeFunded = 0
+            nums.policePercent = 0.0
+            yumDuckets = 0
         }
+        
+        nums.operationExpenses = nums.roadFunded + nums.fireFunded + nums.policeFunded
+        nums.newBalance = nums.previousBalance + nums.taxIncome - nums.operationExpenses
+        
+        return nums
     }
+
 }

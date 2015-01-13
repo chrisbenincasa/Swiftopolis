@@ -16,6 +16,10 @@ class Demand {
     private(set) var needHospital: Int = 0
     private(set) var needChurch: Int = 0
     
+    private(set) var stadiumDemand: Bool = false
+    private(set) var airportDemand: Bool = false
+    private(set) var seaportDemand: Bool = false
+    
     func setHospitalDemand(demand: Int) {
         if demand >= -1 || demand <= 1 {
             needHospital = demand

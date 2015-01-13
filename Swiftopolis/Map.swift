@@ -320,3 +320,7 @@ class Map {
         self.terrainMem = arr
     }
 }
+
+enum MapState {
+    case All, Residential, Commercial, Industrial, LandValue, Transport, GrowthRate, Crime, Pollution, Traffic, Power, Fire, Police
+}
