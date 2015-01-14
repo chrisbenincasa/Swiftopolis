@@ -37,6 +37,7 @@ class TileBehavior: TileBehaviorProtocol {
         self.xPos = x
         self.yPos = y
         self.tile = self.city.getTile(x: x, y: y)
+        self.apply()
     }
     
     func apply() {

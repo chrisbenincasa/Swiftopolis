@@ -16,7 +16,7 @@ class Census {
     // Counts
     var poweredZoneCount: Int = 0
 	var unpoweredZoneCount: Int = 0
-	var roadTotal: Int = 0
+    var roadTotal: Int = 0
 	var railTotal: Int = 0
 	var firePop: Int = 0
 	var residentialZones: Int = 0

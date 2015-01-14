@@ -253,6 +253,16 @@ struct TileConstants {
         }
     }
     
+    static func getTileBehavior(tile: UInt16) -> String? {
+        assert(tile & LOMASK == tile, "Upper bits set!")
+        
+        if let tile = Tiles.get(Int(tile)) {
+            return tile.getAttribute("behavior")
+        } else {
+            return nil
+        }
+    }
+    
     static func isIndustructible(tile: UInt16) -> Bool {
         assert(tile & LOMASK == tile, "Upper bits set!")
         

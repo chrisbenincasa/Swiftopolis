@@ -41,6 +41,10 @@ class City {
     
     private var newPower = false
     
+    init() {
+        initTileBehaviors()
+    }
+    
     // MARK: Map API
     
     func withinBounds(x xpos: Int, y ypos: Int) -> Bool {
@@ -148,9 +152,13 @@ class City {
             break
         case 10:
             if scycle % 10 == 0 {
-                // decROGMem()
+                doRateOfGrowth()
             }
             
+            doTraffic()
+            // TODO: fire maps
+            
+            doMessages()
             break
         case 11:
             powerScan()
@@ -183,7 +191,24 @@ class City {
     
     // TODO: factor out scanners
     private func mapScan(x0: Int, x1: Int) {
-        
+        for var x = x0; x < x1; x++ {
+            for var y = 0; y < map.height; y++ {
+                mapScanTile(x: x, y: y)
+            }
+        }
+    }
+    
+    private func mapScanTile(#x: Int, y: Int) {
+        let tile = getTile(x: x, y: y)
+        if let behaviorString = TileConstants.getTileBehavior(tile) {
+            if let behavior = tileBehaviors[behaviorString] {
+                behavior.processTile(x, y: y)
+            } else {
+                return
+            }
+        } else {
+            return
+        }
     }
     
     private func takeCensus(historical: Bool) {
@@ -577,6 +602,52 @@ class City {
         // TODO: fire events
     }
     
+    private func doRateOfGrowth() {
+        for var y = 0; y < map.rateOfGrowthMem.count; y++ {
+            for var x = 0; x < map.rateOfGrowthMem[y].count; x++ {
+                let z = map.rateOfGrowthMem[y][x]
+                if z == 0 {
+                    continue
+                }
+                
+                if z > 0 {
+                    map.increaseRateOfGrowth(x: x, y: y, amount: -1, byFactor: 1)
+                    if z > 200 {
+                        map.setRateOfGrowthAtLocation(x: x, y: y, value: 200, factor: 1)
+                    }
+                    continue
+                }
+                
+                if z < 0 {
+                    map.increaseRateOfGrowth(x: x, y: y, amount: 1, byFactor: 1)
+                    if z < -200 {
+                        map.setRateOfGrowthAtLocation(x: x, y: y, value: -200, factor: 1)
+                    }
+                }
+            }
+        }
+    }
+    
+    private func doTraffic() {
+        map.foreachTrafficDensity { (x: Int, y: Int, inout density: UInt16) in
+            if density != 0 {
+                if density > 200 {
+                    density -= 34
+                } else if density > 24 {
+                    density -= 24
+                } else {
+                    density = 0
+                }
+            }
+        }
+    }
+    
+    private func doMessages() {
+        // TODO: scenarios
+        
+        
+    }
+    
     private func fireAnalysis() {
         var fireMap = map.fireMap
         for _ in 0..<3 {
@@ -852,7 +923,24 @@ class City {
     // MARK: Private Helpers
     
     private func initTileBehaviors() {
-        let x = FireTerrainBehavior(city: self)
+        tileBehaviors["FIRE"] = FireTerrainBehavior(city: self)
+        tileBehaviors["FLOOD"] = FloodTerrainBehavior(city: self)
+        tileBehaviors["RADIOACTIVE"] = RadioactiveTerrainBehavior(city: self)
+        tileBehaviors["ROAD"] = RoadTileBehavior(city: self)
+        tileBehaviors["RAIL"] = RailTerrainBehavior(city: self)
+        tileBehaviors["EXPLOSION"] = ExplosionTerrainEffect(city: self)
+        tileBehaviors["RESIDENTIAL"] = ResidentialTileBehavior(city: self)
+        tileBehaviors["HOSPITAL_CHURCH"] = HospitalChurchTerrainBehavior(city: self)
+        tileBehaviors["COMMERCIAL"] = CommercialTileBehavior(city: self)
+        tileBehaviors["INDUSTRIAL"] = IndustrialTileBehavior(city: self)
+        tileBehaviors["COAL"] = CoalPowerTileBehavior(city: self)
+        tileBehaviors["NUCLEAR"] = NuclearTileBehavior(city: self)
+        tileBehaviors["FIRESTATION"] = FireStationTileBehavior(city: self)
+        tileBehaviors["POLICESTATION"] = PoliceStationTileEffect(city: self)
+//        TODO: tileBehaviors["STADIUM_EMPTY"]
+//        TODO: tileBehaviors["STADIUM_FULL"]
+//        TODO: tileBehaviors["AIRPORT"]
+//        TODO: tileBehaviors["SEAPORT"]
     }
     
     private func generateBudgetNumbers(#roadTotal: Int, railTotal: Int, totalPopulation: Int, fireStationCount: Int, policeStationCount: Int) -> BudgetNumbers {

@@ -31,7 +31,7 @@ class Map {
     private(set) var fireReachMap: [[Int]] = []
     private(set) var policeMap: [[Int]] = []
     private(set) var policeReachMap: [[Int]] = []
-    private var rateOfGrowthMem: [[Int16]] = [] // [-200, 200]
+    private(set) var rateOfGrowthMem: [[Int16]] = [] // [-200, 200]
     private var commercialRate: [[UInt8]] = []
     
     private(set) var centerOfMassX: Int = 0
@@ -169,6 +169,14 @@ class Map {
         return newDensity
     }
     
+    func foreachTrafficDensity(f: (Int, Int, inout UInt16) -> Void) {
+        for var y = 0; y < trafficDensity.count; y++ {
+            for var x = 0; x < trafficDensity[y].count; x++ {
+                f(x, y, &trafficDensity[y][x])
+            }
+        }
+    }
+    
     // MARK: Land Value
     
     func getLandValueAtLocation(x xpos: Int, y ypos: Int) -> UInt16 {
@@ -221,9 +229,15 @@ class Map {
     
     // MARK: Rate Of Growth
     
-    func increaseRateOfGrowth(x xpos: Int, y ypos: Int, amount: Int = 1) {
+    func increaseRateOfGrowth(x xpos: Int, y ypos: Int, amount: Int = 1, byFactor: Int = 4) {
         if withinBounds(x: xpos, y: ypos) {
-            rateOfGrowthMem[ypos / 8][xpos / 8] += (4 * amount)
+            rateOfGrowthMem[ypos / 8][xpos / 8] += (byFactor * amount)
+        }
+    }
+    
+    func setRateOfGrowthAtLocation(x xpos: Int, y ypos: Int, value: Int, factor: Int = 8) {
+        if withinBounds(x: xpos, y: ypos) {
+            rateOfGrowthMem[ypos / factor][xpos / factor] = Int16(value)
         }
     }
     
