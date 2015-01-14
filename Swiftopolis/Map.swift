@@ -32,7 +32,7 @@ class Map {
     private(set) var policeMap: [[Int]] = []
     private(set) var policeReachMap: [[Int]] = []
     private(set) var rateOfGrowthMem: [[Int16]] = [] // [-200, 200]
-    private var commercialRate: [[UInt8]] = []
+    private(set) var commercialRate: [[UInt8]] = []
     
     private(set) var centerOfMassX: Int = 0
     private(set) var centerOfMassY: Int = 0
@@ -333,8 +333,18 @@ class Map {
     func setTerrainFeatures(arr: [[Int]]) {
         self.terrainMem = arr
     }
+    
+    // MARK: Commerical Rate Map
+    
+    func foreachCommercialRate(f: (Int, Int, inout UInt8) -> Void) {
+        for var y = 0; y < commercialRate.count; y++ {
+            for var x = 0; x < commercialRate[y].count; x++ {
+                f(x, y, &commercialRate[y][x])
+            }
+        }
+    }
 }
 
-enum MapState {
-    case All, Residential, Commercial, Industrial, LandValue, Transport, GrowthRate, Crime, Pollution, Traffic, Power, Fire, Police
+enum MapState : Int {
+    case All, Residential, Commercial, Industrial, LandValue, Transport, GrowthRate, Crime, Pollution, Traffic, Power, Fire, Police, Population
 }

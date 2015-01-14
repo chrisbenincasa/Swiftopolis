@@ -156,14 +156,19 @@ class City {
             }
             
             doTraffic()
-            // TODO: fire maps
+            
+            onMapOverlayDataChanged(.Traffic)
+            onMapOverlayDataChanged(.Transport)
+            onMapOverlayDataChanged(.All)
+            onMapOverlayDataChanged(.Residential)
+            onMapOverlayDataChanged(.Commercial)
+            onMapOverlayDataChanged(.Industrial)
             
             doMessages()
             break
         case 11:
             powerScan()
-            // onMapChanged -> Power
-            
+            onMapOverlayDataChanged(.Power)
             newPower = true
             break
         case 12:
@@ -478,7 +483,7 @@ class City {
         var timeInterval: Double = NSDate().timeIntervalSinceDate(start)
         println("big for-loop (\(i) iterations) took \(timeInterval) seconds");
         
-        // TODO: set land value average
+        census.landValueAverage = landValueCount != 0 ? (landValueTotal / landValueCount) : 0
         
         start = NSDate()
         
@@ -520,8 +525,8 @@ class City {
         
         map.setTerrainFeatures(tem)
         
-        // TODO: send event for pollution map
-        // TODO: send event for land value map
+        onMapOverlayDataChanged(.Pollution)
+        onMapOverlayDataChanged(.LandValue)
     }
     
     private func crimeScan() {
@@ -591,7 +596,10 @@ class City {
             }
         }
         
-        // TODO: distIntMarket
+        // distIntMarket
+        map.foreachCommercialRate { [unowned self] (x: Int, y: Int, inout comRate: UInt8) in
+            comRate = UInt8(64 - (self.map.distanceToCityCenter(x: x * 4, y: y * 4) / 4))
+        }
         
         if zoneCount != 0 {
             map.setMapCenterOfMass(x: xTotal / zoneCount, y: yTotal / zoneCount)
@@ -599,7 +607,8 @@ class City {
             map.setMapCenterOfMass(x: (self.map.width + 1) / 2, y: (self.map.height + 1) / 2)
         }
         
-        // TODO: fire events
+        onMapOverlayDataChanged(.Population)
+        onMapOverlayDataChanged(.GrowthRate)
     }
     
     private func doRateOfGrowth() {
@@ -655,8 +664,7 @@ class City {
         }
         map.setFireMap(fireMap)
         map.setFireReachMap(fireMap)
-        
-        // TODO: fire events
+        onMapOverlayDataChanged(.Fire)
     }
     
     private func doDisasters() {
@@ -917,6 +925,13 @@ class City {
     private func onEarthquakeStarted() {
         for subscriber in self.subscribers {
             subscriber.earthquakeStarted?([:])
+        }
+    }
+    
+    private func onMapOverlayDataChanged(state: MapState) {
+        let data: [NSObject : AnyObject] = [NSString(string: "state") : state.rawValue]
+        for subscriber in self.subscribers {
+            subscriber.mapOverlayDataChanged?(data)
         }
     }
     

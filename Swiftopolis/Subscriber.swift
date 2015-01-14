@@ -34,7 +34,7 @@ protocol Subscriber {
     // Map
     optional func mapAnimation(data: [NSObject: AnyObject]) -> Void
     
-    optional func mapOverlayDataChanged(/*** mapState: MapState ***/) -> Void
+    optional func mapOverlayDataChanged(data: [NSObject: AnyObject]) -> Void
     
     optional func spriteMoved(/*** sprite: Sprite ***/) -> Void
     
