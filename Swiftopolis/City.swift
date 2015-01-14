@@ -16,7 +16,10 @@ class City {
         [weak self] in return DisasterEngine(city: self!) // Diasaster engine depends on City being initialized
     }()
     
-    private var evaluator = CityEvaluation()
+    private lazy var evaluator: CityEvaluation = {
+        [weak self] in return CityEvaluation(city: self!)
+    }()
+    
     private var subscribers: [Subscriber] = []
     private var tileBehaviors: [String : TileBehavior] = [:]
     private(set) var demand: Demand = Demand()
@@ -136,11 +139,10 @@ class City {
                 onCensusChanged()
             }
             
-            // collectTaxPartial()
+            collectTax(cityTime % BudgetConstants.TAX_FREQUENCY == 0)
             
             if cityTime % BudgetConstants.TAX_FREQUENCY == 0 {
-                // collectTax()
-//                evaluator.cityEvaluation()
+                evaluator.cityEvaluation()
             }
             
             break
@@ -248,7 +250,10 @@ class City {
         }
     }
     
-    private func collectTaxPartial() {
+    /**
+     * Generates budget for this simulation step
+     */
+    private func collectTax(flush: Bool) {
         var budgetNumbers = generateBudgetNumbers(roadTotal: census.roadTotal, railTotal: census.railTotal, totalPopulation: census.totalPopulation, fireStationCount: census.fireStationCount, policeStationCount: census.policeCount)
         
         budget.taxFund += budgetNumbers.taxIncome
@@ -260,6 +265,22 @@ class City {
         budget.roadEffect = budgetNumbers.roadRequest != 0 ? Int(floor(32.0 * Double(budgetNumbers.roadFunded) / Double(budgetNumbers.roadRequest))) : 32
         budget.policeEffect = budgetNumbers.roadRequest != 0 ? Int(floor(1000.0 * Double(budgetNumbers.policeFunded) / Double(budgetNumbers.policeRequest))) : 1000
         budget.fireEffect = budgetNumbers.roadRequest != 0 ? Int(floor(1000.0 * Double(budgetNumbers.fireFunded) / Double(budgetNumbers.fireRequest))) : 1000
+        
+        // Actually gets the tax from citizens
+        if flush {
+            let revenue = budget.taxFund / BudgetConstants.TAX_FREQUENCY
+            let expenses = -(budget.roadFundEscrow + budget.policeFundEscrow + budget.fireFundEscrow) / BudgetConstants.TAX_FREQUENCY
+            
+            let net = revenue - expenses
+            spend(net)
+            let statement = FinancialHistory(cityTime: cityTime, totalFunds: budget.totalFunds, taxIncome: revenue, operatingExpenses: expenses)
+            history.addFinancialHistory(statement)
+            
+            budget.taxFund = 0
+            budget.roadFundEscrow = 0
+            budget.fireFundEscrow = 0
+            budget.policeFundEscrow = 0
+        }
     }
     
     private func powerScan() {

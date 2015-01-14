@@ -35,6 +35,7 @@ class Census {
 	var seaportCount: Int = 0
     var airportCount: Int = 0
     var totalPopulation: Int = 0
+    var lastPopulation: Int = 0
     
     // Averages
     var crimeAverage: Int = 0

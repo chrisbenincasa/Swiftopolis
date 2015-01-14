@@ -8,6 +8,19 @@
 
 import Cocoa
 
-enum CityProblem {
+enum CityProblem: Int {
     case Crime, Pollution, Housing, Taxes, Traffic, Unemployment, Fire
+    
+    static func getAllProblems() -> [CityProblem] {
+        var c = 0
+        var problem: CityProblem? = CityProblem(rawValue: c)
+        var problems: [CityProblem] = []
+        while (problem != nil) {
+            problems.append(problem!)
+            c++
+            problem = CityProblem(rawValue: c)
+        }
+        
+        return problems
+    }
 }

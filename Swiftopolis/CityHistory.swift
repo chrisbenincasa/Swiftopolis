@@ -20,6 +20,8 @@ class CityHistory {
     private(set) var commercialMax: Int = 0
     private(set) var industrialMax: Int = 0
     
+    private(set) var financialHistory: [FinancialHistory] = []
+    
     init() {
         Utils.initializeArray(&self.residential, size: 240, value: 0)
         Utils.initializeArray(&self.commercial, size: 240, value: 0)
@@ -65,6 +67,10 @@ class CityHistory {
         self.industrialMax = max
     }
     
+    func addFinancialHistory(fh: FinancialHistory) {
+        self.financialHistory.append(fh)
+    }
+    
     // Inserts value at index i, shifting a[i..length - 2] up by one index and dropping value at a[length - 1]
     // Maintains intiial length of array
     // Example:
@@ -75,4 +81,11 @@ class CityHistory {
         arr.insert(value, atIndex: atIndex)
         arr.removeAtIndex(arr.count - 1)
     }
+}
+
+struct FinancialHistory {
+    var cityTime: Int
+    var totalFunds: Int
+    var taxIncome: Int
+    var operatingExpenses: Int
 }
