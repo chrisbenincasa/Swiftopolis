@@ -7,7 +7,9 @@
 //
 
 import Cocoa
+import SpriteKit
 
-class CityWorld: NSObject {
+class CityWorld: SKNode {
+
 
 }

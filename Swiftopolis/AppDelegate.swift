@@ -35,18 +35,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         
         let barrier = dispatch_queue_create("com.chrisbenincasa.micropolis", DISPATCH_QUEUE_CONCURRENT)
-        dispatch_async(barrier) {
-            let start = NSDate()
-            let tileLoader = TileJsonLoader()
-            tileLoader.readTiles(NSBundle.mainBundle().pathForResource("tiles", ofType: "json")!)
-            let end = NSDate()
-            let timeInterval: Double = end.timeIntervalSinceDate(start)
-            println("Time to evaluate JSON: \(timeInterval) seconds");
-        }
         
-        if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
+        let start = NSDate()
+        let tileLoader = TileJsonLoader()
+        tileLoader.readTiles(NSBundle.mainBundle().pathForResource("tiles", ofType: "json")!)
+        let end = NSDate()
+        let timeInterval: Double = end.timeIntervalSinceDate(start)
+        
+        if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {            
             /* Set the scale mode to scale to fit the window */
-            scene.scaleMode = .AspectFill
+            scene.scaleMode = .ResizeFill
             
             self.skView!.presentScene(scene)
             
@@ -55,8 +53,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
             self.skView!.showsFPS = true
             self.skView!.showsNodeCount = true
+            self.skView!.showsDrawCount = true
             
-//            self.skView!.asynchronous = true
+            self.skView!.asynchronous = true
             
             window.acceptsMouseMovedEvents = true
             window.makeFirstResponder(self.skView.scene)

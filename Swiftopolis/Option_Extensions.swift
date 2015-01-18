@@ -14,5 +14,5 @@ extension Optional {
         case let .Some(x): return x
         case .None: return f()
         }
-    }
+    }    
 }

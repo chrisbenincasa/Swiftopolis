@@ -7,3 +7,15 @@
 //
 
 import Foundation
+
+class TileMapping {
+    var tileName: String
+    var ref: TileImage
+    var dest: TileImage
+    
+    init(name: String, ref: TileImage, dest: TileImage) {
+        self.tileName = name
+        self.ref = ref
+        self.dest = dest
+    }
+}
