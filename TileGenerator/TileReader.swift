@@ -16,7 +16,7 @@ class TileReader {
         json = _json
     }
     
-    func process() {
+    func process() -> NSData? {
         var nextOffsetY = 0
         var mappings: [TileMapping] = []
         
@@ -79,11 +79,10 @@ class TileReader {
         // Create bitmap representation, convert to PNG data, delete old file and save
         
         let rep: NSBitmapImageRep = NSBitmapImageRep(focusedViewRect: NSRect(x: 0, y: 0, width: 16, height: nextOffsetY))!
-        let data = rep.representationUsingType(.NSPNGFileType, properties: [:])
-        NSFileManager.defaultManager().removeItemAtPath(NSFileManager.defaultManager().currentDirectoryPath + "/" + "final.png", error: nil)
-        data?.writeToFile(NSFileManager.defaultManager().currentDirectoryPath + "/" + "final.png", atomically: false)
         
         composite.unlockFocus()
+        
+        return rep.representationUsingType(.NSPNGFileType, properties: [:])
     }
     
     func generateTileNames() -> [String] {

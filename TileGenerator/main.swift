@@ -12,10 +12,6 @@ var tileSize: Int = 0
 var inputFile: String?
 var outputDir: String?
 
-for arg in Process.arguments {
-    println("arg: \(arg)")
-}
-
 for var i = 1; i < Int(C_ARGC); i++ {
     let index = Int(i)
     let next = Int(i + 1)
@@ -51,8 +47,21 @@ if let data: NSData = NSFileManager.defaultManager().contentsAtPath(inputFile!) 
     let manager = NSFileManager.defaultManager()
     let origDir = manager.currentDirectoryPath
     manager.changeCurrentDirectoryPath(manager.currentDirectoryPath + "/graphics")
-    reader.process()
+    let imageData = reader.process()
     manager.changeCurrentDirectoryPath(origDir)
+    
+    if let data = imageData {
+        var isDir = ObjCBool(true)
+        var error: NSErrorPointer = nil
+        if !manager.fileExistsAtPath(outputDir!, isDirectory: &isDir) {
+            manager.createDirectoryAtPath(outputDir!, withIntermediateDirectories: true, attributes: nil, error: error)
+        }
+        
+        manager.changeCurrentDirectoryPath(manager.currentDirectoryPath + "/" + outputDir!)
+        
+        manager.removeItemAtPath(manager.currentDirectoryPath + "/" + "final.png", error: nil)
+        data.writeToFile(manager.currentDirectoryPath + "/" + "final.png", atomically: false)
+    }
 }
 
 
