@@ -63,14 +63,20 @@ class TileReader {
         
         for mapping in mappings {
             if let a = mapping.dest as? Animation {
-                
+                var t = 0
+                for frame in a.frames {
+                    if let s = frame.image as? TileImageSprite {
+                        mapping.ref.drawInRect(&imageRect, offsetX: nil, offsetY: nil, time: t)
+                    }
+                    
+                    t += frame.duration
+                }
             } else if let d = mapping.dest as? TileImageSprite {
                 mapping.ref.drawInRect(&imageRect, offsetX: nil, offsetY: nil, time: nil)
             }
         }
         
         // Create bitmap representation, convert to PNG data, delete old file and save
-        println(composite.representations.count)
         
         let rep: NSBitmapImageRep = NSBitmapImageRep(focusedViewRect: NSRect(x: 0, y: 0, width: 16, height: nextOffsetY))!
         let data = rep.representationUsingType(.NSPNGFileType, properties: [:])
