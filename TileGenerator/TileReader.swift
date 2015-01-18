@@ -23,10 +23,23 @@ class TileReader {
         for (_, subJson: JSON) in self.json {
             let rawDict = subJson.dictionaryObject
             if let images = rawDict?["images"] as? [String] {
-                if let image = parseFrameSpec(images) {
+                // Load layers or frames
+                if let image = parseFrameSpec(images, frames: rawDict?["frames"] as? [String]) {
                     var dest: TileImage? = nil
                     if image.getFrameEndTime(0) > 0 {
+                        var animation = Animation()
+                        var t = 0, n = image.getFrameEndTime(t)
                         
+                        while n > 0 {
+                            var sprite = TileImageSprite()
+                            sprite.offsetY = nextOffsetY
+                            nextOffsetY += 16
+                            animation.frames.append(Animation.Frame(frame: sprite, duration: n - t))
+                            t = n
+                            n = image.getFrameEndTime(t)
+                        }
+                        
+                        dest = animation
                     } else {
                         let imageSprite = TileImageSprite()
                         imageSprite.offsetY = nextOffsetY
@@ -46,17 +59,19 @@ class TileReader {
         let composite = NSImage(size: imageSize)
         composite.lockFocusFlipped(false)
         
-        println("image has size \(imageSize)")
-        
         NSGraphicsContext.currentContext()?.imageInterpolation = .None // dat pixel effect
         
         for mapping in mappings {
-            if let d = mapping.dest as? TileImageSprite {
-                mapping.ref.drawInRect(&imageRect, offsetX: nil, offsetY: nil)
+            if let a = mapping.dest as? Animation {
+                
+            } else if let d = mapping.dest as? TileImageSprite {
+                mapping.ref.drawInRect(&imageRect, offsetX: nil, offsetY: nil, time: nil)
             }
         }
         
         // Create bitmap representation, convert to PNG data, delete old file and save
+        println(composite.representations.count)
+        
         let rep: NSBitmapImageRep = NSBitmapImageRep(focusedViewRect: NSRect(x: 0, y: 0, width: 16, height: nextOffsetY))!
         let data = rep.representationUsingType(.NSPNGFileType, properties: [:])
         NSFileManager.defaultManager().removeItemAtPath(NSFileManager.defaultManager().currentDirectoryPath + "/" + "final.png", error: nil)
@@ -74,25 +89,29 @@ class TileReader {
         return names
     }
     
-    private func parseFrameSpec(layers: [String]) -> TileImage? {
-        if layers.count == 1 {
-            return parseIndividualLayer(layers[0])
+    private func parseFrameSpec(layers: [String], frames: [String]?) -> TileImage? {
+        if let f = frames {
+            return loadAnimation(f)
+        } else {
+            if layers.count == 1 {
+                return parseIndividualLayer(layers[0])
+            }
+            
+            var result: TileImageLayer? = nil
+            for layer in layers {
+                var l = TileImageLayer()
+                l.below = result
+                l.above = parseIndividualLayer(layer)
+                result = l
+            }
+            
+            return result
         }
-        
-        var result: TileImageLayer? = nil
-        for layer in layers {
-            var l = TileImageLayer()
-            l.below = result
-            l.above = parseIndividualLayer(layer)
-            result = l
-        }
-        
-        return nil
     }
     
     private func parseIndividualLayer(layer: String) -> TileImage? {
         let parts = [String](layer.componentsSeparatedByString("@"))
-        let image = loadImageOrAnimation(parts[0])
+        let image = loadImage(parts[0])
         
         if image == nil {
             return nil
@@ -116,17 +135,18 @@ class TileReader {
         return image
     }
     
-    private func loadImageOrAnimation(fileName: String) -> TileImage? {
-        let wd = NSFileManager.defaultManager().currentDirectoryPath
-        if NSFileManager.defaultManager().fileExistsAtPath(wd + "/" + fileName + ".ani") {
-            return loadAnimation(fileName)
-        } else {
-            return loadImage(fileName)
+    private func loadAnimation(frames: [String]) -> TileImage? {
+        var animation: Animation? = nil
+        if frames.count > 0 {
+            animation = Animation()
+            let fs = frames.map(parseIndividualLayer).filter({ $0 != nil }).map({ $0! }).map({ (image: TileImage) -> Animation.Frame in
+                return Animation.Frame(frame: image, duration: AnimationConstants.DEFAULT_DURATION)
+            })
+            
+            animation!.frames = fs
         }
-    }
-    
-    private func loadAnimation(fileName: String) -> TileImage? {
-        return nil
+        
+        return animation
     }
     
     private func loadImage(fileName: String) -> TileImage? {

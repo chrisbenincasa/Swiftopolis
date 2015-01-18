@@ -12,8 +12,7 @@ import AppKit
 protocol TileImage {
     init()
     func getFrameEndTime(frameTime: Int) -> Int
-//    func drawInRect(inout rect: NSRect)
-    func drawInRect(inout rect: NSRect, offsetX: Int?, offsetY: Int?)
+    func drawInRect(inout rect: NSRect, offsetX: Int?, offsetY: Int?, time: Int?)
 }
 
 class TileImageLayer: TileImage {
@@ -39,12 +38,12 @@ class TileImageLayer: TileImage {
         }
     }
     
-    func drawInRect(inout rect: NSRect, offsetX: Int? = nil, offsetY: Int? = nil) {
+    func drawInRect(inout rect: NSRect, offsetX: Int? = nil, offsetY: Int? = nil, time: Int? = nil) {
         if let b = self.below {
             b.drawInRect(&rect)
         }
         
-        above!.drawInRect(&rect, offsetX: nil, offsetY: nil)
+        above!.drawInRect(&rect, offsetX: nil, offsetY: nil, time: nil)
     }
 }
 
@@ -64,8 +63,8 @@ class TileImageSprite : TileImage {
         return source!.getFrameEndTime(frameTime)
     }
     
-    func drawInRect(inout rect: NSRect, offsetX: Int? = nil, offsetY: Int? = nil) {
-        source?.drawInRect(&rect, offsetX: self.offsetX, offsetY: self.offsetY)
+    func drawInRect(inout rect: NSRect, offsetX: Int? = nil, offsetY: Int? = nil, time: Int? = nil) {
+        source?.drawInRect(&rect, offsetX: self.offsetX, offsetY: self.offsetY, time: nil)
     }
 }
 
@@ -87,7 +86,7 @@ class SourceImage: TileImage {
         return -1
     }
     
-    func drawInRect(inout rect: NSRect, offsetX: Int? = nil, offsetY: Int? = nil) {
+    func drawInRect(inout rect: NSRect, offsetX: Int? = nil, offsetY: Int? = nil, time: Int? = nil) {
         var x = offsetX, y = offsetY
         if x == nil {
             x = 0
@@ -100,9 +99,52 @@ class SourceImage: TileImage {
         let offX = CGFloat(x!)
         let offY = image.size.height - (CGFloat(y!)) - 16
         
-        println(rect.origin)
-        
         image.drawAtPoint(rect.origin, fromRect: NSRect(x: offX, y: offY, width: 16, height: 16), operation: .CompositeSourceOver, fraction: 1.0)
         rect.origin.y -= 16.0
+    }
+}
+
+struct AnimationConstants {
+    static let DEFAULT_DURATION = 125
+}
+
+class Animation: TileImage {
+    var frames: [Frame] = []
+    
+    required init() {}
+    
+    func getFrameEndTime(frameTime: Int) -> Int {
+        var t = 0
+        for frame in self.frames {
+            t += frame.duration
+            if frameTime < t {
+                return t
+            }
+        }
+        
+        return -1
+    }
+    
+    func drawInRect(inout rect: NSRect, offsetX: Int?, offsetY: Int?, time: Int?) {
+        var t = 0
+        for frame in self.frames {
+            let d = t + frame.duration
+            if (time != nil) && time! < d {
+                frame.image.drawInRect(&rect, offsetX: offsetX, offsetY: offsetY, time: nil)
+                return
+            }
+            
+            t = d
+        }
+    }
+    
+    class Frame {
+        var image: TileImage
+        var duration: Int
+        
+        init(frame: TileImage, duration: Int) {
+            self.image = frame
+            self.duration = duration
+        }
     }
 }
