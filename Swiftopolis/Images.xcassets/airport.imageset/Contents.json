@@ -3,15 +3,17 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
+      "filename" : "airport-2.png"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x",
       "filename" : "airport.png"
     },
     {
       "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "3x"
+      "scale" : "3x",
+      "filename" : "airport-3.png"
     }
   ],
   "info" : {
