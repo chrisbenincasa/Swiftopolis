@@ -37,7 +37,7 @@ class TileJsonLoader: TileLoader {
         let rawDict = tile.dictionaryObject
         if let images = rawDict?["images"] as? [String] {
             t.images = images
-            TileImages.sharedInstance.processTileImages(t)
+//            TileImages.sharedInstance.processTileImages(t)
         }
         
         if let flammable = rawDict?["flammable"] as? Bool {

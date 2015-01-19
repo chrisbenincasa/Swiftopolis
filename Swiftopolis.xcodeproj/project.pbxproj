@@ -66,6 +66,8 @@
 		14999ADB1A674E6E00BF9F20 /* CityWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14999ADA1A674E6E00BF9F20 /* CityWorld.swift */; };
 		14999ADD1A674EEF00BF9F20 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14999ADC1A674EEF00BF9F20 /* Camera.swift */; };
 		14999ADF1A674F7300BF9F20 /* DebugOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14999ADE1A674F7300BF9F20 /* DebugOverlay.swift */; };
+		14A599631A6D4D020092714A /* final.png in Resources */ = {isa = PBXBuildFile; fileRef = 14A599611A6D4CF00092714A /* final.png */; };
+		14A599641A6D4D020092714A /* tiles_index.json in Resources */ = {isa = PBXBuildFile; fileRef = 14A599621A6D4CF00092714A /* tiles_index.json */; };
 		14AB41A91A5B4C02003A4F7D /* FireTerrainBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AB41A81A5B4C02003A4F7D /* FireTerrainBehavior.swift */; };
 		14AB41AB1A5B4C2D003A4F7D /* FloodTerrainBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AB41AA1A5B4C2D003A4F7D /* FloodTerrainBehavior.swift */; };
 		14AB41AD1A5B4C42003A4F7D /* RadioactiveTerrainBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AB41AC1A5B4C42003A4F7D /* RadioactiveTerrainBehavior.swift */; };
@@ -194,6 +196,8 @@
 		14999ADA1A674E6E00BF9F20 /* CityWorld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityWorld.swift; sourceTree = "<group>"; };
 		14999ADC1A674EEF00BF9F20 /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		14999ADE1A674F7300BF9F20 /* DebugOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugOverlay.swift; sourceTree = "<group>"; };
+		14A599611A6D4CF00092714A /* final.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = final.png; sourceTree = "<group>"; };
+		14A599621A6D4CF00092714A /* tiles_index.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = tiles_index.json; sourceTree = "<group>"; };
 		14AB41A81A5B4C02003A4F7D /* FireTerrainBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireTerrainBehavior.swift; sourceTree = "<group>"; };
 		14AB41AA1A5B4C2D003A4F7D /* FloodTerrainBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloodTerrainBehavior.swift; sourceTree = "<group>"; };
 		14AB41AC1A5B4C42003A4F7D /* RadioactiveTerrainBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadioactiveTerrainBehavior.swift; sourceTree = "<group>"; };
@@ -239,15 +243,14 @@
 		146ABA571A4F0EE0002A1B6B = {
 			isa = PBXGroup;
 			children = (
-				146C6C131A6ACE9C008B14E6 /* AppKit.framework */,
-				14B8AC2C1A6AA59200BF10FE /* SpriteKit.framework */,
-				143059D11A5A1CFF009AF7C2 /* Cocoa.framework */,
+				1489D1231A5A1C490055EF58 /* tiles.json */,
+				14A599601A6D4CF00092714A /* build */,
+				14A599651A6D5E6D0092714A /* Frameworks */,
 				14DFA6F91A59BD75008A43E7 /* Libraries */,
-				14DBB9481A6AB7AE006DD969 /* TileGenerator */,
 				146ABA611A4F0EE0002A1B6B /* Products */,
 				146ABA621A4F0EE0002A1B6B /* Swiftopolis */,
 				146ABA771A4F0EE0002A1B6B /* SwiftopolisTests */,
-				1489D1231A5A1C490055EF58 /* tiles.json */,
+				14DBB9481A6AB7AE006DD969 /* TileGenerator */,
 			);
 			sourceTree = "<group>";
 		};
@@ -265,7 +268,6 @@
 			isa = PBXGroup;
 			children = (
 				1447BC691A682A14000872BE /* images.atlas */,
-				14999AD91A674E5800BF9F20 /* User Interface */,
 				146ABA691A4F0EE0002A1B6B /* GameScene.sks */,
 				146ABAB31A509511002A1B6B /* AbstractToolEffect.swift */,
 				146ABA651A4F0EE0002A1B6B /* AppDelegate.swift */,
@@ -274,13 +276,17 @@
 				1454AC751A5EE7F5008F35B6 /* Census.swift */,
 				146ABAC31A54958A002A1B6B /* City.swift */,
 				1419E8CE1A5B3F2600F725D2 /* CityEvaluation.swift */,
+				14938FF91A64850B0093AC02 /* CityHistory.swift */,
 				14AB41B41A5B5F21003A4F7D /* CityLocation.swift */,
 				14AB41B21A5B5ED0003A4F7D /* CityMessage.swift */,
 				141D9C5D1A583EC900B053DF /* CityProblem.swift */,
+				14938FF51A647F270093AC02 /* CitySound.swift */,
 				145A7F671A5DECBB00B7F0F6 /* Demand.swift */,
+				142420BB1A658BD800CB273C /* DifficultyLevel.swift */,
 				147F2F2F1A63058500E4039E /* DisasterEngine.swift */,
 				146ABABD1A511E55002A1B6B /* Map.swift */,
 				145351471A62BEB8004F8C46 /* MapGenerator.swift */,
+				142420B91A6575F200CB273C /* Option_Extensions.swift */,
 				141D9C5B1A56FD4F00B053DF /* Simulation.swift */,
 				1400EE6D1A618C4A001FA1F2 /* Smoothers.swift */,
 				141D9C591A56FBCE00B053DF /* Speed.swift */,
@@ -301,10 +307,7 @@
 				147F2F331A63949F00E4039E /* Sprites */,
 				146ABA631A4F0EE0002A1B6B /* Supporting Files */,
 				14AB41A71A5B4BEE003A4F7D /* Tile Behaviors */,
-				14938FF51A647F270093AC02 /* CitySound.swift */,
-				14938FF91A64850B0093AC02 /* CityHistory.swift */,
-				142420B91A6575F200CB273C /* Option_Extensions.swift */,
-				142420BB1A658BD800CB273C /* DifficultyLevel.swift */,
+				14999AD91A674E5800BF9F20 /* User Interface */,
 			);
 			path = Swiftopolis;
 			sourceTree = "<group>";
@@ -354,6 +357,25 @@
 				1447BC661A6811C5000872BE /* TileImages.swift */,
 			);
 			name = "User Interface";
+			sourceTree = "<group>";
+		};
+		14A599601A6D4CF00092714A /* build */ = {
+			isa = PBXGroup;
+			children = (
+				14A599611A6D4CF00092714A /* final.png */,
+				14A599621A6D4CF00092714A /* tiles_index.json */,
+			);
+			path = build;
+			sourceTree = "<group>";
+		};
+		14A599651A6D5E6D0092714A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				146C6C131A6ACE9C008B14E6 /* AppKit.framework */,
+				14B8AC2C1A6AA59200BF10FE /* SpriteKit.framework */,
+				143059D11A5A1CFF009AF7C2 /* Cocoa.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		14AB41A71A5B4BEE003A4F7D /* Tile Behaviors */ = {
@@ -503,6 +525,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14A599631A6D4D020092714A /* final.png in Resources */,
+				14A599641A6D4D020092714A /* tiles_index.json in Resources */,
 				1489D1241A5A1C490055EF58 /* tiles.json in Resources */,
 				14DFA6F81A59B6CD008A43E7 /* MainMenu.xib in Resources */,
 				1447BC6A1A682A14000872BE /* images.atlas in Resources */,

@@ -8,6 +8,7 @@
 
 import Foundation
 
+let tileSizeDirFmt = "%dx%d"
 var tileSize: Int = 0
 var inputFile: String?
 var outputDir: String?
@@ -27,7 +28,8 @@ for var i = 1; i < Int(C_ARGC); i++ {
             i++
             break;
         case "--output-dir":
-            outputDir = String.fromCString(C_ARGV[next])
+            let dir = String.fromCString(C_ARGV[next])
+            outputDir = dir?.stringByReplacingOccurrencesOfString("\n", withString: "", options: .CaseInsensitiveSearch, range: nil)
             i++
             break
         default: break
@@ -38,7 +40,7 @@ println("generating with tile size of \(tileSize)")
 
 //assert(inputFile != nil, "You must specify an input file!")
 
-println("reading from input file \(inputFile) and writing to output directory \(outputDir)")
+println("reading from input file \(inputFile!) and writing to output directory \(outputDir!)")
 
 if let data: NSData = NSFileManager.defaultManager().contentsAtPath(inputFile!) {
     let json = JSON(data: data)
@@ -61,7 +63,13 @@ if let data: NSData = NSFileManager.defaultManager().contentsAtPath(inputFile!) 
         
         manager.removeItemAtPath(manager.currentDirectoryPath + "/" + "final.png", error: nil)
         data.writeToFile(manager.currentDirectoryPath + "/" + "final.png", atomically: false)
+        manager.changeCurrentDirectoryPath(origDir)
     }
+    
+    let indexJSON = reader.generateIndexFile()
+
+    manager.changeCurrentDirectoryPath(manager.currentDirectoryPath + "/" + outputDir!)
+    indexJSON.rawData(options: NSJSONWritingOptions.allZeros, error: nil)?.writeToFile(manager.currentDirectoryPath + "/tiles_index.json" , atomically: false)
 }
 
 

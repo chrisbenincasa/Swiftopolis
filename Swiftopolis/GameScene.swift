@@ -23,14 +23,25 @@ class GameScene: SKScene, Subscriber {
     private var worldCircle = SKShapeNode(circleOfRadius: 10.0)
     private var cameraCircle = SKShapeNode(circleOfRadius: 10.0)
     private var atlas: SKTextureAtlas = SKTextureAtlas(named: "images")
+    private var tileImages = TileImages.instance
+    private var renderedTiles: [[UInt16]] = []
+    
+    private var width = 0
+    private var height = 0
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         let cityMap = MapGenerator(city: self.city, width: self.city.map.width, height: self.city.map.height).generateNewCity()
         city.setCityMap(cityMap)
+        
+        width = city.map.width * TILE_SIZE
+        height = city.map.height * TILE_SIZE
+        
+        Utils.initializeMatrix(&self.renderedTiles, width: city.map.width, height: city.map.height, value: UInt16.max)
+        
         city.addSubscriber(self)
 //        initCursor()
-//        startSimulationTimer()
+        startSimulationTimer()
         
         // Turn off gravity
         self.physicsWorld.gravity = CGVectorMake(0, 0)
@@ -79,19 +90,11 @@ class GameScene: SKScene, Subscriber {
     
     override func mouseDown(theEvent: NSEvent) {
         let location = theEvent.locationInNode(world)
-        var x: CGFloat = 0, y: CGFloat = 0
-        if location.x <= 0 {
-//            println(ceil(-self.size.width/2))
-            x = max(ceil(-1024/2), location.x)
-        } else {
-            x = min(1024/2, location.x)
-        }
+        let quarterWidth = width >> 2
+        let quarterHeight = height >> 2
         
-        if location.y <= 0 {
-            y = max(-1024/2, location.y)
-        } else {
-            y = min(1024/2, location.y)
-        }
+        let x = location.x <= 0 ? max(-quarterWidth, Int(location.x)) : min(quarterWidth, Int(location.x))
+        let y = location.y <= 0 ? max(-quarterHeight, Int(location.y)) : min(quarterHeight, Int(location.y))
         
         self.camera.position = CGPoint(x: x, y: y)
         
@@ -172,19 +175,36 @@ class GameScene: SKScene, Subscriber {
         
         let center = CGPoint(x: Int(cameraPositionToWorld.x) / TILE_SIZE, y: Int(cameraPositionToWorld.y) / TILE_SIZE)
 
-        let xMin = Int(Int(point.x) - ((64 / 2) / TILE_SIZE))
-        let xMax = Int(Int(point.x) + ((64 / 2)) / TILE_SIZE)
-        let yMin = Int(Int(point.y) - ((64 / 2)) / TILE_SIZE)
-        let yMax = Int(Int(point.y) + ((64 / 2)) / TILE_SIZE)
+        let halfWidth = ((width / 2) / TILE_SIZE)
+        let halfHeight = ((height / 2) / TILE_SIZE)
+        let xMin = max(-halfWidth, Int(Int(point.x) - halfWidth))
+        let xMax = min(halfWidth, Int(Int(point.x) + halfWidth))
+        let yMin = max(-halfHeight, Int(Int(point.y) - halfHeight))
+        let yMax = min(halfHeight, Int(Int(point.y) + halfHeight))
+        
+        println("\(CGPoint(x: xMin, y: yMin)), \(CGPoint(x: xMax, y: yMax))")
         
         for var y = yMin; y < yMax; y++ {
-            for var x = xMax - 1; x >= xMin; x-- {
-                let comTexture = atlas.textureNamed("com")
-                let s = SKSpriteNode(texture: comTexture)
-                s.position = CGPoint(x: (x * TILE_SIZE) - (TILE_SIZE / 2), y: y * TILE_SIZE - (TILE_SIZE / 2))
-                s.blendMode = .Replace
-                s.texture!.filteringMode = .Nearest
-                world.addChild(s)
+            for var x = xMin; x < xMax; x++ {
+                let mapX = x + (city.map.width / 2)
+                let mapY = y + (city.map.height / 2)
+                if let tile = self.city.map.getTile(x: mapX, y: mapY) {
+                    if renderedTiles[mapX][mapY] == UInt16.max || renderedTiles[mapX][mapY] != tile {
+                        let imageInfo = self.tileImages.getTileImageInfo(Int(tile), acycle: 0)
+                        
+                        let image = self.tileImages.getImage(imageInfo.imageNumber)
+                        let position = CGPoint(x: (x * TILE_SIZE) + (TILE_SIZE / 2), y: y * TILE_SIZE + (TILE_SIZE / 2))
+                        let sprite = SKSpriteNode(texture: SKTexture(image: image))
+                        sprite.position = position
+                        //                    sprite.blendMode = .Replace
+                        sprite.physicsBody = nil
+                        world.addChild(sprite)
+                        
+                        renderedTiles[mapX][mapY] = tile
+                    }
+                } else {
+                    println("tile not found at (\(x), \(y))")
+                }
             }
         }
     }

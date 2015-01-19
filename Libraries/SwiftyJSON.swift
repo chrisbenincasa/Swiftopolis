@@ -247,7 +247,8 @@ extension JSON {
         get {
             var returnJSON = JSON.nullJSON
             if self.type == .Dictionary {
-                if let object_: AnyObject = self.object[key] {
+                var tmpObject: AnyObject? = self.object[key] ?? nil
+                if let object_: AnyObject = tmpObject {
                     returnJSON = JSON(object_)
                 } else {
                     returnJSON._error = NSError(domain: ErrorDomain, code: ErrorNotExist, userInfo: [NSLocalizedDescriptionKey: "Dictionary[\"\(key)\"] does not exist"])

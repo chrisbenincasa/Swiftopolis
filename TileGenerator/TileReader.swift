@@ -11,6 +11,7 @@ import AppKit
 
 class TileReader {
     var json: JSON
+    var mappings: [TileMapping] = []
     
     init(_json: JSON) {
         json = _json
@@ -76,6 +77,8 @@ class TileReader {
             }
         }
         
+        self.mappings = mappings
+        
         // Create bitmap representation, convert to PNG data, delete old file and save
         
         let rep: NSBitmapImageRep = NSBitmapImageRep(focusedViewRect: NSRect(x: 0, y: 0, width: 16, height: nextOffsetY))!
@@ -83,6 +86,33 @@ class TileReader {
         composite.unlockFocus()
         
         return rep.representationUsingType(.NSPNGFileType, properties: [:])
+    }
+    
+    func generateIndexFile() -> JSON {
+        if mappings.count == 0 {
+            println("no mappings to generate indexes for!")
+        }
+        
+        var json: JSON = []
+        
+        for mapping in mappings {
+            var jsonMapping: [String:AnyObject] = ["name":mapping.tileName]
+            
+            if let animation = mapping.dest as? Animation {
+                let frames = animation.frames.map({ (frame: Animation.Frame) -> [String : String] in
+                    let sprite = frame.image as TileImageSprite
+                    return ["offsetY" : String(sprite.offsetY / 16)]
+                })
+                jsonMapping["animation"] = frames
+            } else {
+                let sprite = mapping.dest as TileImageSprite
+                jsonMapping["image"] = ["offsetY" : String(sprite.offsetY / 16)]
+            }
+            
+            json.arrayObject?.append(jsonMapping)
+        }
+        
+        return json
     }
     
     func generateTileNames() -> [String] {
