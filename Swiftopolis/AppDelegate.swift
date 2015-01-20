@@ -32,9 +32,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var window: NSWindow!
     @IBOutlet weak var skView: MapView!
     
-    func applicationDidFinishLaunching(aNotification: NSNotification) {
-        println(NSFileManager.defaultManager().currentDirectoryPath)
-        
+    func applicationDidFinishLaunching(aNotification: NSNotification) {        
         let barrier = dispatch_queue_create("com.chrisbenincasa.micropolis", DISPATCH_QUEUE_CONCURRENT)
         
         let start = NSDate()

@@ -278,7 +278,7 @@ struct TileConstants {
     static func isTree(tile: UInt16) -> Bool {
         assert(tile & LOMASK == tile, "Upper bits set!")
         
-        return tile >= WOODS_LOW && tile >= WOODS_HIGH
+        return tile >= WOODS_LOW && tile <= WOODS_HIGH
     }
     
     static func isRail(tile: UInt16) -> Bool {

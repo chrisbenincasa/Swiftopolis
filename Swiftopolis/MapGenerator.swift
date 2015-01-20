@@ -55,7 +55,7 @@ class MapGenerator {
             makeLakes()
         }
         
-//        smoothRiver()
+        smoothRiver()
         
         if treeLevel != 0 {
             doTrees()
@@ -133,17 +133,16 @@ class MapGenerator {
     ]
     
     private func smoothRiver() {
-        for y in 0...map.count - 1 {
-            for x in 0...map[y].count - 1 {
+        for y in 0..<map.count {
+            for x in 0..<map[y].count {
                 if map[y][x] == TileConstants.REDGE {
                     var bitindex = 0
                     for z in 0...3 {
                         bitindex <<= 1
-                        let xtem = x + DX[z], ytem = y + DX[z]
+                        let xtem = x + DX[z], ytem = y + DY[z]
                         if city.withinBounds(x: xtem, y: ytem) {
-                            if (map[ytem][xtem] & TileConstants.LOMASK) != TileConstants.DIRT &&
-                                ((map[ytem][xtem] & TileConstants.LOMASK) < TileConstants.WOODS_LOW ||
-                                (map[ytem][xtem] & TileConstants.LOMASK) > TileConstants.WOODS_HIGH) {
+                            let tempTile = map[ytem][xtem] & TileConstants.LOMASK
+                            if tempTile != TileConstants.DIRT && (tempTile < TileConstants.WOODS_LOW || tempTile > TileConstants.WOODS_HIGH) {
                                 bitindex |= 1
                             }
                         }
@@ -161,15 +160,15 @@ class MapGenerator {
     }
     
     private func smoothTrees() {
-        for y in 0...map.count - 1 {
-            for x in 0...map[y].count - 1 {
+        for y in 0..<map.count {
+            for x in 0..<map[y].count {
                 if TileConstants.isTree(map[y][x]) {
                     var bitindex = 0
                     for z in 0...3 {
                         bitindex <<= 1
-                        let xtem = x + DX[z], ytem = y + DX[z]
+                        let xtem = x + DX[z], ytem = y + DY[z]
                         if city.withinBounds(x: xtem, y: ytem) && TileConstants.isTree(map[ytem][xtem]) {
-                                bitindex |= 1
+                            bitindex |= 1
                         }
                     }
                     

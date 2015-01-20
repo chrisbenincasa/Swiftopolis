@@ -105,8 +105,6 @@ class GameScene: SKScene, Subscriber {
         let y = location.y <= 0 ? max(-quarterHeight, Int(location.y)) : min(quarterHeight, Int(location.y))
         var point = CGPoint(x: x, y: y)
         
-        println(point)
-        
         if let view = self.view {
 //            let p = CGFloat((quarterWidth / 2) - Int(view.bounds.width / 2))
 //            point.x += p
@@ -116,6 +114,7 @@ class GameScene: SKScene, Subscriber {
         
         if let v = self.view as? MapView {
             v.currentPoint = CGPoint(x: Int(point.x / 16), y: Int(point.y / 16))
+            println(CGPoint(x: Int(point.x / 16), y: Int(point.y / 16)))
             v.needsDisplay = true
             v.needsToDrawRect(v.frame)
         }
