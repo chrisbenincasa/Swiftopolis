@@ -14,7 +14,7 @@ import GLUT
 class GameScene: SKScene, Subscriber {
     private let TILE_SIZE: Int = 16
     private var tool: SKSpriteNode?
-    private let city = City()
+    let city = City()
     private let barrier = dispatch_queue_create("com.chrisbenincasa.micropolis", DISPATCH_QUEUE_CONCURRENT)
     
     private var debugOverlay = DebugOverlay()
@@ -22,7 +22,7 @@ class GameScene: SKScene, Subscriber {
     private var camera: Camera = Camera()
     private var worldCircle = SKShapeNode(circleOfRadius: 10.0)
     private var cameraCircle = SKShapeNode(circleOfRadius: 10.0)
-    private var atlas: SKTextureAtlas = SKTextureAtlas(named: "images")
+//    private var atlas: SKTextureAtlas = SKTextureAtlas(named: "images")
     private var tileImages = TileImages.instance
     private var renderedTiles: [[UInt16]] = []
     
@@ -31,6 +31,9 @@ class GameScene: SKScene, Subscriber {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        
+        self.backgroundColor = NSColor.clearColor()
+        
         let cityMap = MapGenerator(city: self.city, width: self.city.map.width, height: self.city.map.height).generateNewCity()
         city.setCityMap(cityMap)
         
@@ -41,7 +44,7 @@ class GameScene: SKScene, Subscriber {
         
         city.addSubscriber(self)
 //        initCursor()
-        startSimulationTimer()
+//        startSimulationTimer()
         
         // Turn off gravity
         self.physicsWorld.gravity = CGVectorMake(0, 0)
@@ -56,8 +59,8 @@ class GameScene: SKScene, Subscriber {
         world.addChild(camera)
         world.addChild(cameraCircle)
         
-        drawGrid()
-        drawTiles(CGPoint(x: 0, y: 0))
+//        drawGrid()
+//        drawTiles(CGPoint(x: 0, y: 0))
     }
     
     private func startSimulationTimer() {
@@ -85,7 +88,12 @@ class GameScene: SKScene, Subscriber {
     }
     
     override func didMoveToView(view: SKView) {
-
+        if let mapView = view as? MapView {
+            mapView.currentPoint = self.camera.position
+        }
+        
+        view.needsDisplay = true
+        view.needsToDrawRect(view.frame)
     }
     
     override func mouseDown(theEvent: NSEvent) {
@@ -95,10 +103,24 @@ class GameScene: SKScene, Subscriber {
         
         let x = location.x <= 0 ? max(-quarterWidth, Int(location.x)) : min(quarterWidth, Int(location.x))
         let y = location.y <= 0 ? max(-quarterHeight, Int(location.y)) : min(quarterHeight, Int(location.y))
+        var point = CGPoint(x: x, y: y)
         
-        self.camera.position = CGPoint(x: x, y: y)
+        println(point)
         
-        drawTiles(CGPoint(x: x, y: y))
+        if let view = self.view {
+//            let p = CGFloat((quarterWidth / 2) - Int(view.bounds.width / 2))
+//            point.x += p
+        }
+        
+        self.camera.position = point
+        
+        if let v = self.view as? MapView {
+            v.currentPoint = CGPoint(x: Int(point.x / 16), y: Int(point.y / 16))
+            v.needsDisplay = true
+            v.needsToDrawRect(v.frame)
+        }
+        
+//        drawTiles(CGPoint(x: x, y: y))
     }
     
     override func update(currentTime: CFTimeInterval) {
@@ -182,8 +204,6 @@ class GameScene: SKScene, Subscriber {
         let yMin = max(-halfHeight, Int(Int(point.y) - halfHeight))
         let yMax = min(halfHeight, Int(Int(point.y) + halfHeight))
         
-        println("\(CGPoint(x: xMin, y: yMin)), \(CGPoint(x: xMax, y: yMax))")
-        
         for var y = yMin; y < yMax; y++ {
             for var x = xMin; x < xMax; x++ {
                 let mapX = x + (city.map.width / 2)
@@ -196,7 +216,6 @@ class GameScene: SKScene, Subscriber {
                         let position = CGPoint(x: (x * TILE_SIZE) + (TILE_SIZE / 2), y: y * TILE_SIZE + (TILE_SIZE / 2))
                         let sprite = SKSpriteNode(texture: SKTexture(image: image))
                         sprite.position = position
-                        //                    sprite.blendMode = .Replace
                         sprite.physicsBody = nil
                         world.addChild(sprite)
                         

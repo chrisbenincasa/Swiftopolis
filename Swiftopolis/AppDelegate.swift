@@ -30,7 +30,7 @@ extension SKNode {
 class AppDelegate: NSObject, NSApplicationDelegate {
     
     @IBOutlet weak var window: NSWindow!
-    @IBOutlet weak var skView: SKView!
+    @IBOutlet weak var skView: MapView!
     
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         println(NSFileManager.defaultManager().currentDirectoryPath)
@@ -43,7 +43,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let end = NSDate()
         let timeInterval: Double = end.timeIntervalSinceDate(start)
         
-        if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {            
+        self.skView!.allowsTransparency = true
+        
+        if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
             /* Set the scale mode to scale to fit the window */
             scene.scaleMode = .ResizeFill
             

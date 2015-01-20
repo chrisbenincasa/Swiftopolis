@@ -45,6 +45,8 @@ class MapGenerator {
             clearMap()
         }
         
+        getRandomStartPosition()
+        
         if curveLevel != 0 {
             doRivers()
         }
@@ -53,7 +55,7 @@ class MapGenerator {
             makeLakes()
         }
         
-        smoothRiver()
+//        smoothRiver()
         
         if treeLevel != 0 {
             doTrees()
@@ -119,9 +121,9 @@ class MapGenerator {
     private let DY = [ 0, 1, 0, -1 ]
     private let REdTab: [UInt16] = [
         TileConstants.RIVEDGE + 8, TileConstants.RIVEDGE + 8, TileConstants.RIVEDGE + 12, TileConstants.RIVEDGE + 10,
-        TileConstants.RIVEDGE + 0, TileConstants.RIVER,       TileConstants.RIVEDGE + 14, TileConstants.RIVEDGE + 12,
+        TileConstants.RIVEDGE,     TileConstants.RIVER,       TileConstants.RIVEDGE + 14, TileConstants.RIVEDGE + 12,
         TileConstants.RIVEDGE + 4, TileConstants.RIVEDGE + 6, TileConstants.RIVER,        TileConstants.RIVEDGE + 8,
-        TileConstants.RIVEDGE + 2, TileConstants.RIVEDGE + 4, TileConstants.RIVEDGE + 0,  TileConstants.RIVER
+        TileConstants.RIVEDGE + 2, TileConstants.RIVEDGE + 4, TileConstants.RIVEDGE,      TileConstants.RIVER
     ]
     private let TEdTab: [UInt16] = [
         0, 0, 0, 34,
@@ -138,12 +140,12 @@ class MapGenerator {
                     for z in 0...3 {
                         bitindex <<= 1
                         let xtem = x + DX[z], ytem = y + DX[z]
-                        if city.withinBounds(x: xtem, y: ytem) &&
-                            (map[ytem][xtem] & TileConstants.LOMASK) != TileConstants.DIRT &&
-                            (map[ytem][xtem] & TileConstants.LOMASK) != TileConstants.WOODS_LOW &&
-                            (map[ytem][xtem] & TileConstants.LOMASK) != TileConstants.WOODS_HIGH {
-                            
+                        if city.withinBounds(x: xtem, y: ytem) {
+                            if (map[ytem][xtem] & TileConstants.LOMASK) != TileConstants.DIRT &&
+                                ((map[ytem][xtem] & TileConstants.LOMASK) < TileConstants.WOODS_LOW ||
+                                (map[ytem][xtem] & TileConstants.LOMASK) > TileConstants.WOODS_HIGH) {
                                 bitindex |= 1
+                            }
                         }
                     }
                     
@@ -151,6 +153,7 @@ class MapGenerator {
                     if (temp != TileConstants.RIVER) && arc4random_uniform(2) != 0 {
                         temp++
                     }
+                    
                     map[y][x] = temp;
                 }
             }
@@ -165,7 +168,7 @@ class MapGenerator {
                     for z in 0...3 {
                         bitindex <<= 1
                         let xtem = x + DX[z], ytem = y + DX[z]
-                        if city.withinBounds(x: xtem, y: ytem) && TileConstants.isTree(map[ytem][xtem]){
+                        if city.withinBounds(x: xtem, y: ytem) && TileConstants.isTree(map[ytem][xtem]) {
                                 bitindex |= 1
                         }
                     }

@@ -101,7 +101,7 @@
             </items>
         </menu>
         <window title="Swiftopolis" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="371">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <rect key="contentRect" x="0.0" y="0.0" width="800" height="800"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
@@ -109,7 +109,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="800" height="800"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="539" customClass="SKView">
+                    <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="539" customClass="MapView" customModule="Swiftopolis" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="200" width="800" height="600"/>
                     </customView>
                 </subviews>

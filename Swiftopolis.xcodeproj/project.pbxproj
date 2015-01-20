@@ -68,6 +68,7 @@
 		14999ADF1A674F7300BF9F20 /* DebugOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14999ADE1A674F7300BF9F20 /* DebugOverlay.swift */; };
 		14A599631A6D4D020092714A /* final.png in Resources */ = {isa = PBXBuildFile; fileRef = 14A599611A6D4CF00092714A /* final.png */; };
 		14A599641A6D4D020092714A /* tiles_index.json in Resources */ = {isa = PBXBuildFile; fileRef = 14A599621A6D4CF00092714A /* tiles_index.json */; };
+		14A599671A6D86E00092714A /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A599661A6D86E00092714A /* MapView.swift */; };
 		14AB41A91A5B4C02003A4F7D /* FireTerrainBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AB41A81A5B4C02003A4F7D /* FireTerrainBehavior.swift */; };
 		14AB41AB1A5B4C2D003A4F7D /* FloodTerrainBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AB41AA1A5B4C2D003A4F7D /* FloodTerrainBehavior.swift */; };
 		14AB41AD1A5B4C42003A4F7D /* RadioactiveTerrainBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AB41AC1A5B4C42003A4F7D /* RadioactiveTerrainBehavior.swift */; };
@@ -198,6 +199,7 @@
 		14999ADE1A674F7300BF9F20 /* DebugOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugOverlay.swift; sourceTree = "<group>"; };
 		14A599611A6D4CF00092714A /* final.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = final.png; sourceTree = "<group>"; };
 		14A599621A6D4CF00092714A /* tiles_index.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = tiles_index.json; sourceTree = "<group>"; };
+		14A599661A6D86E00092714A /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		14AB41A81A5B4C02003A4F7D /* FireTerrainBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireTerrainBehavior.swift; sourceTree = "<group>"; };
 		14AB41AA1A5B4C2D003A4F7D /* FloodTerrainBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloodTerrainBehavior.swift; sourceTree = "<group>"; };
 		14AB41AC1A5B4C42003A4F7D /* RadioactiveTerrainBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadioactiveTerrainBehavior.swift; sourceTree = "<group>"; };
@@ -355,6 +357,7 @@
 				14999ADC1A674EEF00BF9F20 /* Camera.swift */,
 				14999ADE1A674F7300BF9F20 /* DebugOverlay.swift */,
 				1447BC661A6811C5000872BE /* TileImages.swift */,
+				14A599661A6D86E00092714A /* MapView.swift */,
 			);
 			name = "User Interface";
 			sourceTree = "<group>";
@@ -608,6 +611,7 @@
 				1454AC7A1A5EEBF7008F35B6 /* FireStationTileBehavior.swift in Sources */,
 				14AB41B51A5B5F21003A4F7D /* CityLocation.swift in Sources */,
 				1447BC671A6811C5000872BE /* TileImages.swift in Sources */,
+				14A599671A6D86E00092714A /* MapView.swift in Sources */,
 				14AB41B31A5B5ED0003A4F7D /* CityMessage.swift in Sources */,
 				143059D41A5A5C04009AF7C2 /* Tiles.swift in Sources */,
 				146ABAC41A54958A002A1B6B /* City.swift in Sources */,

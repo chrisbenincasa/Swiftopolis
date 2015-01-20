@@ -22,7 +22,6 @@ class TileJsonLoader: TileLoader {
             let json = JSON(data: data)
             for (_, subJson: JSON) in json {
                 let tile = processTile(subJson)
-//                TileImages.sharedInstance.processTileImages(tile)
             }
             
             println("Loaded \(Tiles.sharedInstance.tiles.count) tiles.")
@@ -37,7 +36,6 @@ class TileJsonLoader: TileLoader {
         let rawDict = tile.dictionaryObject
         if let images = rawDict?["images"] as? [String] {
             t.images = images
-//            TileImages.sharedInstance.processTileImages(t)
         }
         
         if let flammable = rawDict?["flammable"] as? Bool {
