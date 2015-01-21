@@ -14,5 +14,21 @@ extension Optional {
         case let .Some(x): return x
         case .None: return f()
         }
-    }    
+    }
+    
+    func flatMap<Z>(f: T -> Z?) -> Z? {
+        switch self {
+        case .Some(let a):
+            return f(a)
+        case .None:
+            return .None
+        }
+    }
+    
+    func toArray() -> Array<T> {
+        switch self {
+        case .Some(let a): return [T](arrayLiteral: a)
+        case .None: return []
+        }
+    }
 }

@@ -44,7 +44,7 @@ println("reading from input file \(inputFile!) and writing to output directory \
 
 if let data: NSData = NSFileManager.defaultManager().contentsAtPath(inputFile!) {
     let json = JSON(data: data)
-    let reader = TileReader(_json: json)
+    let reader = TileReader(_json: json, _size: tileSize)
     
     let manager = NSFileManager.defaultManager()
     let origDir = manager.currentDirectoryPath
@@ -61,8 +61,10 @@ if let data: NSData = NSFileManager.defaultManager().contentsAtPath(inputFile!) 
         
         manager.changeCurrentDirectoryPath(manager.currentDirectoryPath + "/" + outputDir!)
         
-        manager.removeItemAtPath(manager.currentDirectoryPath + "/" + "final.png", error: nil)
-        data.writeToFile(manager.currentDirectoryPath + "/" + "final.png", atomically: false)
+        let fileName: String = NSString(format: "final-%dx%d.png", tileSize, tileSize)
+        
+        manager.removeItemAtPath(manager.currentDirectoryPath + "/" + fileName, error: nil)
+        data.writeToFile(manager.currentDirectoryPath + "/" + fileName, atomically: false)
         manager.changeCurrentDirectoryPath(origDir)
     }
     

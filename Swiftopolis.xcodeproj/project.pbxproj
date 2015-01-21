@@ -84,6 +84,8 @@
 		14DBB9521A6ABE01006DD969 /* TileReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DBB9511A6ABE01006DD969 /* TileReader.swift */; };
 		14DFA6F81A59B6CD008A43E7 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 146ABA6D1A4F0EE0002A1B6B /* MainMenu.xib */; };
 		14DFA6FC1A59BD75008A43E7 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DFA6FB1A59BD75008A43E7 /* SwiftyJSON.swift */; };
+		14FB3BF81A704634000DA4E7 /* Option_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142420B91A6575F200CB273C /* Option_Extensions.swift */; };
+		14FB3BF91A70478F000DA4E7 /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148069361A5B6CC40004A7B0 /* ArrayExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -653,6 +655,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14FB3BF91A70478F000DA4E7 /* ArrayExtensions.swift in Sources */,
+				14FB3BF81A704634000DA4E7 /* Option_Extensions.swift in Sources */,
 				146C6C121A6AC5E7008B14E6 /* TileImage.swift in Sources */,
 				14DBB9521A6ABE01006DD969 /* TileReader.swift in Sources */,
 				14DBB9501A6ABCAC006DD969 /* SwiftyJSON.swift in Sources */,

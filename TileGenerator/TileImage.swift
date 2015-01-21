@@ -13,6 +13,7 @@ protocol TileImage {
     init()
     func getFrameEndTime(frameTime: Int) -> Int
     func drawInRect(inout rect: NSRect, offsetX: Int?, offsetY: Int?, time: Int?)
+//    func imageRect(offsetX: Int?, offsetY: Int?, time: Int?) -> NSRect
 }
 
 class TileImageLayer: TileImage {
@@ -45,6 +46,10 @@ class TileImageLayer: TileImage {
         
         above!.drawInRect(&rect, offsetX: nil, offsetY: nil, time: nil)
     }
+    
+//    func imageRect(offsetX: Int?, offsetY: Int?, time: Int?) -> NSRect {
+//        
+//    }
 }
 
 class TileImageSprite : TileImage {
@@ -66,6 +71,10 @@ class TileImageSprite : TileImage {
     func drawInRect(inout rect: NSRect, offsetX: Int? = nil, offsetY: Int? = nil, time: Int? = nil) {
         source?.drawInRect(&rect, offsetX: self.offsetX, offsetY: self.offsetY, time: nil)
     }
+    
+//    func imageRect(offsetX: Int?, offsetY: Int?, time: Int?) -> NSRect {
+//        
+//    }
 }
 
 class SourceImage: TileImage {
@@ -97,10 +106,25 @@ class SourceImage: TileImage {
         }
         
         let offX = CGFloat(x!)
-        let offY = image.size.height - (CGFloat(y!)) - 16
+        let offY = image.size.height - (CGFloat(y!)) - CGFloat(basisSize)
+        let basisRect = NSRect(origin: CGPointMake(offX, offY), size: CGSize(width: basisSize, height: basisSize))
         
-        image.drawAtPoint(rect.origin, fromRect: NSRect(x: offX, y: offY, width: 16, height: 16), operation: .CompositeSourceOver, fraction: 1.0)
-        rect.origin.y -= 16.0
+        if targetSize == basisSize {
+            image.drawAtPoint(rect.origin, fromRect: basisRect, operation: .CompositeSourceOver, fraction: 1.0)
+        } else {
+            scaleImage(basisRect).drawAtPoint(rect.origin, fromRect: NSRect.zeroRect, operation: .CompositeSourceOver, fraction: 1.0)
+        }
+        
+        rect.origin.y -= CGFloat(targetSize)
+    }
+    
+    private func scaleImage(sourceRect: NSRect) -> NSImage {
+        let newImage = NSImage(size: NSSize(width: targetSize, height: targetSize))
+        let newRect = NSRect(x: 0, y: 0, width: targetSize, height: targetSize)
+        newImage.lockFocus()
+        image.drawInRect(newRect, fromRect: sourceRect, operation: .CompositeSourceOver, fraction: 1.0)
+        newImage.unlockFocus()
+        return newImage
     }
 }
 

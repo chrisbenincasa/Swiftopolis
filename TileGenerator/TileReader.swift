@@ -12,9 +12,11 @@ import AppKit
 class TileReader {
     var json: JSON
     var mappings: [TileMapping] = []
+    var tileSize: Int = 16
     
-    init(_json: JSON) {
+    init(_json: JSON, _size: Int) {
         json = _json
+        tileSize = _size
     }
     
     func process() -> NSData? {
@@ -34,7 +36,7 @@ class TileReader {
                         while n > 0 {
                             var sprite = TileImageSprite()
                             sprite.offsetY = nextOffsetY
-                            nextOffsetY += 16
+                            nextOffsetY += tileSize
                             animation.frames.append(Animation.Frame(frame: sprite, duration: n - t))
                             t = n
                             n = image.getFrameEndTime(t)
@@ -44,7 +46,7 @@ class TileReader {
                     } else {
                         let imageSprite = TileImageSprite()
                         imageSprite.offsetY = nextOffsetY
-                        nextOffsetY += 16
+                        nextOffsetY += tileSize
                         dest = imageSprite
                     }
                     
@@ -55,8 +57,8 @@ class TileReader {
         }
         
         // Create composite image
-        let imageSize = NSSize(width: 16, height: nextOffsetY)
-        var imageRect = NSRect(origin: NSPoint(x: 0, y: nextOffsetY - 16), size: imageSize)
+        let imageSize = NSSize(width: tileSize, height: nextOffsetY)
+        var imageRect = NSRect(origin: NSPoint(x: 0, y: nextOffsetY - tileSize), size: imageSize)
         let composite = NSImage(size: imageSize)
         composite.lockFocusFlipped(false)
         
@@ -65,6 +67,16 @@ class TileReader {
         for mapping in mappings {
             if let a = mapping.dest as? Animation {
                 var t = 0
+                // TODO make me functional.
+//                let x = a.frames.flatMap({ (i: Animation.Frame) -> [TileImageSprite] in
+//                    return (i.image as? TileImageSprite).toArray()
+//                }).map({ (sprite: TileImageSprite) -> NSRect in
+//                    return NSRect.zeroRect
+//                }).reduce(NSRect.zeroRect, combine: { (accum, var next) -> NSRect in
+//                    let offset = NSOffsetRect(next, 0, accum.height)
+//                    return NSUnionRect(accum, next)
+//                })
+                
                 for frame in a.frames {
                     if let s = frame.image as? TileImageSprite {
                         mapping.ref.drawInRect(&imageRect, offsetX: nil, offsetY: nil, time: t)
@@ -81,7 +93,7 @@ class TileReader {
         
         // Create bitmap representation, convert to PNG data, delete old file and save
         
-        let rep: NSBitmapImageRep = NSBitmapImageRep(focusedViewRect: NSRect(x: 0, y: 0, width: 16, height: nextOffsetY))!
+        let rep: NSBitmapImageRep = NSBitmapImageRep(focusedViewRect: NSRect(x: 0, y: 0, width: tileSize, height: nextOffsetY))!
         
         composite.unlockFocus()
         
@@ -101,12 +113,12 @@ class TileReader {
             if let animation = mapping.dest as? Animation {
                 let frames = animation.frames.map({ (frame: Animation.Frame) -> [String : String] in
                     let sprite = frame.image as TileImageSprite
-                    return ["offsetY" : String(sprite.offsetY / 16)]
+                    return ["offsetY" : String(sprite.offsetY / self.tileSize)]
                 })
                 jsonMapping["animation"] = frames
             } else {
                 let sprite = mapping.dest as TileImageSprite
-                jsonMapping["image"] = ["offsetY" : String(sprite.offsetY / 16)]
+                jsonMapping["image"] = ["offsetY" : String(sprite.offsetY / tileSize)]
             }
             
             json.arrayObject?.append(jsonMapping)
@@ -189,7 +201,7 @@ class TileReader {
         if let data = NSData(contentsOfFile: wd + "/" + fileName + ".png") {
             let img = NSImage(dataIgnoringOrientation: data)
             img!.setName(fileName)
-            return SourceImage(image: img!, basisSize: 16, targetSize: 16)
+            return SourceImage(image: img!, basisSize: 16, targetSize: tileSize)
         } else {
             println("could not find file: " + wd + "/" + fileName + ".png")
         }

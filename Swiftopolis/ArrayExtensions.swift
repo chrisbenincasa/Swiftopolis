@@ -14,4 +14,13 @@ extension Array {
             f(element: ele)
         }
     }
+    
+    func flatMap<U>(f: T -> [U]) -> [U] {
+        var ret: [U] = []
+        self.foreach { (element) -> Void in
+            ret.extend(f(element))
+        }
+        
+        return ret
+    }
 }
