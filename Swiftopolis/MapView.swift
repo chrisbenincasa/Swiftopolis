@@ -13,7 +13,9 @@ import SpriteKit
 private let INVERT_Y_AXIS = false
 
 class MapView : SKView {
+    @IBOutlet weak var gameController: GameViewController!
     @IBOutlet weak var interface: CityInterfaceView!
+    
     var tileImages = TileImages.instance
     var currentPoint: CGPoint?
     var currentRect: CGRect = CGRect.zeroRect
@@ -31,8 +33,6 @@ class MapView : SKView {
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        
-//        self.interface = CityInterfaceView(coder: coder)
     }
     
     private func commonInit() {
@@ -99,13 +99,5 @@ class MapView : SKView {
             
             CGContextFlush(context)
         }
-    }
-    
-    override func drawLayer(layer: CALayer!, inContext ctx: CGContext!) {
-        println("draw layer bitch")
-    }
-    
-    @IBAction func regenerate(sender: AnyObject!) {
-        println("regen!")
     }
 }

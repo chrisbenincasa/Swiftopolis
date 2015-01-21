@@ -12,6 +12,7 @@ import Cocoa
 @IBDesignable class CityInterfaceView : NSView {
     
     @IBOutlet weak var mapView: MapView!
+    @IBOutlet weak var gameController: GameViewController!
     @IBOutlet weak var regenerateMapButton: NSButton!
     
     required init?(coder: NSCoder) {
@@ -29,7 +30,7 @@ import Cocoa
         button.setButtonType(.MomentaryPushInButton)
         button.bezelStyle = .RoundedBezelStyle
         button.title = "Next Map"
-        button.target = self.mapView
+        button.target = self.gameController
         button.action = Selector("regenerate:")
         self.regenerateMapButton = button
         self.addSubview(regenerateMapButton)

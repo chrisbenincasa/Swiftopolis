@@ -18,5 +18,8 @@ class GameViewController: NSViewController {
         println(userInterface)
 //        NSBundle.mainBundle().loadNibNamed("CityInterfaceView", owner: self, topLevelObjects: nil)
     }
-    
+ 
+    @IBAction func regenerate(sender: AnyObject!) {
+        println("regen!")
+    }
 }
