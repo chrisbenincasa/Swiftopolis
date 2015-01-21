@@ -43,7 +43,7 @@ class GameScene: SKScene, Subscriber {
         Utils.initializeMatrix(&self.renderedTiles, width: city.map.width, height: city.map.height, value: UInt16.max)
         
         city.addSubscriber(self)
-//        initCursor()
+        initCursor()
 //        startSimulationTimer()
         
         // Turn off gravity
@@ -58,9 +58,6 @@ class GameScene: SKScene, Subscriber {
         self.camera.name = "camera"
         world.addChild(camera)
         world.addChild(cameraCircle)
-        
-//        drawGrid()
-//        drawTiles(CGPoint(x: 0, y: 0))
     }
     
     private func startSimulationTimer() {
@@ -105,11 +102,20 @@ class GameScene: SKScene, Subscriber {
         let y = location.y <= 0 ? max(-quarterHeight, Int(location.y)) : min(quarterHeight, Int(location.y))
         var point = CGPoint(x: x, y: y)
         
-        if let view = self.view {
-//            let p = CGFloat((quarterWidth / 2) - Int(view.bounds.width / 2))
-//            point.x += p
-        }
-        
+        /* Uncomment for camera move animation
+        let moveAction = SKAction.moveTo(point, duration: 1.0)
+        moveAction.timingMode = .EaseIn
+        let drawAction = SKAction.customActionWithDuration(1.0, actionBlock: { (node, elapsed) -> Void in
+            if let v = self.view as? MapView {
+                v.currentPoint = CGPoint(x: node.position.x / 16.0, y: node.position.y / 16.0)
+//                println(CGPoint(x: Int(point.x / 16), y: Int(point.y / 16)))
+                v.needsDisplay = true
+                v.needsToDrawRect(v.frame)
+            }
+        })
+        let group = SKAction.group([moveAction, drawAction])
+        self.camera.runAction(group)
+        */
         self.camera.position = point
         
         if let v = self.view as? MapView {
@@ -118,8 +124,6 @@ class GameScene: SKScene, Subscriber {
             v.needsDisplay = true
             v.needsToDrawRect(v.frame)
         }
-        
-//        drawTiles(CGPoint(x: x, y: y))
     }
     
     override func update(currentTime: CFTimeInterval) {
@@ -128,14 +132,14 @@ class GameScene: SKScene, Subscriber {
     }
     
     override func mouseMoved(theEvent: NSEvent) {
-//        let location = theEvent.locationInNode(self)
-//        let cityPoint = getPoint(location)
-//        let x = Int(cityPoint.x) * TILE_SIZE - 4
-//        let y = Int(cityPoint.y) * TILE_SIZE - 4
-//        let newPoint = CGPoint(x: x, y: y)
-//        if tool!.position != newPoint {
-//            tool!.position = newPoint
-//        }
+        let location = theEvent.locationInNode(self)
+        let cityPoint = getPoint(location)
+        let x = Int(cityPoint.x) * TILE_SIZE - 4
+        let y = Int(cityPoint.y) * TILE_SIZE - 4
+        let newPoint = CGPoint(x: x, y: y)
+        if tool!.position != newPoint {
+            tool!.position = newPoint
+        }
     }
 
     override func didFinishUpdate() {

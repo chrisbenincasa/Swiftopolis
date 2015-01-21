@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		1400EE6E1A618C4A001FA1F2 /* Smoothers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1400EE6D1A618C4A001FA1F2 /* Smoothers.swift */; };
+		1408F7CE1A6EDDE6005B8EF8 /* CityInterfaceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1408F7CD1A6EDDE6005B8EF8 /* CityInterfaceView.xib */; };
+		1408F7D01A6EDE54005B8EF8 /* CityInterfaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1408F7CF1A6EDE54005B8EF8 /* CityInterfaceView.swift */; };
+		1408F7D21A6EE931005B8EF8 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1408F7D11A6EE931005B8EF8 /* GameViewController.swift */; };
 		141617A21A5C664A0066E8F1 /* ResidentialTileBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141617A11A5C664A0066E8F1 /* ResidentialTileBehavior.swift */; };
 		141617A41A5C708A0066E8F1 /* RailTerrainBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141617A31A5C708A0066E8F1 /* RailTerrainBehavior.swift */; };
 		141617A61A5C725E0066E8F1 /* TrafficGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141617A51A5C725E0066E8F1 /* TrafficGenerator.swift */; };
@@ -134,6 +137,9 @@
 
 /* Begin PBXFileReference section */
 		1400EE6D1A618C4A001FA1F2 /* Smoothers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Smoothers.swift; sourceTree = "<group>"; };
+		1408F7CD1A6EDDE6005B8EF8 /* CityInterfaceView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CityInterfaceView.xib; sourceTree = "<group>"; };
+		1408F7CF1A6EDE54005B8EF8 /* CityInterfaceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityInterfaceView.swift; sourceTree = "<group>"; };
+		1408F7D11A6EE931005B8EF8 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		141617A11A5C664A0066E8F1 /* ResidentialTileBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResidentialTileBehavior.swift; sourceTree = "<group>"; };
 		141617A31A5C708A0066E8F1 /* RailTerrainBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RailTerrainBehavior.swift; sourceTree = "<group>"; };
 		141617A51A5C725E0066E8F1 /* TrafficGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrafficGenerator.swift; sourceTree = "<group>"; };
@@ -270,7 +276,6 @@
 			isa = PBXGroup;
 			children = (
 				1447BC691A682A14000872BE /* images.atlas */,
-				146ABA691A4F0EE0002A1B6B /* GameScene.sks */,
 				146ABAB31A509511002A1B6B /* AbstractToolEffect.swift */,
 				146ABA651A4F0EE0002A1B6B /* AppDelegate.swift */,
 				148069361A5B6CC40004A7B0 /* ArrayExtensions.swift */,
@@ -305,7 +310,6 @@
 				147F2F2D1A62DC9E00E4039E /* Utils.swift */,
 				14450D171A5CAF7C00218A5E /* Zone.swift */,
 				146ABA6B1A4F0EE0002A1B6B /* Images.xcassets */,
-				146ABA6D1A4F0EE0002A1B6B /* MainMenu.xib */,
 				147F2F331A63949F00E4039E /* Sprites */,
 				146ABA631A4F0EE0002A1B6B /* Supporting Files */,
 				14AB41A71A5B4BEE003A4F7D /* Tile Behaviors */,
@@ -352,12 +356,17 @@
 		14999AD91A674E5800BF9F20 /* User Interface */ = {
 			isa = PBXGroup;
 			children = (
+				146ABA6D1A4F0EE0002A1B6B /* MainMenu.xib */,
+				1408F7CF1A6EDE54005B8EF8 /* CityInterfaceView.swift */,
+				1408F7CD1A6EDDE6005B8EF8 /* CityInterfaceView.xib */,
+				146ABA691A4F0EE0002A1B6B /* GameScene.sks */,
 				146ABA671A4F0EE0002A1B6B /* GameScene.swift */,
 				14999ADA1A674E6E00BF9F20 /* CityWorld.swift */,
 				14999ADC1A674EEF00BF9F20 /* Camera.swift */,
 				14999ADE1A674F7300BF9F20 /* DebugOverlay.swift */,
 				1447BC661A6811C5000872BE /* TileImages.swift */,
 				14A599661A6D86E00092714A /* MapView.swift */,
+				1408F7D11A6EE931005B8EF8 /* GameViewController.swift */,
 			);
 			name = "User Interface";
 			sourceTree = "<group>";
@@ -531,6 +540,7 @@
 				14A599631A6D4D020092714A /* final.png in Resources */,
 				14A599641A6D4D020092714A /* tiles_index.json in Resources */,
 				1489D1241A5A1C490055EF58 /* tiles.json in Resources */,
+				1408F7CE1A6EDDE6005B8EF8 /* CityInterfaceView.xib in Resources */,
 				14DFA6F81A59B6CD008A43E7 /* MainMenu.xib in Resources */,
 				1447BC6A1A682A14000872BE /* images.atlas in Resources */,
 				146ABA6A1A4F0EE0002A1B6B /* GameScene.sks in Resources */,
@@ -582,6 +592,7 @@
 				14999ADD1A674EEF00BF9F20 /* Camera.swift in Sources */,
 				146ABAB41A509511002A1B6B /* AbstractToolEffect.swift in Sources */,
 				141617A81A5CA5B00066E8F1 /* ExplosionTerrainEffect.swift in Sources */,
+				1408F7D01A6EDE54005B8EF8 /* CityInterfaceView.swift in Sources */,
 				14938FF61A647F270093AC02 /* CitySound.swift in Sources */,
 				1454AC6E1A5E1703008F35B6 /* HospitalChurchTerrainBehavior.swift in Sources */,
 				146ABABE1A511E55002A1B6B /* Map.swift in Sources */,
@@ -607,6 +618,7 @@
 				14AB41AF1A5B5C43003A4F7D /* RoadTileBehavior.swift in Sources */,
 				141D9C581A56FABD00B053DF /* Budget.swift in Sources */,
 				14999ADF1A674F7300BF9F20 /* DebugOverlay.swift in Sources */,
+				1408F7D21A6EE931005B8EF8 /* GameViewController.swift in Sources */,
 				146ABAC01A511F78002A1B6B /* Tile.swift in Sources */,
 				1454AC7A1A5EEBF7008F35B6 /* FireStationTileBehavior.swift in Sources */,
 				14AB41B51A5B5F21003A4F7D /* CityLocation.swift in Sources */,

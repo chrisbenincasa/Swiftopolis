@@ -103,21 +103,27 @@
         <window title="Swiftopolis" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="371">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
-            <rect key="contentRect" x="0.0" y="0.0" width="800" height="800"/>
+            <rect key="contentRect" x="0.0" y="0.0" width="1000" height="800"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <view key="contentView" id="372">
-                <rect key="frame" x="0.0" y="0.0" width="800" height="800"/>
+                <rect key="frame" x="0.0" y="0.0" width="1000" height="800"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="539" customClass="MapView" customModule="Swiftopolis" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="200" width="800" height="600"/>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="539" customClass="MapView" customModule="Swiftopolis" customModuleProvider="target">
+                        <rect key="frame" x="200" y="0.0" width="800" height="800"/>
+                    </customView>
+                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FH2-pp-Kp2" customClass="CityInterfaceView" customModule="Swiftopolis" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="507" width="192" height="293"/>
+                        <connections>
+                            <outlet property="mapView" destination="539" id="Nkr-iZ-sOn"/>
+                        </connections>
                     </customView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="539" firstAttribute="bottom" secondItem="372" secondAttribute="bottom" id="541"/>
                     <constraint firstItem="539" firstAttribute="top" secondItem="372" secondAttribute="top" id="542"/>
                     <constraint firstItem="539" firstAttribute="trailing" secondItem="372" secondAttribute="trailing" id="543"/>
-                    <constraint firstItem="539" firstAttribute="leading" secondItem="372" secondAttribute="leading" id="544"/>
+                    <constraint firstItem="539" firstAttribute="leading" secondItem="372" secondAttribute="leading" constant="200" id="544"/>
                 </constraints>
             </view>
         </window>
@@ -128,5 +134,10 @@
             </connections>
         </customObject>
         <customObject id="420" customClass="NSFontManager"/>
+        <viewController id="PU2-Zf-viC" customClass="GameViewController" customModule="Swiftopolis">
+            <connections>
+                <outlet property="view" destination="372" id="5LL-YB-tz8"/>
+            </connections>
+        </viewController>
     </objects>
 </document>

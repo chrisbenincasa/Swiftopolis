@@ -13,11 +13,14 @@ import SpriteKit
 private let INVERT_Y_AXIS = false
 
 class MapView : SKView {
+    @IBOutlet weak var interface: CityInterfaceView!
     var tileImages = TileImages.instance
     var currentPoint: CGPoint?
     var currentRect: CGRect = CGRect.zeroRect
     let VIEWPORT_WIDTH = 25
     let VIEWPORT_HEIGHT = 25
+    
+    private var trackingArea: NSTrackingArea?
     
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
@@ -28,14 +31,38 @@ class MapView : SKView {
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        
+//        self.interface = CityInterfaceView(coder: coder)
+    }
+    
+    private func commonInit() {
+        
+    }
+    
+    override func mouseEntered(theEvent: NSEvent) {
+        println("mouse entered")
+        NSCursor.hide()
+    }
+    
+    override func mouseExited(theEvent: NSEvent) {
+        NSCursor.unhide()
+    }
+    
+    override func updateTrackingAreas() {
+        if self.trackingArea != nil {
+            self.removeTrackingArea(self.trackingArea!)
+        }
+        
+        let opts = NSTrackingAreaOptions.MouseEnteredAndExited | NSTrackingAreaOptions.ActiveInActiveApp
+        let trackingArea = NSTrackingArea(rect: self.bounds, options: opts, owner: self, userInfo: nil)
+        self.addTrackingArea(trackingArea)
+        self.trackingArea = trackingArea
     }
     
     override func drawRect(dirtyRect: NSRect) {
         if self.currentPoint == nil {
             self.currentPoint = CGPoint(x: self.frame.width / 2, y: self.frame.height / 2)
         }
-        
-//        println(self.currentPoint)
         
         if let s = scene as? GameScene {
             let city = s.city
@@ -76,5 +103,9 @@ class MapView : SKView {
     
     override func drawLayer(layer: CALayer!, inContext ctx: CGContext!) {
         println("draw layer bitch")
+    }
+    
+    @IBAction func regenerate(sender: AnyObject!) {
+        println("regen!")
     }
 }
