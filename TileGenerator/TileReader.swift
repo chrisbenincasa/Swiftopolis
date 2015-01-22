@@ -198,12 +198,23 @@ class TileReader {
     
     private func loadImage(fileName: String) -> TileImage? {
         let wd = NSFileManager.defaultManager().currentDirectoryPath
-        if let data = NSData(contentsOfFile: wd + "/" + fileName + ".png") {
-            let img = NSImage(dataIgnoringOrientation: data)
+        let sizedFileName: String = "\(wd)/\(fileName)_\(self.tileSize)x\(self.tileSize).png"
+        let regularFileName: String = "\(wd)/\(fileName).png"
+        
+        var data: NSData?
+        
+        if let d = NSData(contentsOfFile: sizedFileName) {
+            data = d
+        } else if let d = NSData(contentsOfFile: regularFileName) {
+            data = d
+        } else {
+            println("could not find file: \(sizedFileName) or \(regularFileName)")
+        }
+        
+        if let imageData = data {
+            let img = NSImage(dataIgnoringOrientation: imageData)
             img!.setName(fileName)
             return SourceImage(image: img!, basisSize: 16, targetSize: tileSize)
-        } else {
-            println("could not find file: " + wd + "/" + fileName + ".png")
         }
 
         return nil
