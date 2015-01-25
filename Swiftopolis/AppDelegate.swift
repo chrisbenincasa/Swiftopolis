@@ -31,19 +31,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     @IBOutlet weak var window: NSWindow!
     @IBOutlet weak var skView: MapView!
+    @IBOutlet weak var gameViewController: GameViewController!
     
     func applicationDidFinishLaunching(aNotification: NSNotification) {        
         let barrier = dispatch_queue_create("com.chrisbenincasa.micropolis", DISPATCH_QUEUE_CONCURRENT)
         
+        // TODO load this different, better, something
         let start = NSDate()
         let tileLoader = TileJsonLoader()
         tileLoader.readTiles(NSBundle.mainBundle().pathForResource("tiles", ofType: "json")!)
         let end = NSDate()
         let timeInterval: Double = end.timeIntervalSinceDate(start)
         
-        self.skView!.allowsTransparency = true
-        
         if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
+            self.skView!.allowsTransparency = true
+            
             /* Set the scale mode to scale to fit the window */
             scene.scaleMode = .ResizeFill
             
@@ -51,10 +53,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
             /* Sprite Kit applies additional optimizations to improve rendering performance */
             self.skView!.ignoresSiblingOrder = true
-            
-            self.skView!.showsFPS = true
-            self.skView!.showsNodeCount = true
-            self.skView!.showsDrawCount = true
             
             self.skView!.asynchronous = true
             

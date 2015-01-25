@@ -9,17 +9,21 @@
 import Cocoa
 
 class GameViewController: NSViewController {
-
-    @IBOutlet weak var userInterface: CityInterfaceView!
+    @IBOutlet weak var mapView: MapView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        println(userInterface)
-//        NSBundle.mainBundle().loadNibNamed("CityInterfaceView", owner: self, topLevelObjects: nil)
     }
  
     @IBAction func regenerate(sender: AnyObject!) {
-        println("regen!")
+        
+    }
+    
+    @IBAction func useResidentialZoneTool(sender: AnyObject!) {
+        mapView.onToolChanged(.Residential)
+    }
+    
+    @IBAction func useCommercialZoneTool(sender: AnyObject!) {
+        mapView.onToolChanged(.Commercial)
     }
 }

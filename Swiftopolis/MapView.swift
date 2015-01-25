@@ -13,14 +13,11 @@ import SpriteKit
 private let INVERT_Y_AXIS = false
 
 class MapView : SKView {
-    @IBOutlet weak var gameController: GameViewController!
-    @IBOutlet weak var interface: CityInterfaceView!
-    
-    var tileImages = TileImages.instance
+    private var tileImages = TileImages.instance
     var currentPoint: CGPoint?
-    var currentRect: CGRect = CGRect.zeroRect
-    let VIEWPORT_WIDTH = 25
-    let VIEWPORT_HEIGHT = 25
+    private var currentRect: CGRect = CGRect.zeroRect
+    private let VIEWPORT_WIDTH = 25
+    private let VIEWPORT_HEIGHT = 25
     
     private var trackingArea: NSTrackingArea?
     
@@ -35,10 +32,6 @@ class MapView : SKView {
         super.init(coder: coder)
     }
     
-    private func commonInit() {
-        
-    }
-    
     override func mouseEntered(theEvent: NSEvent) {
         println("mouse entered")
         NSCursor.hide()
@@ -46,6 +39,12 @@ class MapView : SKView {
     
     override func mouseExited(theEvent: NSEvent) {
         NSCursor.unhide()
+    }
+    
+    func onToolChanged(newTool: Tool) {
+        if let s =  self.scene as? GameScene {
+            s.setCurrentTool(newTool)
+        }
     }
     
     override func updateTrackingAreas() {

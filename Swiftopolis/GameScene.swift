@@ -12,7 +12,11 @@ class GameScene: SKScene, Subscriber {
     private let TILE_SIZE: Int = 16
     
     private var toolCursor: ToolCursor!
-    private var currentTool: Tool!
+    private var currentTool: Tool! {
+        didSet {
+            initCursor()
+        }
+    }
     private var toolNode: SKShapeNode?
     
     let city = City()
@@ -48,7 +52,6 @@ class GameScene: SKScene, Subscriber {
         Utils.initializeMatrix(&self.renderedTiles, width: city.map.width, height: city.map.height, value: UInt16.max)
         
         city.addSubscriber(self)
-        initCursor()
 //        startSimulationTimer()
         
         // Turn off gravity
@@ -118,13 +121,16 @@ class GameScene: SKScene, Subscriber {
     }
     
     override func mouseMoved(theEvent: NSEvent) {
-        let location = theEvent.locationInNode(self)
-        let cityPoint = getPoint(location)
-        let x = Int(cityPoint.x) * TILE_SIZE - 4
-        let y = Int(cityPoint.y) * TILE_SIZE - 4
-        let newPoint = CGPoint(x: x, y: y)
-        if toolNode!.position != newPoint {
-            toolNode!.position = newPoint
+        // TODO toss events that are out of the bounds of the scene
+        if var tool = toolNode {
+            let location = theEvent.locationInNode(self)
+            let cityPoint = getPoint(location)
+            let x = Int(cityPoint.x) * TILE_SIZE - 4
+            let y = Int(cityPoint.y) * TILE_SIZE - 4
+            let newPoint = CGPoint(x: x, y: y)
+            if tool.position != newPoint {
+                tool.position = newPoint
+            }
         }
     }
 
@@ -203,11 +209,20 @@ class GameScene: SKScene, Subscriber {
     
     // MARK: Tool Cursor
     
+    func setCurrentTool(tool: Tool) {
+        self.currentTool = tool
+    }
+    
     private func initCursor() {
-        currentTool = Tool.Residential
-        toolCursor = ToolCursor.residentialTool(rect: NSRect(x: 0, y: 0, width: currentTool.size(), height: currentTool.size()))
-        toolNode = makeToolCursor()
-        self.addChild(toolNode!)
+        if currentTool != nil {
+            let lastNode = toolNode
+            let lastPosition = lastNode != nil ? lastNode!.position : NSPoint(x: 0, y: 0)
+            let newRect = NSRect(origin: NSPoint(x: 0, y: 0), size: NSSize(width: currentTool.size(), height: currentTool.size()))
+            toolCursor = ToolCursor.toolCursorForTool(currentTool, rect: newRect)
+            toolNode = makeToolCursor()
+            toolNode!.position = lastPosition
+            self.addChild(toolNode!)
+        }
     }
     
     private func makeToolCursor() -> SKShapeNode {
@@ -215,8 +230,9 @@ class GameScene: SKScene, Subscriber {
         toolNode = SKShapeNode(rect: shapeRect)
         toolNode!.fillColor = toolCursor.fillColor
         toolNode!.lineWidth = 2.0
-        toolNode!.glowWidth = 1.0
+        toolNode!.glowWidth = 0.5
         toolNode!.strokeColor = toolCursor.borderColor
+
         return toolNode!
     }
     
