@@ -10,25 +10,6 @@
         <customView id="c22-O7-iKe" customClass="CityInterfaceView" customModule="Swiftopolis" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="214" height="358"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <subviews>
-                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="snX-o1-shV">
-                    <rect key="frame" x="14" y="310" width="67" height="32"/>
-                    <buttonCell key="cell" type="push" title="cool" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ap0-cM-AuY">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                </button>
-                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jrI-t8-EA5">
-                    <rect key="frame" x="91" y="181" width="48" height="48"/>
-                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mU6-zh-GjJ">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                </button>
-            </subviews>
-            <connections>
-                <outlet property="regenerateMapButton" destination="snX-o1-shV" id="leS-Jm-A4G"/>
-            </connections>
             <point key="canvasLocation" x="132" y="424"/>
         </customView>
     </objects>

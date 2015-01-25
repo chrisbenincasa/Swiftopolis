@@ -9,7 +9,7 @@
 import Cocoa
 
 struct TileConstants {
-    static let CLEAR: Int16 = -1
+    static let CLEAR: UInt16 = UInt16.max // set this to the max num so we don't have to worry about convering from negatives later
     static let DIRT: UInt16 = 0
     static let RIVER: UInt16 = 2
     static let REDGE: UInt16 = 3
@@ -52,7 +52,7 @@ struct TileConstants {
     static let LTRFBASE: UInt16 = 80
     static let BRWV: UInt16 = 95       //vert bridge, open
     static let HTRFBASE: UInt16 = 144
-    private static let LASTROAD = 206
+    private static let LASTROAD: UInt16 = 206
     static let POWERBASE: UInt16 = 208
     static let HPOWER: UInt16 = 208    //underwater power-line
     static let VPOWER: UInt16 = 209
@@ -222,6 +222,78 @@ struct TileConstants {
         }
     }
     
+    /**
+      * Converts a road tile value with traffic to the equivalent
+      * road tile without traffic.
+      */
+    static func normalizeRoad(tile: UInt16) -> UInt16 {
+        var returnTile: UInt16 = tile
+        
+        if tile >= ROADBASE && tile <= LASTROAD {
+            returnTile = ((tile - ROADBASE) & 0xf) + ROADBASE
+        }
+        
+        return returnTile
+    }
+    
+    // MARK: Roads
+    
+    // Will the road tile automatically change to connect to neighboring roads?
+    static func isDynamicRoad(tile: UInt16) -> Bool {
+        let tempTile = normalizeRoad(tile)
+        return tempTile >= ROADS && tempTile <= INTERSECTION
+    }
+    
+    static func roadConnectsHorizontally(tile: UInt16) -> Bool {
+        let normalized = normalizeRoad(tile)
+        return (normalized == VRAILROAD || (normalized >= ROADBASE && normalized <= VROADPOWER)) &&
+            (normalized != VROADPOWER && normalized != HRAILROAD && normalized != VBRIDGE)
+    }
+    
+    static func roadConnectsVertically(tile: UInt16) -> Bool {
+        let normalized = normalizeRoad(tile)
+        return (normalized == HRAILROAD || (normalized >= ROADBASE && normalized <= VROADPOWER)) &&
+            (normalized != HROADPOWER && normalized != VRAILROAD && normalized != ROADBASE)
+    }
+    
+    // MARK: Rail
+    static func isDynamicRail(tile: UInt16) -> Bool {
+        assert(tile & LOMASK == tile, "LOWER BITS SET")
+        
+        return tile >= LHRAIL && tile <= LVRAIL10
+    }
+    
+    static func railConnectsHorizontally(tile: UInt16) -> Bool {
+        let normalized = normalizeRoad(tile)
+        return (normalized >= RAILHPOWERV && normalized <= VRAILROAD) &&
+            normalized != RAILVPOWERH && normalized != VRAILROAD && normalized != VRAIL
+    }
+    
+    static func railConnectsVertically(tile: UInt16) -> Bool {
+        let normalized = normalizeRoad(tile)
+        return (normalized >= RAILHPOWERV && normalized <= VRAILROAD) &&
+            normalized != RAILHPOWERV && normalized != HRAILROAD && normalized != HRAIL
+    }
+    
+    // MARK: Power
+    static func isDynamicWire(tile: UInt16) -> Bool {
+        assert(tile & LOMASK == tile, "LOWER BITS SET")
+        
+        return tile >= LHPOWER && tile <= LVPOWER10
+    }
+    
+    static func powerConnectsVertically(tile: UInt16) -> Bool {
+        let normalized = normalizeRoad(tile)
+        
+        return isConductive(normalized) && normalized != VPOWER && normalized != VROADPOWER && normalized != RAILVPOWERH
+    }
+    
+    static func powerConnectsHorizontally(tile: UInt16) -> Bool {
+        let normalized = normalizeRoad(tile)
+        
+        return isConductive(normalized) && normalized != HPOWER && normalized != VROADPOWER && normalized != RAILHPOWERV
+    }
+    
     static func industrialZonePopulation(tile: UInt16) -> Int {
         assert(tile & LOMASK == tile, "Upper bits set!")
         
@@ -232,7 +304,7 @@ struct TileConstants {
         }
     }
     
-    static func getZoneSize(tile: UInt16) -> (Int, Int)? {
+    static func getZoneSize(tile: UInt16) -> NSSize? {
         assert(isZoneCenter(tile), "Not zone center!")
         assert(tile & LOMASK == tile, "Upper bits set!")
         
@@ -262,6 +334,19 @@ struct TileConstants {
             return nil
         }
     }
+    
+    static func getZoneSizeFor(tile: UInt16) -> NSSize? {
+        assert(isZoneCenter(tile), "Not zone center!")
+        assert(tile & LOMASK == tile, "Upper bits set!")
+        
+        if let tile = Tiles.get(Int(tile)) {
+            return tile.getBuildingSize()
+        } else {
+            return nil
+        }
+    }
+    
+    // MARK: Tile Property helpers
     
     static func isIndustructible(tile: UInt16) -> Bool {
         assert(tile & LOMASK == tile, "Upper bits set!")

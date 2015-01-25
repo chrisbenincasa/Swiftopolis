@@ -104,7 +104,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <rect key="contentRect" x="0.0" y="0.0" width="1000" height="800"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="900"/>
             <view key="contentView" id="372">
                 <rect key="frame" x="0.0" y="0.0" width="1000" height="800"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -124,8 +124,8 @@
                         </connections>
                     </customView>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xvf-gu-6CX">
-                        <rect key="frame" x="20" y="438" width="111" height="23"/>
-                        <buttonCell key="cell" type="squareTextured" title="Textured Button" bezelStyle="texturedSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Jy5-jC-9xz">
+                        <rect key="frame" x="20" y="438" width="34" height="50"/>
+                        <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="iccomhi" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Jy5-jC-9xz">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -153,4 +153,7 @@
             </connections>
         </viewController>
     </objects>
+    <resources>
+        <image name="iccomhi" width="34" height="50"/>
+    </resources>
 </document>

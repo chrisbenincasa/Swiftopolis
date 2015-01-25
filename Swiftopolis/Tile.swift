@@ -35,7 +35,7 @@ class Tile {
         return self.attributes[key]
     }
     
-// MARK: getters
+    // MARK: getters
     
     func population() -> Int {
         if let pop = self.getAttribute("population")?.toInt() {
@@ -55,9 +55,9 @@ class Tile {
         }
     }
     
-    func getBuildingSize() -> (Int, Int)? {
+    func getBuildingSize() -> NSSize? {
         if let bi = buildingInfo {
-            return (bi.width, bi.height)
+            return NSSize(width: bi.width, height: bi.height)
         } else {
             return nil
         }

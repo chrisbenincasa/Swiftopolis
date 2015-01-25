@@ -59,12 +59,12 @@ class BuildingZoneBehavior: TileBehavior {
         
         if newPower && !oldPower {
             city.setTilePower(x: xPos, y: yPos, power: true)
-            let (width, height) = TileConstants.getZoneSize(tile)!
-            city.turnOnZonePower(x: xPos, y: yPos, width: width, height: height)
+            let size = TileConstants.getZoneSize(tile)!
+            city.turnOnZonePower(x: xPos, y: yPos, width: Int(size.width), height: Int(size.height))
         } else if !newPower && oldPower {
             city.setTilePower(x: xPos, y: yPos, power: false)
-            let (width, height) = TileConstants.getZoneSize(tile)!
-            city.shutdownZonePower(x: xPos, y: yPos, width: width, height: height)
+            let size = TileConstants.getZoneSize(tile)!
+            city.shutdownZonePower(x: xPos, y: yPos, width: Int(size.width), height: Int(size.height))
         }
         
         return newPower

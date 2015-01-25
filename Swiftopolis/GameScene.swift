@@ -13,7 +13,11 @@ import GLUT
 
 class GameScene: SKScene, Subscriber {
     private let TILE_SIZE: Int = 16
-    private var tool: SKSpriteNode?
+    
+    private var toolCursor: ToolCursor!
+    private var currentTool: Tool!
+    private var toolNode: SKShapeNode?
+    
     let city = City()
     private let barrier = dispatch_queue_create("com.chrisbenincasa.micropolis", DISPATCH_QUEUE_CONCURRENT)
     
@@ -32,11 +36,15 @@ class GameScene: SKScene, Subscriber {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
+        // Make the background clear to the drawn map underneath shows
         self.backgroundColor = NSColor.clearColor()
         
+        // Generate a new map and assign it to the city
+        // TODO: This should be factored out of the scene
         let cityMap = MapGenerator(city: self.city, width: self.city.map.width, height: self.city.map.height).generateNewCity()
         city.setCityMap(cityMap)
         
+        // Save the pixel dimensions of the map
         width = city.map.width * TILE_SIZE
         height = city.map.height * TILE_SIZE
         
@@ -49,39 +57,18 @@ class GameScene: SKScene, Subscriber {
         // Turn off gravity
         self.physicsWorld.gravity = CGVectorMake(0, 0)
         
+        // Set anchor point to the middle of the screen
         self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         self.addChild(debugOverlay)
-
+        debugOverlay.addChild(worldCircle)
+        debugOverlay.addChild(cameraCircle)
+        
+        // Create main nodes
+        // World represents the city and camera is the viewpoint.
         world.name = "world"
-        self.addChild(worldCircle)
         self.addChild(world)
         self.camera.name = "camera"
         world.addChild(camera)
-        world.addChild(cameraCircle)
-    }
-    
-    private func startSimulationTimer() {
-        let delay: Double = Double(self.city.speed.delay) / 1000.0
-        var wait = SKAction.waitForDuration(delay)
-        var run = SKAction.runBlock({
-            let speed = self.city.speed
-            for _ in 0...speed.steps - 1 {
-                self.city.animate()
-            }
-        }, queue: barrier)
-        self.runAction(SKAction.repeatActionForever(SKAction.sequence([wait, run])), withKey: "simulation")
-    }
-    
-    private func stopSimulationTimer() {
-        if let action = self.actionForKey("simulation") {
-            self.removeActionForKey("simulation")
-        }
-    }
-    
-    private func initCursor() {
-        tool = SKSpriteNode(imageNamed: "com")
-        tool!.size = CGSize(width: 3 * TILE_SIZE + 8, height: 3 * TILE_SIZE + 8)
-        self.addChild(tool!)
     }
     
     override func didMoveToView(view: SKView) {
@@ -126,6 +113,8 @@ class GameScene: SKScene, Subscriber {
         }
     }
     
+    // MARK: Overrides and Animation
+    
     override func update(currentTime: CFTimeInterval) {
         self.debugOverlay.removeFromParent()
         self.debugOverlay.removeAllChildren()
@@ -137,8 +126,8 @@ class GameScene: SKScene, Subscriber {
         let x = Int(cityPoint.x) * TILE_SIZE - 4
         let y = Int(cityPoint.y) * TILE_SIZE - 4
         let newPoint = CGPoint(x: x, y: y)
-        if tool!.position != newPoint {
-            tool!.position = newPoint
+        if toolNode!.position != newPoint {
+            toolNode!.position = newPoint
         }
     }
 
@@ -154,6 +143,26 @@ class GameScene: SKScene, Subscriber {
         worldCircle.position = world.position
     }
     
+    // MARK: Simulation Helpers
+    
+    private func startSimulationTimer() {
+        let delay: Double = Double(self.city.speed.delay) / 1000.0
+        var wait = SKAction.waitForDuration(delay)
+        var run = SKAction.runBlock({
+            let speed = self.city.speed
+            for _ in 0...speed.steps - 1 {
+                self.city.animate()
+            }
+        }, queue: barrier)
+        self.runAction(SKAction.repeatActionForever(SKAction.sequence([wait, run])), withKey: "simulation")
+    }
+    
+    private func stopSimulationTimer() {
+        if let action = self.actionForKey("simulation") {
+            self.removeActionForKey("simulation")
+        }
+    }
+    
     private func getPoint(point: CGPoint) -> CGPoint {
         let (newX, newY) = (Int(point.x / CGFloat(TILE_SIZE)), Int(point.y / CGFloat(TILE_SIZE)))
         return CGPoint(x: newX, y: newY)
@@ -163,6 +172,8 @@ class GameScene: SKScene, Subscriber {
         let cameraPosition = self.convertPoint(camera.position, fromNode: world)
         world.position = CGPoint(x: world.position.x - cameraPosition.x, y: world.position.y - cameraPosition.y)
     }
+    
+    // MARK: Drawing Helpers
     
     private func drawGrid() {
         for var x = -64, y = 0; x <= 64; x += TILE_SIZE, y++ {
@@ -229,6 +240,25 @@ class GameScene: SKScene, Subscriber {
                 }
             }
         }
+    }
+    
+    // MARK: Tool Cursor
+    
+    private func initCursor() {
+        currentTool = Tool.Residential
+        toolCursor = ToolCursor.residentialTool(rect: NSRect(x: 0, y: 0, width: currentTool.size(), height: currentTool.size()))
+        toolNode = makeToolCursor()
+        self.addChild(toolNode!)
+    }
+    
+    private func makeToolCursor() -> SKShapeNode {
+        let shapeRect = NSRect(x: 0, y: 0, width: currentTool.size() * TILE_SIZE, height: currentTool.size() * TILE_SIZE)
+        toolNode = SKShapeNode(rect: shapeRect)
+        toolNode!.fillColor = toolCursor.fillColor
+        toolNode!.lineWidth = 2.0
+        toolNode!.glowWidth = 1.0
+        toolNode!.strokeColor = toolCursor.borderColor
+        return toolNode!
     }
     
     // MARK: Subscriber Protocol

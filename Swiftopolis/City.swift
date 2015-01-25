@@ -41,6 +41,8 @@ class City {
     
     private var newPower = false
     
+    private(set) var autoBulldoze = true
+    
     init() {
         initTileBehaviors()
     }
@@ -71,6 +73,21 @@ class City {
     
     func setCityMap(map: [[UInt16]]) {
         self.map.setMap(map)
+    }
+    
+    func isTileBulldozable(effect: AbstractToolEffect) -> Bool {
+        let tileNumber = effect.getTile(0, 0)
+        let tile = Tiles.get(Int(tileNumber))
+        if tile!.canBulldoze {
+            return true
+        }
+        
+        if let owner = tile?.owner {
+            let base = effect.getTile(-tile!.ownerOffsetX!, -tile!.ownerOffsetY!)
+            return Int16(owner.tileNumber) != base
+        }
+        
+        return false
     }
     
     // MARK: Populations

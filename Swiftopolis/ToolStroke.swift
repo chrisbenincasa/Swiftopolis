@@ -10,13 +10,18 @@ import Cocoa
 
 class ToolStroke {
 
+    private(set) var city: City
     var xSrc: Int
     var ySrc: Int
     var xDest: Int
     var yDest: Int
-    var tool: Tool
+    private(set) var tool: Tool
+    private(set) var previewing: Bool = false
     
-    init(tool: Tool, x: Int, y: Int) {
+    private var currentEffect: ToolEffect?
+    
+    init(city: City, tool: Tool, x: Int, y: Int) {
+        self.city = city
         self.tool = tool
         self.xSrc = x
         self.xDest = x
@@ -24,19 +29,55 @@ class ToolStroke {
         self.yDest = y
     }
     
-    func apply() -> ToolResult {
-        return .None
+    func getPreview() -> ToolPreview {
+        let effect = ToolEffect(city: city)
+        
+        previewing = true
+        applyArea(effect)
+        previewing = false
+        return effect.preview
     }
     
-    func applyArea() {
+    func dragTo(x: Int, _ y: Int) {
+        xDest = x
+        yDest = y
+    }
+    
+    func apply() -> ToolResult {
+        let effect = ToolEffect(city: city)
+        applyArea(effect)
+        return effect.apply()
+    }
+    
+    func applyArea(effect: AbstractToolEffect) {
         let toolSize = tool.size()
         let bounds = getBounds()
         
         for var i = 0; i < Int(bounds.height); i += toolSize {
             for var j = 0; j < Int(bounds.width); j += toolSize {
-                self.apply()
+                applyWithEffect(OffsetToolEffect(base: effect, dx: Int(bounds.origin.x) + j, dy: Int(bounds.origin.y) + i))
             }
         }
+    }
+    
+    func applyWithEffect(effect: AbstractToolEffect) -> Bool {
+        var tile: UInt16!
+        
+        switch tool {
+        case .Park: return false
+        case .Residential:
+            tile = TileConstants.RESCLR
+            break
+        case .Commercial:
+            tile = TileConstants.COMBASE
+            break
+        case .Industrial:
+            tile = TileConstants.INDBASE
+            break
+        default: fatalError("Unexpected tool \(tool)")
+        }
+        
+        return applyZone(effect, Tiles.load(Int(tile)))
     }
     
     func getBounds() -> CGRect {
@@ -66,9 +107,144 @@ class ToolStroke {
         return CGRect(x: x, y: y, width: width, height: height)
     }
     
-    private func applyInner(t: Tool) -> Bool {
-        switch tool {
-        default: return false
+    func applyZone(effect: AbstractToolEffect, _ base: Tile) -> Bool {
+        if let buildingInfo = base.buildingInfo {
+            var cost = tool.cost()
+            var canBuild = true
+            for row in 0..<buildingInfo.height {
+                for col in 0..<buildingInfo.width {
+                    let tile = effect.getTile(col, row)
+                    if tile == TileConstants.CLEAR || (tile & TileConstants.LOMASK) != TileConstants.DIRT {
+                        let t = tile & TileConstants.LOMASK
+                        if city.autoBulldoze && TileConstants.canAutoBulldozeZone(t) {
+                            cost++
+                        } else {
+                            canBuild = false
+                        }
+                    }
+                }
+            }
+            
+            if !canBuild {
+                // TODO set effect result
+                return false
+            }
+            
+            effect.spend(cost)
+            
+            var i = 0
+            for row in 0..<buildingInfo.height {
+                for col in 0..<buildingInfo.width {
+                    effect.setTile(col, row, buildingInfo.members[i].tileNumber)
+                    i++
+                }
+            }
+            
+            fixBorder(effect, buildingInfo.width, buildingInfo.height)
+            
+            return true
+        } else {
+            fatalError("Canont applyZone to #\(base.tileNumber)")
+        }
+    }
+    
+    internal func fixBorder(effect: AbstractToolEffect, _ width: Int, _ height: Int) {
+        for x in 0..<width {
+            fixZone(OffsetToolEffect(base: effect, dx: x, dy: 0))
+            fixZone(OffsetToolEffect(base: effect, dx: x, dy: height - 1))
+        }
+        
+        for y in 1..<height - 1 {
+            fixZone(OffsetToolEffect(base: effect, dx: 0, dy: y))
+            fixZone(OffsetToolEffect(base: effect, dx: width - 1, dy: y))
+        }
+    }
+    
+    internal func fixZone(effect: AbstractToolEffect) {
+        fixSingleTile(effect)
+        
+        fixSingleTile(OffsetToolEffect(base: effect, dx: 0, dy: -1))
+        fixSingleTile(OffsetToolEffect(base: effect, dx: -1, dy: 0))
+        fixSingleTile(OffsetToolEffect(base: effect, dx: 1, dy: 0))
+        fixSingleTile(OffsetToolEffect(base: effect, dx: 0, dy: 1))
+    }
+    
+    // Fixes dynamic road, rail, power tiles if necessary
+    internal func fixSingleTile(effect: AbstractToolEffect) {
+        let tile = effect.getTile(0, 0)
+        
+        if TileConstants.isDynamicRoad(UInt16(tile)) {
+            var adjTile = 0
+            
+            // North
+            if TileConstants.roadConnectsVertically(UInt16(effect.getTile(0, -1))) {
+                adjTile |= 1
+            }
+            
+            // East
+            if TileConstants.roadConnectsHorizontally(UInt16(effect.getTile(1, 0))) {
+                adjTile |= 2
+            }
+            
+            // South
+            if TileConstants.roadConnectsVertically(UInt16(effect.getTile(0, 1))) {
+                adjTile |= 4
+            }
+            
+            // West
+            if TileConstants.roadConnectsHorizontally(UInt16(effect.getTile(-1, 0))) {
+                adjTile |= 8
+            }
+            
+            effect.setTile(0, 0, TileConstants.RoadTable[adjTile])
+        } else if TileConstants.isDynamicRoad(UInt16(tile)) {
+            var adjTile = 0
+            
+            // North
+            if TileConstants.railConnectsVertically(UInt16(effect.getTile(0, -1))) {
+                adjTile |= 1
+            }
+            
+            // East
+            if TileConstants.railConnectsHorizontally(UInt16(effect.getTile(1, 0))) {
+                adjTile |= 2
+            }
+            
+            // South
+            if TileConstants.railConnectsVertically(UInt16(effect.getTile(0, 1))) {
+                adjTile |= 4
+            }
+            
+            // West
+            if TileConstants.railConnectsHorizontally(UInt16(effect.getTile(-1, 0))) {
+                adjTile |= 8
+            }
+            
+            effect.setTile(0, 0, TileConstants.RailTable[adjTile])
+        } else if TileConstants.isDynamicWire(UInt16(tile)) {
+            var adjTile = 0
+            
+            // North
+            if TileConstants.powerConnectsVertically(UInt16(effect.getTile(0, -1))) {
+                adjTile |= 1
+            }
+            
+            // East
+            if TileConstants.powerConnectsHorizontally(UInt16(effect.getTile(1, 0))) {
+                adjTile |= 2
+            }
+            
+            // South
+            if TileConstants.powerConnectsVertically(UInt16(effect.getTile(0, 1))) {
+                adjTile |= 4
+            }
+            
+            // West
+            if TileConstants.powerConnectsHorizontally(UInt16(effect.getTile(-1, 0))) {
+                adjTile |= 8
+            }
+            
+            effect.setTile(0, 0, TileConstants.WireTable[adjTile])
         }
     }
 }

@@ -8,16 +8,49 @@
 
 import Cocoa
 
-class CitySound {
-    private(set) var soundName: String
-
-    internal init(soundName: String) {
-        self.soundName = soundName
+class Sound {
+    var filename: String!
+    var filetype = "wav"
+    
+    init(_ filename: String) {
+        self.filename = filename
+    }
+    
+    func getSoundFilename() -> String {
+        return "\(self.filename).\(self.filetype)"
     }
 }
 
-class EarthquakeSound : CitySound {
+class CitySound {
+    private(set) var x: Int
+    private(set) var y: Int
+    private(set) var sound: Sound
+    
+    init(x: Int, _ y: Int, sound: Sound) {
+        self.x = x
+        self.y = y
+        self.sound = sound
+    }
+}
+
+class ExplosionSound: Sound {
+    private(set) var isHigh: Bool = false
+    private(set) var isBoth: Bool = false
+    
+    init(isHigh: Bool = false, isBoth: Bool = false) {
+        if isHigh {
+            super.init("explosion-high")
+        } else {
+            super.init("explosion-low")
+        }
+        
+        self.isHigh = isHigh
+        self.isBoth = isBoth
+    }
+}
+
+class EarthquakeSound: Sound {
     convenience init() {
-        self.init(soundName: "earthquake.wav")
+        self.init("earthquake")
     }
 }
