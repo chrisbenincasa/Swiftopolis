@@ -7,9 +7,6 @@
 //
 
 import SpriteKit
-import OpenGL
-import GLKit
-import GLUT
 
 class GameScene: SKScene, Subscriber {
     private let TILE_SIZE: Int = 16
@@ -203,7 +200,7 @@ class GameScene: SKScene, Subscriber {
             world.addChild(node)
         }
     }
-        
+    
     // MARK: Tool Cursor
     
     private func initCursor() {
