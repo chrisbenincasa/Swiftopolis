@@ -838,6 +838,24 @@ class City {
         return nil
     }
     
+    func spawnAirplane(x: Int, _ y: Int) {
+        if findSpriteOfKind(.Airplane) == nil {
+            // TODO: Implement airplane sprite
+        }
+    }
+    
+    func spawnHelicopter(x: Int, _ y: Int) {
+        if findSpriteOfKind(.Helicopter) == nil {
+            // TODO: Implement helicopter sprite
+        }
+    }
+    
+    func spawnShip(x: Int, _ y: Int) {
+        if findSpriteOfKind(.Ship) == nil {
+            // TODO: Implement ship sprite
+        }
+    }
+    
     // MARK: Traffic API
     
     func trafficDensityAtLocation(x xpos: Int, y ypos: Int) -> UInt16 {
@@ -969,10 +987,10 @@ class City {
         tileBehaviors["NUCLEAR"] = NuclearTileBehavior(city: self)
         tileBehaviors["FIRESTATION"] = FireStationTileBehavior(city: self)
         tileBehaviors["POLICESTATION"] = PoliceStationTileEffect(city: self)
-//        TODO: tileBehaviors["STADIUM_EMPTY"]
-//        TODO: tileBehaviors["STADIUM_FULL"]
-//        TODO: tileBehaviors["AIRPORT"]
-//        TODO: tileBehaviors["SEAPORT"]
+        tileBehaviors["STADIUM_EMPTY"] = StadiumTileBehavior(city: self, isEmpty: true)
+        tileBehaviors["STADIUM_FULL"] = StadiumTileBehavior(city: self, isEmpty: false)
+        tileBehaviors["AIRPORT"] = AirportTileBehavior(city: self)
+        tileBehaviors["SEAPORT"] = SeaportTileBehavior(city: self)
     }
     
     private func generateBudgetNumbers(#roadTotal: Int, railTotal: Int, totalPopulation: Int, fireStationCount: Int, policeStationCount: Int) -> BudgetNumbers {

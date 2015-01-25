@@ -44,5 +44,5 @@ class Sprite {
 }
 
 enum SpriteKind {
-    case None, God, Tornado, Monster
+    case None, God, Tornado, Monster, Airplane, Helicopter, Ship
 }
