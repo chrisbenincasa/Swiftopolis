@@ -203,45 +203,7 @@ class GameScene: SKScene, Subscriber {
             world.addChild(node)
         }
     }
-    
-    private func drawTiles(point: CGPoint) {
-        let cameraPositionToWorld = self.convertPoint(camera.position, fromNode: world)
-        let cameraPositionToScene = self.convertPoint(camera.position, fromNode: self)
-        let worldPosition = self.convertPoint(world.position, fromNode: self)
         
-        let center = CGPoint(x: Int(cameraPositionToWorld.x) / TILE_SIZE, y: Int(cameraPositionToWorld.y) / TILE_SIZE)
-
-        let halfWidth = ((width / 2) / TILE_SIZE)
-        let halfHeight = ((height / 2) / TILE_SIZE)
-        let xMin = max(-halfWidth, Int(Int(point.x) - halfWidth))
-        let xMax = min(halfWidth, Int(Int(point.x) + halfWidth))
-        let yMin = max(-halfHeight, Int(Int(point.y) - halfHeight))
-        let yMax = min(halfHeight, Int(Int(point.y) + halfHeight))
-        
-        for var y = yMin; y < yMax; y++ {
-            for var x = xMin; x < xMax; x++ {
-                let mapX = x + (city.map.width / 2)
-                let mapY = y + (city.map.height / 2)
-                if let tile = self.city.map.getTile(x: mapX, y: mapY) {
-                    if renderedTiles[mapX][mapY] == UInt16.max || renderedTiles[mapX][mapY] != tile {
-                        let imageInfo = self.tileImages.getTileImageInfo(Int(tile), acycle: 0)
-                        
-                        let image = self.tileImages.getImage(imageInfo.imageNumber)
-                        let position = CGPoint(x: (x * TILE_SIZE) + (TILE_SIZE / 2), y: y * TILE_SIZE + (TILE_SIZE / 2))
-                        let sprite = SKSpriteNode(texture: SKTexture(image: image))
-                        sprite.position = position
-                        sprite.physicsBody = nil
-                        world.addChild(sprite)
-                        
-                        renderedTiles[mapX][mapY] = tile
-                    }
-                } else {
-                    println("tile not found at (\(x), \(y))")
-                }
-            }
-        }
-    }
-    
     // MARK: Tool Cursor
     
     private func initCursor() {
