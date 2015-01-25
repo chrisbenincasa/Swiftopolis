@@ -71,7 +71,7 @@ class ToolEffect: AbstractToolEffect {
             for var x = 0; x < preview.tiles[0].count; x++ {
                 let tile = preview.tiles[y][x]
                 if tile != TileConstants.CLEAR {
-                    city.setTile(x: x, y: y, tile: UInt16(tile))
+                    city.setTile(x: x, y: y, tile: tile)
                     newTileSet = true
                 }
             }

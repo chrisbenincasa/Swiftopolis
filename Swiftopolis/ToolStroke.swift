@@ -173,74 +173,74 @@ class ToolStroke {
     internal func fixSingleTile(effect: AbstractToolEffect) {
         let tile = effect.getTile(0, 0)
         
-        if TileConstants.isDynamicRoad(UInt16(tile)) {
+        if TileConstants.isDynamicRoad(tile) {
             var adjTile = 0
             
             // North
-            if TileConstants.roadConnectsVertically(UInt16(effect.getTile(0, -1))) {
+            if TileConstants.roadConnectsVertically(effect.getTile(0, -1)) {
                 adjTile |= 1
             }
             
             // East
-            if TileConstants.roadConnectsHorizontally(UInt16(effect.getTile(1, 0))) {
+            if TileConstants.roadConnectsHorizontally(effect.getTile(1, 0)) {
                 adjTile |= 2
             }
             
             // South
-            if TileConstants.roadConnectsVertically(UInt16(effect.getTile(0, 1))) {
+            if TileConstants.roadConnectsVertically(effect.getTile(0, 1)) {
                 adjTile |= 4
             }
             
             // West
-            if TileConstants.roadConnectsHorizontally(UInt16(effect.getTile(-1, 0))) {
+            if TileConstants.roadConnectsHorizontally(effect.getTile(-1, 0)) {
                 adjTile |= 8
             }
             
             effect.setTile(0, 0, TileConstants.RoadTable[adjTile])
-        } else if TileConstants.isDynamicRoad(UInt16(tile)) {
+        } else if TileConstants.isDynamicRoad(tile) {
             var adjTile = 0
             
             // North
-            if TileConstants.railConnectsVertically(UInt16(effect.getTile(0, -1))) {
+            if TileConstants.railConnectsVertically(effect.getTile(0, -1)) {
                 adjTile |= 1
             }
             
             // East
-            if TileConstants.railConnectsHorizontally(UInt16(effect.getTile(1, 0))) {
+            if TileConstants.railConnectsHorizontally(effect.getTile(1, 0)) {
                 adjTile |= 2
             }
             
             // South
-            if TileConstants.railConnectsVertically(UInt16(effect.getTile(0, 1))) {
+            if TileConstants.railConnectsVertically(effect.getTile(0, 1)) {
                 adjTile |= 4
             }
             
             // West
-            if TileConstants.railConnectsHorizontally(UInt16(effect.getTile(-1, 0))) {
+            if TileConstants.railConnectsHorizontally(effect.getTile(-1, 0)) {
                 adjTile |= 8
             }
             
             effect.setTile(0, 0, TileConstants.RailTable[adjTile])
-        } else if TileConstants.isDynamicWire(UInt16(tile)) {
+        } else if TileConstants.isDynamicWire(tile) {
             var adjTile = 0
             
             // North
-            if TileConstants.powerConnectsVertically(UInt16(effect.getTile(0, -1))) {
+            if TileConstants.powerConnectsVertically(effect.getTile(0, -1)) {
                 adjTile |= 1
             }
             
             // East
-            if TileConstants.powerConnectsHorizontally(UInt16(effect.getTile(1, 0))) {
+            if TileConstants.powerConnectsHorizontally(effect.getTile(1, 0)) {
                 adjTile |= 2
             }
             
             // South
-            if TileConstants.powerConnectsVertically(UInt16(effect.getTile(0, 1))) {
+            if TileConstants.powerConnectsVertically(effect.getTile(0, 1)) {
                 adjTile |= 4
             }
             
             // West
-            if TileConstants.powerConnectsHorizontally(UInt16(effect.getTile(-1, 0))) {
+            if TileConstants.powerConnectsHorizontally(effect.getTile(-1, 0)) {
                 adjTile |= 8
             }
             

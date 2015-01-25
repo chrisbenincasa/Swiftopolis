@@ -84,7 +84,7 @@ class City {
         
         if let owner = tile?.owner {
             let base = effect.getTile(-tile!.ownerOffsetX!, -tile!.ownerOffsetY!)
-            return Int16(owner.tileNumber) != base
+            return owner.tileNumber != base
         }
         
         return false
@@ -910,7 +910,7 @@ class City {
         }
     }
     
-    private func onCitySound(sound: CitySound, location: CityLocation?) {
+    private func onCitySound(sound: Sound, location: CityLocation?) {
         var data: [NSObject : AnyObject] = [NSString(string: "sound") : sound]
         if location != nil {
             data[NSString(string: "location")] = location!

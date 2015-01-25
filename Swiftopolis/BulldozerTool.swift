@@ -24,7 +24,7 @@ class BulldozerTool: ToolStroke {
                     bulldozeField(e)
                 }
                 
-                let tile = UInt16(effect.getTile(Int(bounds.origin.x) + x, Int(bounds.origin.y) + y))
+                let tile = effect.getTile(Int(bounds.origin.x) + x, Int(bounds.origin.y) + y)
                 if TileConstants.isZoneCenter(tile) {
                     bulldozeZone(e)
                 }
@@ -35,7 +35,7 @@ class BulldozerTool: ToolStroke {
     }
     
     private func bulldozeField(effect: AbstractToolEffect) {
-        let tile = UInt16(effect.getTile(0, 0))
+        let tile = effect.getTile(0, 0)
 
         if TileConstants.isOverWater(tile) {
             effect.setTile(0, 0, TileConstants.RIVER)
@@ -48,7 +48,7 @@ class BulldozerTool: ToolStroke {
     }
     
     private func bulldozeZone(effect: AbstractToolEffect) {
-        let tile = UInt16(effect.getTile(0, 0))
+        let tile = effect.getTile(0, 0)
         
         if let dimensions = TileConstants.getZoneSizeFor(tile) {
             assert(dimensions.width >= 3 && dimensions.height >= 3, "zone size < 3")
@@ -75,9 +75,9 @@ class BulldozerTool: ToolStroke {
                     continue
                 }
                 
-                if UInt16(tile) != TileConstants.RADTILE && UInt16(tile) != TileConstants.DIRT {
-                    let z = previewing ? 0 : Int(arc4random_uniform(3))
-                    let nTile = TileConstants.TINYEXP + UInt16(z)
+                if tile != TileConstants.RADTILE && tile != TileConstants.DIRT {
+                    let z = previewing ? 0 : UInt16(arc4random_uniform(3))
+                    let nTile = TileConstants.TINYEXP + z
                     effect.setTile(x, y, nTile)
                 }
             }
