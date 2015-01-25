@@ -27,12 +27,9 @@ class GameScene: SKScene, Subscriber {
     private var camera: Camera = Camera()
     private var worldCircle = SKShapeNode(circleOfRadius: 10.0)
     private var cameraCircle = SKShapeNode(circleOfRadius: 10.0)
-//    private var atlas: SKTextureAtlas = SKTextureAtlas(named: "images")
-    private var tileImages = TileImages.instance
-    private var renderedTiles: [[UInt16]] = []
     
-    private var width = 0
-    private var height = 0
+    private var pixelWidth = 0
+    private var pixelHeight = 0
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -46,13 +43,15 @@ class GameScene: SKScene, Subscriber {
         city.setCityMap(cityMap)
         
         // Save the pixel dimensions of the map
-        width = city.map.width * TILE_SIZE
-        height = city.map.height * TILE_SIZE
+        pixelWidth = city.map.width * TILE_SIZE
+        pixelHeight = city.map.height * TILE_SIZE
+        self.size = NSSize(width: pixelWidth, height: pixelHeight)
         
-        Utils.initializeMatrix(&self.renderedTiles, width: city.map.width, height: city.map.height, value: UInt16.max)
-        
+        // Listen for city events
         city.addSubscriber(self)
-//        startSimulationTimer()
+        
+        // Start the simulation
+        // startSimulationTimer()
         
         // Turn off gravity
         self.physicsWorld.gravity = CGVectorMake(0, 0)
@@ -71,6 +70,8 @@ class GameScene: SKScene, Subscriber {
         world.addChild(camera)
     }
     
+    // MARK: Overrides and Animation
+    
     override func didMoveToView(view: SKView) {
         if let mapView = view as? MapView {
             mapView.currentPoint = self.camera.position
@@ -80,45 +81,24 @@ class GameScene: SKScene, Subscriber {
         view.needsToDrawRect(view.frame)
     }
     
-    override func mouseDown(theEvent: NSEvent) {
-        let location = theEvent.locationInNode(world)
-        let quarterWidth = width >> 2
-        let quarterHeight = height >> 2
-        
-        let x = location.x <= 0 ? max(-quarterWidth, Int(location.x)) : min(quarterWidth, Int(location.x))
-        let y = location.y <= 0 ? max(-quarterHeight, Int(location.y)) : min(quarterHeight, Int(location.y))
-        var point = CGPoint(x: x, y: y)
-        
-        /* Uncomment for camera move animation
-        let moveAction = SKAction.moveTo(point, duration: 1.0)
-        moveAction.timingMode = .EaseIn
-        let drawAction = SKAction.customActionWithDuration(1.0, actionBlock: { (node, elapsed) -> Void in
-            if let v = self.view as? MapView {
-                v.currentPoint = CGPoint(x: node.position.x / 16.0, y: node.position.y / 16.0)
-//                println(CGPoint(x: Int(point.x / 16), y: Int(point.y / 16)))
-                v.needsDisplay = true
-                v.needsToDrawRect(v.frame)
-            }
-        })
-        let group = SKAction.group([moveAction, drawAction])
-        self.camera.runAction(group)
-        */
-        self.camera.position = point
-        
-        if let v = self.view as? MapView {
-            v.currentPoint = CGPoint(x: Int(point.x / 16), y: Int(point.y / 16))
-            println(CGPoint(x: Int(point.x / 16), y: Int(point.y / 16)))
-            v.needsDisplay = true
-            v.needsToDrawRect(v.frame)
-        }
-    }
-    
-    // MARK: Overrides and Animation
-    
     override func update(currentTime: CFTimeInterval) {
         self.debugOverlay.removeFromParent()
         self.debugOverlay.removeAllChildren()
     }
+    
+    override func didFinishUpdate() {
+        centerOnCamera()
+        
+        self.addChild(debugOverlay)
+        
+        cameraCircle.fillColor = NSColor.redColor()
+        cameraCircle.position = camera.position
+        
+        worldCircle.fillColor = NSColor.blueColor()
+        worldCircle.position = world.position
+    }
+    
+    // MARK: Mouse Events
     
     override func mouseMoved(theEvent: NSEvent) {
         // TODO toss events that are out of the bounds of the scene
@@ -133,17 +113,38 @@ class GameScene: SKScene, Subscriber {
             }
         }
     }
-
-    override func didFinishUpdate() {
-        centerOnCamera()
+    
+    override func mouseDown(theEvent: NSEvent) {
+        let location = theEvent.locationInNode(world)
+        let quarterWidth = pixelWidth >> 2
+        let quarterHeight = pixelHeight >> 2
         
-        self.addChild(debugOverlay)
+        let x = location.x <= 0 ? max(-quarterWidth, Int(location.x)) : min(quarterWidth, Int(location.x))
+        let y = location.y <= 0 ? max(-quarterHeight, Int(location.y)) : min(quarterHeight, Int(location.y))
+        var point = CGPoint(x: x, y: y)
         
-        cameraCircle.fillColor = NSColor.redColor()
-        cameraCircle.position = camera.position
+        /* Uncomment for camera move animation
+        let moveAction = SKAction.moveTo(point, duration: 1.0)
+        moveAction.timingMode = .EaseIn
+        let drawAction = SKAction.customActionWithDuration(1.0, actionBlock: { (node, elapsed) -> Void in
+        if let v = self.view as? MapView {
+        v.currentPoint = CGPoint(x: node.position.x / 16.0, y: node.position.y / 16.0)
+        //                println(CGPoint(x: Int(point.x / 16), y: Int(point.y / 16)))
+        v.needsDisplay = true
+        v.needsToDrawRect(v.frame)
+        }
+        })
+        let group = SKAction.group([moveAction, drawAction])
+        self.camera.runAction(group)
+        */
+        self.camera.position = point
         
-        worldCircle.fillColor = NSColor.blueColor()
-        worldCircle.position = world.position
+        if let v = self.view as? MapView {
+            v.currentPoint = CGPoint(x: Int(point.x / 16), y: Int(point.y / 16))
+            println(CGPoint(x: Int(point.x / 16), y: Int(point.y / 16)))
+            v.needsDisplay = true
+            v.needsToDrawRect(v.frame)
+        }
     }
     
     // MARK: Simulation Helpers
@@ -166,9 +167,10 @@ class GameScene: SKScene, Subscriber {
         }
     }
     
+    // MARK: Position Helpers
+    
     private func getPoint(point: CGPoint) -> CGPoint {
-        let (newX, newY) = (Int(point.x / CGFloat(TILE_SIZE)), Int(point.y / CGFloat(TILE_SIZE)))
-        return CGPoint(x: newX, y: newY)
+        return CGPoint(x: Int(point.x) / TILE_SIZE, y: Int(point.y) / TILE_SIZE)
     }
     
     private func centerOnCamera() {
@@ -239,8 +241,8 @@ class GameScene: SKScene, Subscriber {
     // MARK: Subscriber Protocol
     
     func citySoundFired(data: [NSObject : AnyObject]) {
-        if let sound = data["sound"] as? CitySound {
-
+        if let sound = data["sound"] as? Sound {
+            println("sound fired!")
         }
     }
 }

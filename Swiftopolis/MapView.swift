@@ -48,14 +48,14 @@ class MapView : SKView {
     }
     
     override func updateTrackingAreas() {
-        if self.trackingArea != nil {
-            self.removeTrackingArea(self.trackingArea!)
-        }
-        
-        let opts = NSTrackingAreaOptions.MouseEnteredAndExited | NSTrackingAreaOptions.ActiveInActiveApp
-        let trackingArea = NSTrackingArea(rect: self.bounds, options: opts, owner: self, userInfo: nil)
-        self.addTrackingArea(trackingArea)
-        self.trackingArea = trackingArea
+//        if self.trackingArea != nil {
+//            self.removeTrackingArea(self.trackingArea!)
+//        }
+//        
+//        let opts = NSTrackingAreaOptions.MouseEnteredAndExited | NSTrackingAreaOptions.ActiveInActiveApp
+//        let trackingArea = NSTrackingArea(rect: self.bounds, options: opts, owner: self, userInfo: nil)
+//        self.addTrackingArea(trackingArea)
+//        self.trackingArea = trackingArea
     }
     
     override func drawRect(dirtyRect: NSRect) {
