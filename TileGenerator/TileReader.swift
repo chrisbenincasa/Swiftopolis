@@ -89,6 +89,10 @@ class TileReader {
             }
         }
         
+//        for i in 0..<4 {
+//            mappings[i].ref.drawInRect(&imageRect, offsetX: nil, offsetY: nil, time: nil)
+//        }
+        
         self.mappings = mappings
         
         // Create bitmap representation, convert to PNG data, delete old file and save
@@ -202,9 +206,11 @@ class TileReader {
         let regularFileName: String = "\(wd)/\(fileName).png"
         
         var data: NSData?
+        var baseSize: Int = 16
         
         if let d = NSData(contentsOfFile: sizedFileName) {
             data = d
+            baseSize = tileSize
         } else if let d = NSData(contentsOfFile: regularFileName) {
             data = d
         } else {
@@ -214,7 +220,7 @@ class TileReader {
         if let imageData = data {
             let img = NSImage(dataIgnoringOrientation: imageData)
             img!.setName(fileName)
-            return SourceImage(image: img!, basisSize: 16, targetSize: tileSize)
+            return SourceImage(image: img!, basisSize: baseSize, targetSize: tileSize)
         }
 
         return nil

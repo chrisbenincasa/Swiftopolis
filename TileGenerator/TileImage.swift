@@ -13,7 +13,6 @@ protocol TileImage {
     init()
     func getFrameEndTime(frameTime: Int) -> Int
     func drawInRect(inout rect: NSRect, offsetX: Int?, offsetY: Int?, time: Int?)
-//    func imageRect(offsetX: Int?, offsetY: Int?, time: Int?) -> NSRect
 }
 
 class TileImageLayer: TileImage {
@@ -46,10 +45,6 @@ class TileImageLayer: TileImage {
         
         above!.drawInRect(&rect, offsetX: nil, offsetY: nil, time: nil)
     }
-    
-//    func imageRect(offsetX: Int?, offsetY: Int?, time: Int?) -> NSRect {
-//        
-//    }
 }
 
 class TileImageSprite : TileImage {
@@ -71,10 +66,6 @@ class TileImageSprite : TileImage {
     func drawInRect(inout rect: NSRect, offsetX: Int? = nil, offsetY: Int? = nil, time: Int? = nil) {
         source?.drawInRect(&rect, offsetX: self.offsetX, offsetY: self.offsetY, time: nil)
     }
-    
-//    func imageRect(offsetX: Int?, offsetY: Int?, time: Int?) -> NSRect {
-//        
-//    }
 }
 
 class SourceImage: TileImage {
@@ -105,16 +96,17 @@ class SourceImage: TileImage {
             y = 0
         }
         
-        let offX = CGFloat(x!)
-        let offY = image.size.height - (CGFloat(y!)) - CGFloat(basisSize)
-        let basisRect = NSRect(origin: CGPointMake(offX, offY), size: CGSize(width: basisSize, height: basisSize))
+        let offX = (x! * basisSize / 16)
+        let offY = Int(image.size.height) - (y! * basisSize / 16) - basisSize
+        let basisRect = NSRect(origin: CGPoint(x: offX, y: offY), size: CGSize(width: basisSize, height: basisSize))
         
         if targetSize == basisSize {
             image.drawAtPoint(rect.origin, fromRect: basisRect, operation: .CompositeSourceOver, fraction: 1.0)
         } else {
-            scaleImage(basisRect).drawAtPoint(rect.origin, fromRect: NSRect.zeroRect, operation: .CompositeSourceOver, fraction: 1.0)
+            let scaled = scaleImage(basisRect)
+            scaled.drawAtPoint(rect.origin, fromRect: NSRect.zeroRect, operation: .CompositeSourceOver, fraction: 1.0)
         }
-        
+
         rect.origin.y -= CGFloat(targetSize)
     }
     
