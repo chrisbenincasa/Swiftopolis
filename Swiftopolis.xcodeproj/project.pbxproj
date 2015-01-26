@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1400EE6E1A618C4A001FA1F2 /* Smoothers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1400EE6D1A618C4A001FA1F2 /* Smoothers.swift */; };
-		1408F7CE1A6EDDE6005B8EF8 /* CityInterfaceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1408F7CD1A6EDDE6005B8EF8 /* CityInterfaceView.xib */; };
 		1408F7D01A6EDE54005B8EF8 /* CityInterfaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1408F7CF1A6EDE54005B8EF8 /* CityInterfaceView.swift */; };
 		1408F7D21A6EE931005B8EF8 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1408F7D11A6EE931005B8EF8 /* GameViewController.swift */; };
 		141617A21A5C664A0066E8F1 /* ResidentialTileBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141617A11A5C664A0066E8F1 /* ResidentialTileBehavior.swift */; };
@@ -45,6 +44,8 @@
 		146987A81A753ABE0029F630 /* StadiumTileBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146987A71A753ABE0029F630 /* StadiumTileBehavior.swift */; };
 		146987AA1A753CE30029F630 /* AirportTileBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146987A91A753CE30029F630 /* AirportTileBehavior.swift */; };
 		146987AC1A753E1D0029F630 /* SeaportTileBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146987AB1A753E1D0029F630 /* SeaportTileBehavior.swift */; };
+		146987B01A7574C40029F630 /* GameWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 146987AF1A7574C40029F630 /* GameWindow.xib */; };
+		146987B21A7575010029F630 /* GameWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146987B11A7575010029F630 /* GameWindow.swift */; };
 		146ABA661A4F0EE0002A1B6B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146ABA651A4F0EE0002A1B6B /* AppDelegate.swift */; };
 		146ABA681A4F0EE0002A1B6B /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146ABA671A4F0EE0002A1B6B /* GameScene.swift */; };
 		146ABA6A1A4F0EE0002A1B6B /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 146ABA691A4F0EE0002A1B6B /* GameScene.sks */; };
@@ -68,6 +69,11 @@
 		147F2F321A6364F700E4039E /* Sprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147F2F311A6364F700E4039E /* Sprite.swift */; };
 		147F2F351A6394EC00E4039E /* TornadoSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147F2F341A6394EC00E4039E /* TornadoSprite.swift */; };
 		148069371A5B6CC40004A7B0 /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148069361A5B6CC40004A7B0 /* ArrayExtensions.swift */; };
+		1481F12E1A757A15005B5A16 /* final-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 1481F12C1A757A15005B5A16 /* final-8x8.png */; };
+		1481F12F1A757A15005B5A16 /* final-16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 1481F12D1A757A15005B5A16 /* final-16x16.png */; };
+		1481F1311A757C95005B5A16 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481F1301A757C95005B5A16 /* GameView.swift */; };
+		1481F1371A75A901005B5A16 /* MainSceneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481F1361A75A900005B5A16 /* MainSceneView.swift */; };
+		1481F1391A75A99D005B5A16 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481F1381A75A99D005B5A16 /* MapView.swift */; };
 		1489D1241A5A1C490055EF58 /* tiles.json in Resources */ = {isa = PBXBuildFile; fileRef = 1489D1231A5A1C490055EF58 /* tiles.json */; };
 		148E69381A7402690058C2CE /* BulldozerTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148E69371A7402690058C2CE /* BulldozerTool.swift */; };
 		14938FF61A647F270093AC02 /* CitySound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14938FF51A647F270093AC02 /* CitySound.swift */; };
@@ -76,9 +82,7 @@
 		14999ADB1A674E6E00BF9F20 /* CityWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14999ADA1A674E6E00BF9F20 /* CityWorld.swift */; };
 		14999ADD1A674EEF00BF9F20 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14999ADC1A674EEF00BF9F20 /* Camera.swift */; };
 		14999ADF1A674F7300BF9F20 /* DebugOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14999ADE1A674F7300BF9F20 /* DebugOverlay.swift */; };
-		14A599631A6D4D020092714A /* final.png in Resources */ = {isa = PBXBuildFile; fileRef = 14A599611A6D4CF00092714A /* final.png */; };
 		14A599641A6D4D020092714A /* tiles_index.json in Resources */ = {isa = PBXBuildFile; fileRef = 14A599621A6D4CF00092714A /* tiles_index.json */; };
-		14A599671A6D86E00092714A /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A599661A6D86E00092714A /* MapView.swift */; };
 		14A822FA1A71630500F1590B /* ToolCursor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A822F91A71630500F1590B /* ToolCursor.swift */; };
 		14AB41A91A5B4C02003A4F7D /* FireTerrainBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AB41A81A5B4C02003A4F7D /* FireTerrainBehavior.swift */; };
 		14AB41AB1A5B4C2D003A4F7D /* FloodTerrainBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AB41AA1A5B4C2D003A4F7D /* FloodTerrainBehavior.swift */; };
@@ -86,6 +90,8 @@
 		14AB41AF1A5B5C43003A4F7D /* RoadTileBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AB41AE1A5B5C43003A4F7D /* RoadTileBehavior.swift */; };
 		14AB41B31A5B5ED0003A4F7D /* CityMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AB41B21A5B5ED0003A4F7D /* CityMessage.swift */; };
 		14AB41B51A5B5F21003A4F7D /* CityLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AB41B41A5B5F21003A4F7D /* CityLocation.swift */; };
+		14B822F81A761A9A0071F299 /* final-3x3.png in Resources */ = {isa = PBXBuildFile; fileRef = 14B822F71A761A9A0071F299 /* final-3x3.png */; };
+		14B822FA1A767FB10071F299 /* OverlayMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B822F91A767FB10071F299 /* OverlayMapView.swift */; };
 		14B8AC2D1A6AA59200BF10FE /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14B8AC2C1A6AA59200BF10FE /* SpriteKit.framework */; };
 		14DBB94A1A6AB7AE006DD969 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DBB9491A6AB7AE006DD969 /* main.swift */; };
 		14DBB9501A6ABCAC006DD969 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DFA6FB1A59BD75008A43E7 /* SwiftyJSON.swift */; };
@@ -147,7 +153,6 @@
 
 /* Begin PBXFileReference section */
 		1400EE6D1A618C4A001FA1F2 /* Smoothers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Smoothers.swift; sourceTree = "<group>"; };
-		1408F7CD1A6EDDE6005B8EF8 /* CityInterfaceView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CityInterfaceView.xib; sourceTree = "<group>"; };
 		1408F7CF1A6EDE54005B8EF8 /* CityInterfaceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityInterfaceView.swift; sourceTree = "<group>"; };
 		1408F7D11A6EE931005B8EF8 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		141617A11A5C664A0066E8F1 /* ResidentialTileBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResidentialTileBehavior.swift; sourceTree = "<group>"; };
@@ -184,6 +189,8 @@
 		146987A71A753ABE0029F630 /* StadiumTileBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StadiumTileBehavior.swift; sourceTree = "<group>"; };
 		146987A91A753CE30029F630 /* AirportTileBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AirportTileBehavior.swift; sourceTree = "<group>"; };
 		146987AB1A753E1D0029F630 /* SeaportTileBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeaportTileBehavior.swift; sourceTree = "<group>"; };
+		146987AF1A7574C40029F630 /* GameWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameWindow.xib; sourceTree = "<group>"; };
+		146987B11A7575010029F630 /* GameWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameWindow.swift; sourceTree = "<group>"; };
 		146ABA601A4F0EE0002A1B6B /* Swiftopolis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Swiftopolis.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		146ABA641A4F0EE0002A1B6B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		146ABA651A4F0EE0002A1B6B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -212,6 +219,11 @@
 		147F2F311A6364F700E4039E /* Sprite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sprite.swift; sourceTree = "<group>"; };
 		147F2F341A6394EC00E4039E /* TornadoSprite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TornadoSprite.swift; sourceTree = "<group>"; };
 		148069361A5B6CC40004A7B0 /* ArrayExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtensions.swift; sourceTree = "<group>"; };
+		1481F12C1A757A15005B5A16 /* final-8x8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "final-8x8.png"; sourceTree = "<group>"; };
+		1481F12D1A757A15005B5A16 /* final-16x16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "final-16x16.png"; sourceTree = "<group>"; };
+		1481F1301A757C95005B5A16 /* GameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		1481F1361A75A900005B5A16 /* MainSceneView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainSceneView.swift; sourceTree = "<group>"; };
+		1481F1381A75A99D005B5A16 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		1489D1231A5A1C490055EF58 /* tiles.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = tiles.json; path = Swiftopolis/tiles.json; sourceTree = "<group>"; };
 		148E69371A7402690058C2CE /* BulldozerTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BulldozerTool.swift; sourceTree = "<group>"; };
 		14938FF51A647F270093AC02 /* CitySound.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CitySound.swift; sourceTree = "<group>"; };
@@ -220,9 +232,7 @@
 		14999ADA1A674E6E00BF9F20 /* CityWorld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityWorld.swift; sourceTree = "<group>"; };
 		14999ADC1A674EEF00BF9F20 /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		14999ADE1A674F7300BF9F20 /* DebugOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugOverlay.swift; sourceTree = "<group>"; };
-		14A599611A6D4CF00092714A /* final.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = final.png; sourceTree = "<group>"; };
 		14A599621A6D4CF00092714A /* tiles_index.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = tiles_index.json; sourceTree = "<group>"; };
-		14A599661A6D86E00092714A /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		14A822F91A71630500F1590B /* ToolCursor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolCursor.swift; sourceTree = "<group>"; };
 		14AB41A81A5B4C02003A4F7D /* FireTerrainBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireTerrainBehavior.swift; sourceTree = "<group>"; };
 		14AB41AA1A5B4C2D003A4F7D /* FloodTerrainBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloodTerrainBehavior.swift; sourceTree = "<group>"; };
@@ -230,6 +240,8 @@
 		14AB41AE1A5B5C43003A4F7D /* RoadTileBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoadTileBehavior.swift; sourceTree = "<group>"; };
 		14AB41B21A5B5ED0003A4F7D /* CityMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityMessage.swift; sourceTree = "<group>"; };
 		14AB41B41A5B5F21003A4F7D /* CityLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityLocation.swift; sourceTree = "<group>"; };
+		14B822F71A761A9A0071F299 /* final-3x3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "final-3x3.png"; sourceTree = "<group>"; };
+		14B822F91A767FB10071F299 /* OverlayMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayMapView.swift; sourceTree = "<group>"; };
 		14B8AC2C1A6AA59200BF10FE /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
 		14DBB9471A6AB7AE006DD969 /* TileGenerator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TileGenerator; sourceTree = BUILT_PRODUCTS_DIR; };
 		14DBB9491A6AB7AE006DD969 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -386,18 +398,22 @@
 		14999AD91A674E5800BF9F20 /* User Interface */ = {
 			isa = PBXGroup;
 			children = (
-				146ABA6D1A4F0EE0002A1B6B /* MainMenu.xib */,
-				1408F7CF1A6EDE54005B8EF8 /* CityInterfaceView.swift */,
-				1408F7CD1A6EDDE6005B8EF8 /* CityInterfaceView.xib */,
 				146ABA691A4F0EE0002A1B6B /* GameScene.sks */,
-				146ABA671A4F0EE0002A1B6B /* GameScene.swift */,
-				14999ADA1A674E6E00BF9F20 /* CityWorld.swift */,
 				14999ADC1A674EEF00BF9F20 /* Camera.swift */,
+				1408F7CF1A6EDE54005B8EF8 /* CityInterfaceView.swift */,
+				14999ADA1A674E6E00BF9F20 /* CityWorld.swift */,
 				14999ADE1A674F7300BF9F20 /* DebugOverlay.swift */,
-				1447BC661A6811C5000872BE /* TileImages.swift */,
-				14A599661A6D86E00092714A /* MapView.swift */,
+				146ABA671A4F0EE0002A1B6B /* GameScene.swift */,
+				1481F1301A757C95005B5A16 /* GameView.swift */,
 				1408F7D11A6EE931005B8EF8 /* GameViewController.swift */,
+				146987B11A7575010029F630 /* GameWindow.swift */,
+				1481F1361A75A900005B5A16 /* MainSceneView.swift */,
+				1481F1381A75A99D005B5A16 /* MapView.swift */,
+				1447BC661A6811C5000872BE /* TileImages.swift */,
 				14A822F91A71630500F1590B /* ToolCursor.swift */,
+				146987AF1A7574C40029F630 /* GameWindow.xib */,
+				146ABA6D1A4F0EE0002A1B6B /* MainMenu.xib */,
+				14B822F91A767FB10071F299 /* OverlayMapView.swift */,
 			);
 			name = "User Interface";
 			sourceTree = "<group>";
@@ -405,7 +421,9 @@
 		14A599601A6D4CF00092714A /* build */ = {
 			isa = PBXGroup;
 			children = (
-				14A599611A6D4CF00092714A /* final.png */,
+				14B822F71A761A9A0071F299 /* final-3x3.png */,
+				1481F12C1A757A15005B5A16 /* final-8x8.png */,
+				1481F12D1A757A15005B5A16 /* final-16x16.png */,
 				14A599621A6D4CF00092714A /* tiles_index.json */,
 			);
 			path = build;
@@ -571,14 +589,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				14A599631A6D4D020092714A /* final.png in Resources */,
+				1481F12E1A757A15005B5A16 /* final-8x8.png in Resources */,
+				1481F12F1A757A15005B5A16 /* final-16x16.png in Resources */,
 				14A599641A6D4D020092714A /* tiles_index.json in Resources */,
+				146987B01A7574C40029F630 /* GameWindow.xib in Resources */,
 				1489D1241A5A1C490055EF58 /* tiles.json in Resources */,
-				1408F7CE1A6EDDE6005B8EF8 /* CityInterfaceView.xib in Resources */,
 				14DFA6F81A59B6CD008A43E7 /* MainMenu.xib in Resources */,
 				1447BC6A1A682A14000872BE /* images.atlas in Resources */,
 				146ABA6A1A4F0EE0002A1B6B /* GameScene.sks in Resources */,
 				146ABA6C1A4F0EE0002A1B6B /* Images.xcassets in Resources */,
+				14B822F81A761A9A0071F299 /* final-3x3.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -602,7 +622,7 @@
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = "/bin/sh ./generate-tiles.sh --tile-size 16 --input-file Swiftopolis/tiles.json --output-dir build/";
+			shellPath = "/bin/sh ./generate-tiles.sh";
 			shellScript = "";
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -626,6 +646,7 @@
 				1400EE6E1A618C4A001FA1F2 /* Smoothers.swift in Sources */,
 				146ABAC61A5495AB002A1B6B /* TileConstants.swift in Sources */,
 				14999ADD1A674EEF00BF9F20 /* Camera.swift in Sources */,
+				1481F1391A75A99D005B5A16 /* MapView.swift in Sources */,
 				146ABAB41A509511002A1B6B /* AbstractToolEffect.swift in Sources */,
 				141617A81A5CA5B00066E8F1 /* ExplosionTerrainEffect.swift in Sources */,
 				1408F7D01A6EDE54005B8EF8 /* CityInterfaceView.swift in Sources */,
@@ -636,6 +657,7 @@
 				1419E8D11A5B402B00F725D2 /* TileBehavior.swift in Sources */,
 				147F2F301A63058500E4039E /* DisasterEngine.swift in Sources */,
 				147F2F2E1A62DC9E00E4039E /* Utils.swift in Sources */,
+				146987B21A7575010029F630 /* GameWindow.swift in Sources */,
 				14AB41AB1A5B4C2D003A4F7D /* FloodTerrainBehavior.swift in Sources */,
 				143059D61A5A5CE7009AF7C2 /* TileLoader.swift in Sources */,
 				1454AC741A5EE73B008F35B6 /* CoalPowerTileBehavior.swift in Sources */,
@@ -645,6 +667,7 @@
 				146ABAB81A509640002A1B6B /* ToolStroke.swift in Sources */,
 				146ABABC1A509889002A1B6B /* Tool.swift in Sources */,
 				141D9C5E1A583EC900B053DF /* CityProblem.swift in Sources */,
+				1481F1311A757C95005B5A16 /* GameView.swift in Sources */,
 				146987A81A753ABE0029F630 /* StadiumTileBehavior.swift in Sources */,
 				142F22FC1A71B3D000663165 /* ToolPreview.swift in Sources */,
 				14938FFA1A64850B0093AC02 /* CityHistory.swift in Sources */,
@@ -663,7 +686,7 @@
 				1454AC7A1A5EEBF7008F35B6 /* FireStationTileBehavior.swift in Sources */,
 				14AB41B51A5B5F21003A4F7D /* CityLocation.swift in Sources */,
 				1447BC671A6811C5000872BE /* TileImages.swift in Sources */,
-				14A599671A6D86E00092714A /* MapView.swift in Sources */,
+				1481F1371A75A901005B5A16 /* MainSceneView.swift in Sources */,
 				14AB41B31A5B5ED0003A4F7D /* CityMessage.swift in Sources */,
 				143059D41A5A5C04009AF7C2 /* Tiles.swift in Sources */,
 				146ABAC41A54958A002A1B6B /* City.swift in Sources */,
@@ -675,6 +698,7 @@
 				146987AC1A753E1D0029F630 /* SeaportTileBehavior.swift in Sources */,
 				14DFA6FC1A59BD75008A43E7 /* SwiftyJSON.swift in Sources */,
 				146ABAB61A50954A002A1B6B /* ToolEffect.swift in Sources */,
+				14B822FA1A767FB10071F299 /* OverlayMapView.swift in Sources */,
 				145351481A62BEB8004F8C46 /* MapGenerator.swift in Sources */,
 				146ABA661A4F0EE0002A1B6B /* AppDelegate.swift in Sources */,
 				147F2F321A6364F700E4039E /* Sprite.swift in Sources */,

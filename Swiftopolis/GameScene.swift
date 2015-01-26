@@ -19,7 +19,7 @@ class GameScene: SKScene, Subscriber {
     }
     private var toolNode: SKShapeNode?
     
-    let city = City()
+    private var city: City!
     private let barrier = dispatch_queue_create("com.chrisbenincasa.micropolis", DISPATCH_QUEUE_CONCURRENT)
     
     private var debugOverlay = DebugOverlay()
@@ -33,7 +33,22 @@ class GameScene: SKScene, Subscriber {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
+        commonInit()
+    }
+    
+    init(city: City) {
+        super.init()
+        self.city = city
+        commonInit()
+    }
+    
+    init(city: City, size: CGSize) {
+        super.init(size: size)
+        self.city = city
+        commonInit()
+    }
+    
+    private func commonInit() {
         // Make the background clear to the drawn map underneath shows
         self.backgroundColor = NSColor.clearColor()
         
@@ -68,13 +83,16 @@ class GameScene: SKScene, Subscriber {
         self.addChild(world)
         self.camera.name = "camera"
         world.addChild(camera)
+
     }
     
     // MARK: Overrides and Animation
     
     override func didMoveToView(view: SKView) {
-        if let mapView = view as? MapView {
+        if let mapView = view as? MainSceneView {
+            println("what")
             mapView.currentPoint = self.camera.position
+            mapView.city = self.city
         }
         
         view.needsDisplay = true
@@ -139,12 +157,12 @@ class GameScene: SKScene, Subscriber {
         */
         self.camera.position = point
         
-        if let v = self.view as? MapView {
+        if let v = self.view as? MainSceneView {
             v.currentPoint = CGPoint(x: Int(point.x / 16), y: Int(point.y / 16))
-            println(CGPoint(x: Int(point.x / 16), y: Int(point.y / 16)))
             v.needsDisplay = true
             v.needsToDrawRect(v.frame)
         }
+
     }
     
     // MARK: Simulation Helpers

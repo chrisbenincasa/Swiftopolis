@@ -9,21 +9,30 @@
 import Cocoa
 import SpriteKit
 
-private let GlobalTileImages = TileImages()
+private var GlobalTileImages: [Int : TileImages] = [:]
 
 class TileImages {
+    private(set) var name: String
+    private(set) var size: Int
     private(set) var spriteByName: [String : SKSpriteNode] = [:]
     private(set) var spriteImages: [SpriteKind : [Int : NSImage]] = [:]
     private(set) var tileImages: [TileImage!] = []
     private(set) var images: [NSImage] = []
     
-    class var instance: TileImages {
-        let this = GlobalTileImages
-        this.initTileImages()
-        return this
+    class func instance(size: Int) -> TileImages {
+        if let images = GlobalTileImages[size] {
+            return images
+        } else {
+            let this = TileImages(name: "\(size)x\(size)", size: size)
+            this.initTileImages()
+            GlobalTileImages[size] = this
+            return this
+        }
     }
     
-    init() {
+    init(name: String, size: Int) {
+        self.name = name
+        self.size = size
         initTileImageMap()
     }
     
@@ -69,8 +78,7 @@ class TileImages {
             return
         }
         
-        // TODO use dynamic name and dynamic dimensions
-        self.images = loadTileImages("final.png", 16)
+        self.images = loadTileImages("final-\(self.name).png", self.size)
     }
     
     private func loadTileImages(imageName: String, _ size: Int) -> [NSImage] {
@@ -87,7 +95,7 @@ class TileImages {
             img.lockFocusFlipped(false)
             NSGraphicsContext.currentContext()?.imageInterpolation = .None // dat pixel effect
             
-            let offsetY = Int(refImage!.size.height) - ((i + 1) * 16)
+            let offsetY = Int(refImage!.size.height) - ((i + 1) * size)
             let destinationRect = NSRect(x: 0, y: 0, width: size, height: size)
             let sourceRect = NSRect(x: 0, y: offsetY, width: size, height: size)
             refImage!.drawInRect(destinationRect, fromRect: sourceRect, operation: .CompositeSourceOver, fraction: 1.0, respectFlipped: true, hints: nil)

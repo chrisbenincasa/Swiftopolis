@@ -11,5 +11,4 @@ import SpriteKit
 
 class CityWorld: SKNode {
 
-
 }

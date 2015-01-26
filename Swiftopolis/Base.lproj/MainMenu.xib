@@ -114,7 +114,7 @@
                     </customView>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xvf-gu-6CX">
                         <rect key="frame" x="22" y="440" width="32" height="50"/>
-                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="8258CF51-39AB-416E-AE1C-B92EFCA61BA8" imagePosition="overlaps" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="Jy5-jC-9xz">
+                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="D021E8CC-33B3-4583-AD72-FB9CCB5CD326" imagePosition="overlaps" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="Jy5-jC-9xz">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -124,7 +124,7 @@
                     </button>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6dS-dK-e44">
                         <rect key="frame" x="62" y="440" width="32" height="50"/>
-                        <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="8423D243-56B7-44F8-82A5-C3D83D7B736E" imagePosition="overlaps" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="zew-pp-WcA">
+                        <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="ED51FFC6-C835-47F8-BF47-7E87129AA7A0" imagePosition="overlaps" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="zew-pp-WcA">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -132,6 +132,9 @@
                             <action selector="useResidentialZoneTool:" target="PU2-Zf-viC" id="I9f-a5-H6f"/>
                         </connections>
                     </button>
+                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZNF-8T-UYp" customClass="MapView2" customModule="Swiftopolis" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="633" width="202" height="167"/>
+                    </customView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="539" firstAttribute="bottom" secondItem="372" secondAttribute="bottom" id="541"/>
@@ -143,21 +146,18 @@
         </window>
         <customObject id="494" customClass="AppDelegate" customModule="Swiftopolis" customModuleProvider="target">
             <connections>
-                <outlet property="skView" destination="539" id="540"/>
                 <outlet property="window" destination="371" id="532"/>
             </connections>
         </customObject>
         <customObject id="420" customClass="NSFontManager"/>
         <viewController id="PU2-Zf-viC" customClass="GameViewController" customModule="Swiftopolis">
             <connections>
-                <outlet property="mapView" destination="539" id="OxE-GN-CUu"/>
                 <outlet property="view" destination="372" id="O6Y-sR-6xi"/>
             </connections>
         </viewController>
-        <viewController id="pIK-J2-bLi"/>
     </objects>
     <resources>
-        <image name="8258CF51-39AB-416E-AE1C-B92EFCA61BA8" width="34" height="50">
+        <image name="D021E8CC-33B3-4583-AD72-FB9CCB5CD326" width="34" height="50">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOzxYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISksLzU4VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA
@@ -340,7 +340,7 @@ AKIApACmAKgArQDEAMYAyChqKG8oeiiDKJYomiitKLgowSjGKM4o0SjWKOUo6SjwKPgpBSkKKQwpDikT
 KRspHikjKSspLilAKUMpSAAAAAAAAAIBAAAAAAAAAD8AAAAAAAAAAAAAAAAAAClKA
 </mutableData>
         </image>
-        <image name="8423D243-56B7-44F8-82A5-C3D83D7B736E" width="34" height="50">
+        <image name="ED51FFC6-C835-47F8-BF47-7E87129AA7A0" width="34" height="50">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOzxYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISksLzU4VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA
