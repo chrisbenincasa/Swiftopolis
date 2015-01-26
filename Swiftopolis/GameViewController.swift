@@ -20,7 +20,6 @@ class GameViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        println("generating map: \(city.map.width)x\(city.map.height)")
         let cityMap = MapGenerator(city: city, width: city.map.width, height: city.map.height).generateNewCity()
         city.setCityMap(cityMap)
         

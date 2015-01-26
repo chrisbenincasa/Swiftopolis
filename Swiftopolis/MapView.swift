@@ -15,9 +15,9 @@ class MapView: NSView {
     
     var city: City?
     var currentPoint: CGPoint?
-    private let VIEWPORT_WIDTH = 25
-    private let VIEWPORT_HEIGHT = 25
-    private var tileSize: Int = 16
+    private let VIEWPORT_WIDTH = 25  // viewport width in tiles
+    private let VIEWPORT_HEIGHT = 25 // viewport height in tiles
+    private var tileSize: Int = 16   // Tile size in pixels
     private var tileImages: TileImages!
     
     init(tileSize: Int, frame: NSRect) {
@@ -51,9 +51,8 @@ class MapView: NSView {
             // for var y = 0, cameraY = yMax - 1; cameraY >= yMin; y++, cameraY-- { // inverted Y axis
             for var y = 0, cameraY = yMin; cameraY < yMax; y++, cameraY++ {
                 for var x = 0, cameraX = xMin; cameraX < xMax; x++, cameraX++ {
-                    let mapX = cameraX + (c.map.width / 2)
-                    // let mapY = cameraY + (city.map.height / 2) // Inverted Y axis
-                    let mapY = c.map.height - (cameraY + (c.map.height / 2)) - 1
+                    // Camera positions have (0, 0) at the center of the map while
+                    let (mapX, mapY) = cameraPositionToMapPosition(c, cameraX, cameraY)
                     if let tile = c.map.getTile(x: mapX, y: mapY) {
                         let imageInfo = self.tileImages.getTileImageInfo(Int(tile), acycle: 0)
                         let image = self.tileImages.getImage(imageInfo.imageNumber)
@@ -66,6 +65,16 @@ class MapView: NSView {
             }
             
             CGContextFlush(context)
+        }
+    }
+    
+    private func cameraPositionToMapPosition(city: City, _ x: Int, _ y: Int, invertedY: Bool = INVERT_Y_AXIS) -> (Int, Int) {
+        let mapX = x + (city.map.width / 2)
+        
+        if invertedY {
+            return (mapX, y + (city.map.height / 2))
+        } else {
+            return (mapX, city.map.height - (y + (city.map.height / 2)) - 1)
         }
     }
 

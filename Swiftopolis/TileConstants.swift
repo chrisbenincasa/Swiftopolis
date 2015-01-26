@@ -348,6 +348,54 @@ struct TileConstants {
     
     // MARK: Tile Property helpers
     
+    static func isZone(tile: UInt16) -> Bool {
+        assert(tile & LOMASK == tile, "Upper bits set!")
+        
+        return tile >= RESBASE
+    }
+    
+    static func isResidentialZoneAny(tile: UInt16) -> Bool {
+        assert(tile & LOMASK == tile, "Upper bits set!")
+        
+        if var tile = Tiles.get(Int(tile)) {
+            if let owner = tile.owner {
+                tile = owner
+            }
+            
+            return tile.getAttribute("residential-zone") == "true"
+        } else {
+            return false
+        }
+    }
+    
+    static func isCommercialZone(tile: UInt16) -> Bool {
+        assert(tile & LOMASK == tile, "Upper bits set!")
+        
+        if var tile = Tiles.get(Int(tile)) {
+            if let owner = tile.owner {
+                tile = owner
+            }
+            
+            return tile.getAttribute("commercial-zone") == "true"
+        } else {
+            return false
+        }
+    }
+    
+    static func isIndustrialZone(tile: UInt16) -> Bool {
+        assert(tile & LOMASK == tile, "Upper bits set!")
+        
+        if var tile = Tiles.get(Int(tile)) {
+            if let owner = tile.owner {
+                tile = owner
+            }
+            
+            return tile.getAttribute("industrial-zone") == "true"
+        } else {
+            return false
+        }
+    }
+    
     static func isIndustructible(tile: UInt16) -> Bool {
         assert(tile & LOMASK == tile, "Upper bits set!")
         
