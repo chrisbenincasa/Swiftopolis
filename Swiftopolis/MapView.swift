@@ -98,8 +98,8 @@ class MapView: NSView {
     }
     
     private func normalizeWorldPoint(var point: CGPoint) -> CGPoint {
-        let halfVewportWidth = VIEWPORT_WIDTH % 2 == 0 ? VIEWPORT_WIDTH >> 1 : (VIEWPORT_WIDTH >> 1)
-        let halfVewportHeight = VIEWPORT_HEIGHT % 2 == 0 ? VIEWPORT_HEIGHT >> 1 : (VIEWPORT_HEIGHT >> 1)
+        let halfVewportWidth = VIEWPORT_WIDTH >> 1   // Ints round down
+        let halfVewportHeight = VIEWPORT_HEIGHT >> 1 // Ints round down
         let halfWidth = city.map.width >> 1
         let halfHeight = city.map.height >> 1
 
