@@ -73,6 +73,8 @@ class GameScene: SKScene, Subscriber {
         
         // Set anchor point to the middle of the screen
         self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        
+        // DEBUG
         self.addChild(debugOverlay)
         debugOverlay.addChild(worldCircle)
         debugOverlay.addChild(cameraCircle)
@@ -83,7 +85,7 @@ class GameScene: SKScene, Subscriber {
         self.addChild(world)
         self.camera.name = "camera"
         world.addChild(camera)
-
+        println("world started at \(world.position)")
     }
     
     // MARK: Overrides and Animation
@@ -134,12 +136,6 @@ class GameScene: SKScene, Subscriber {
     
     override func mouseDown(theEvent: NSEvent) {
         let location = theEvent.locationInNode(world)
-        let quarterWidth = pixelWidth >> 2
-        let quarterHeight = pixelHeight >> 2
-        
-        let x = location.x <= 0 ? max(-quarterWidth, Int(location.x)) : min(quarterWidth, Int(location.x))
-        let y = location.y <= 0 ? max(-quarterHeight, Int(location.y)) : min(quarterHeight, Int(location.y))
-        var point = CGPoint(x: x, y: y)
         
         /* Uncomment for camera move animation
         let moveAction = SKAction.moveTo(point, duration: 1.0)
@@ -155,10 +151,19 @@ class GameScene: SKScene, Subscriber {
         let group = SKAction.group([moveAction, drawAction])
         self.camera.runAction(group)
         */
-        self.camera.position = point
+        
+        // convert to map point
+        let x = (Int(location.x) / TILE_SIZE) + (city.map.width >> 1)
+        let y = (city.map.height >> 1) - (Int(location.y) / TILE_SIZE)
+        
+        // This is still a little busted because we don't validate/normalize the point we set to the new camera
+        // location, so you can keep clicking but the map won't move
+        // The map validates/normalizes the requested point to draw around, but we set blindly
+        // TODO: Factor out the validation methods so we can use them here before blindly setting the camera point
+        self.camera.position = location
         
         if let v = self.view as? MainSceneView {
-            v.currentPoint = CGPoint(x: Int(point.x / 16), y: Int(point.y / 16))
+            v.currentPoint = CGPoint(x: x, y: y)
             v.needsDisplay = true
             v.needsToDrawRect(v.frame)
         }

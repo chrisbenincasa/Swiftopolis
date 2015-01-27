@@ -26,7 +26,7 @@ class GameViewController: NSViewController {
         // TODO: factor out view construction
         var baseFrame = mainView.frame
         baseFrame.origin = CGPoint(x: 0, y: 0)
-        map = MapView(tileSize: 16, frame: baseFrame)
+        map = MapView(tileSize: 16, city: city, frame: baseFrame)
         mainView.addSubview(map)
         mainView.city = city
         
@@ -51,7 +51,9 @@ class GameViewController: NSViewController {
         mainView.needsDisplay = true
         mainView.needsToDrawRect(map.frame)
 
-        smallMap = OverlayMapView(city: city, frame: NSRect(origin: CGPoint(x: 0, y: Int(view.bounds.size.height) - 320 - 90), size: CGSize(width: 320, height: 320)))
+        let smallMapPosition = CGPoint(x: 0, y: Int(view.bounds.size.height) - 320 - 90)
+        smallMap = OverlayMapView(city: city, frame: NSRect(origin: smallMapPosition, size: CGSize(width: city.map.width * 3, height: city.map.height * 3)))
+        smallMap.connectedView = map
         view.addSubview(smallMap)
         smallMap.needsDisplay = true
     }

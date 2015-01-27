@@ -13,15 +13,27 @@ private let INVERT_Y_AXIS = false
 
 class MapView: NSView {
     
-    var city: City?
-    var currentPoint: CGPoint?
-    private let VIEWPORT_WIDTH = 25  // viewport width in tiles
-    private let VIEWPORT_HEIGHT = 25 // viewport height in tiles
-    private var tileSize: Int = 16   // Tile size in pixels
+    private(set) var city: City!
+    lazy var currentMapPoint: CGPoint = {
+        [unowned self] in return CGPoint(x: self.city.map.width / 2, y: self.city.map.height / 2)
+    }()
+    
+    private var VIEWPORT_WIDTH: Int {
+        get {
+            return Int(self.frame.width) / self.tileSize
+        }
+    }
+    private var VIEWPORT_HEIGHT: Int {
+        get {
+            return Int(self.frame.height) / self.tileSize
+        }
+    }
+    private(set) var tileSize: Int = 16   // Tile size in pixels
     private var tileImages: TileImages!
     
-    init(tileSize: Int, frame: NSRect) {
+    init(tileSize: Int, city: City, frame: NSRect) {
         super.init(frame: frame)
+        self.city = city
         self.tileSize = tileSize
         self.tileImages = TileImages.instance(tileSize)
     }
@@ -32,43 +44,42 @@ class MapView: NSView {
     }
     
     override func drawRect(dirtyRect: NSRect) {
-        if self.currentPoint == nil {
-            self.currentPoint = CGPoint(x: self.frame.width / 2, y: self.frame.height / 2)
+        if city == nil {
+            return
         }
         
-        if let c = self.city {
-            var context = NSGraphicsContext.currentContext()!.CGContext
-            
-            let point = self.currentPoint!
-            let halfWidth = Int(c.map.width >> 1)
-            let halfHeight = Int(c.map.height >> 1)
-            
-            let xMin = max(-halfWidth, Int(point.x) - VIEWPORT_WIDTH)
-            let xMax = min(halfWidth, Int(point.x) + VIEWPORT_WIDTH)
-            let yMin = max(-halfHeight, Int(point.y) - VIEWPORT_HEIGHT)
-            let yMax = min(halfHeight, Int(point.y) + VIEWPORT_HEIGHT)
-            
-            // for var y = 0, cameraY = yMax - 1; cameraY >= yMin; y++, cameraY-- { // inverted Y axis
-            for var y = 0, cameraY = yMin; cameraY < yMax; y++, cameraY++ {
-                for var x = 0, cameraX = xMin; cameraX < xMax; x++, cameraX++ {
-                    // Camera positions have (0, 0) at the center of the map while
-                    let (mapX, mapY) = cameraPositionToMapPosition(c, cameraX, cameraY)
-                    if let tile = c.map.getTile(x: mapX, y: mapY) {
-                        let imageInfo = self.tileImages.getTileImageInfo(Int(tile), acycle: 0)
-                        let image = self.tileImages.getImage(imageInfo.imageNumber)
-                        let position = CGPoint(x: x * tileSize, y: y * tileSize)
-                        image.drawAtPoint(position, fromRect: NSRect.zeroRect, operation: .CompositeSourceOver, fraction: 1.0)
-                    } else {
-                        println("tile not found. \(mapX, mapY)")
-                    }
+        var context = NSGraphicsContext.currentContext()!.CGContext
+        
+        let viewPoint = mapPointToViewPoint(self.currentMapPoint)
+        
+        var point = normalizeWorldPoint(viewPoint)
+        
+        let xMin = Int(point.x) - (VIEWPORT_WIDTH >> 1)
+        let xMax = Int(point.x) + (VIEWPORT_WIDTH >> 1)
+        let yMin = Int(point.y) - (VIEWPORT_HEIGHT >> 1)
+        let yMax = Int(point.y) + (VIEWPORT_HEIGHT >> 1)
+        
+//        println("xMin = \(xMin), yMin = \(yMin), xMax = \(xMax), yMax = \(yMax)")
+        // for var y = 0, cameraY = yMax - 1; cameraY >= yMin; y++, cameraY-- { // inverted Y axis
+        for var y = 0, cameraY = yMin; cameraY < yMax; y++, cameraY++ {
+            for var x = 0, cameraX = xMin; cameraX < xMax; x++, cameraX++ {
+                // Camera positions have (0, 0) at the center of the map while
+                let (mapX, mapY) = cameraPositionToMapPosition(cameraX, cameraY)
+                if let tile = city.map.getTile(x: mapX, y: mapY) {
+                    let imageInfo = self.tileImages.getTileImageInfo(Int(tile), acycle: 0)
+                    let image = self.tileImages.getImage(imageInfo.imageNumber)
+                    let position = CGPoint(x: x * tileSize, y: y * tileSize)
+                    image.drawAtPoint(position, fromRect: NSRect.zeroRect, operation: .CompositeSourceOver, fraction: 1.0)
+                } else {
+                    println("tile not found. \(mapX, mapY)")
                 }
             }
-            
-            CGContextFlush(context)
         }
+        
+        CGContextFlush(context)
     }
     
-    private func cameraPositionToMapPosition(city: City, _ x: Int, _ y: Int, invertedY: Bool = INVERT_Y_AXIS) -> (Int, Int) {
+    private func cameraPositionToMapPosition(x: Int, _ y: Int, invertedY: Bool = INVERT_Y_AXIS) -> (Int, Int) {
         let mapX = x + (city.map.width / 2)
         
         if invertedY {
@@ -78,4 +89,33 @@ class MapView: NSView {
         }
     }
 
+    private func mapPointToViewPoint(point: CGPoint) -> CGPoint {
+        return CGPoint(x: Int(point.x) - (city.map.width / 2), y: (city.map.height / 2) - Int(point.y))
+    }
+    
+    private func viewPointToMapPoint(point: CGPoint) -> CGPoint {
+        return CGPoint(x: Int(point.x) + (city.map.width / 2), y: (city.map.height / 2) - Int(point.y))
+    }
+    
+    private func normalizeWorldPoint(var point: CGPoint) -> CGPoint {
+        let halfVewportWidth = VIEWPORT_WIDTH % 2 == 0 ? VIEWPORT_WIDTH >> 1 : (VIEWPORT_WIDTH >> 1)
+        let halfVewportHeight = VIEWPORT_HEIGHT % 2 == 0 ? VIEWPORT_HEIGHT >> 1 : (VIEWPORT_HEIGHT >> 1)
+        let halfWidth = city.map.width >> 1
+        let halfHeight = city.map.height >> 1
+
+        
+        if Int(point.x) <= -(halfWidth - halfVewportWidth) {
+            point.x = -CGFloat(halfWidth - halfVewportWidth)
+        } else if Int(point.x) > (halfWidth - halfVewportWidth) {
+            point.x = CGFloat(halfWidth - halfVewportWidth)
+        }
+        
+        if Int(point.y) <= -(halfHeight - halfVewportHeight) {
+            point.y = -CGFloat(halfHeight - halfVewportHeight)
+        } else if Int(point.y) > (halfHeight - halfVewportHeight) {
+            point.y = CGFloat(halfHeight - halfVewportHeight)
+        }
+        
+        return point
+    }
 }

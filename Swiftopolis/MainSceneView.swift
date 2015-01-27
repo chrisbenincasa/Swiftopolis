@@ -11,21 +11,15 @@ import Cocoa
 import SpriteKit
 
 class MainSceneView: SKView {
-    var city: City? {
-        didSet {
-            for subview in subviews {
-                if let map = subview as? MapView {
-                    map.city = self.city
-                }
-            }
-        }
-    }
+    var city: City?
     
     var currentPoint: CGPoint? {
         didSet {
-            for subview in subviews {
-                if let map = subview as? MapView {
-                    map.currentPoint = self.currentPoint
+            if self.currentPoint != nil {
+                for subview in subviews {
+                    if let map = subview as? MapView {
+                        map.currentMapPoint = self.currentPoint!
+                    }
                 }
             }
         }
