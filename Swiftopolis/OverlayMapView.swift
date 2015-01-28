@@ -31,14 +31,12 @@ class OverlayMapView: NSView {
     override func mouseDown(theEvent: NSEvent) {
         let localPoint = self.convertPoint(theEvent.locationInWindow, fromView: nil)
         let mapPoint = CGPoint(x: Int(localPoint.x) / tileSize, y: city.map.height - Int(localPoint.y) / tileSize)
-        println("map point = \(mapPoint)")
         moveViewTo(mapPoint)
     }
     
     override func mouseDragged(theEvent: NSEvent) {
         let localPoint = self.convertPoint(theEvent.locationInWindow, fromView: nil)
         let mapPoint = CGPoint(x: Int(localPoint.x) / tileSize, y: city.map.height - Int(localPoint.y) / tileSize)
-        println("map point = \(mapPoint)")
         moveViewTo(mapPoint)
     }
     
@@ -79,34 +77,27 @@ class OverlayMapView: NSView {
         }
         
         if connectedView != nil {
-//            let currentPoint 
+            let viewport = connectedView!.getViewport()
+            
+            let tSize = CGFloat(tileSize)
+            let size = CGSize(width: viewport.width * tSize, height: viewport.height * tSize)
+            let point = CGPointMake(viewport.origin.x * tSize, self.frame.height - (viewport.origin.y * tSize))
+            var viewRect = NSRect(origin: point, size: size)
+            viewRect.offset(dx: -(viewport.width / 2) * tSize, dy: -(viewport.width / 2) * tSize)
+            NSColor.whiteColor().setStroke()
+            NSBezierPath.strokeRect(viewRect)
         }
-        
-        CGContextFlush(context)
     }
     
     private func moveViewTo(point: NSPoint) {
         if connectedView == nil {
-            println("connected view is nil")
             return
         }
         
-        var newPoint = NSPoint(x: Int(point.x) - (city.map.width / 2), y: (city.map.height / 2) - Int(point.y))
-//        if newPoint.x < 0 && Int(newPoint.x) < -(city.map.width >> 2) {
-//            newPoint.x = -CGFloat(city.map.width >> 2)
-//        } else if newPoint.x > 0 && Int(newPoint.x) > (city.map.width >> 2) {
-//            newPoint.x = CGFloat(city.map.width >> 2)
-//        }
-//        
-//        if newPoint.y < 0 && Int(newPoint.y) < -(city.map.height >> 2) {
-//            newPoint.y = -CGFloat(city.map.height >> 2)
-//        } else if newPoint.y > 0 && Int(newPoint.y) > (city.map.height >> 2) {
-//            newPoint.y = CGFloat(city.map.height >> 2)
-//        }
-        
-//        println(newPoint)
+        var newPoint = NSPoint(x: point.x - CGFloat(city.map.width / 2), y: CGFloat(city.map.height / 2) - point.y)
         connectedView.currentMapPoint = point
         connectedView.needsDisplay = true
+        self.needsDisplay = true
     }
     
     private func drawTileAtPoint(tile: UInt16, x: Int, y: Int) {
@@ -114,5 +105,26 @@ class OverlayMapView: NSView {
         let image = self.tileImages.getImage(imageInfo.imageNumber)
         let position = CGPoint(x: x * tileSize, y: y * tileSize)
         image.drawAtPoint(position, fromRect: NSRect.zeroRect, operation: .CompositeSourceOver, fraction: 1.0)
+    }
+    
+    private func normalizeMapPoint(var point: CGPoint, viewport: CGSize = CGSize.zeroSize) -> CGPoint {
+        let halfVewportWidth = Int(viewport.width) >> 1   // Ints round down
+        let halfVewportHeight = Int(viewport.height) >> 1 // Ints round down
+        let halfWidth = city.map.width >> 1
+        let halfHeight = city.map.height >> 1
+        
+        if Int(point.x) <= -(halfWidth - halfVewportWidth) {
+            point.x = -CGFloat(halfWidth - halfVewportWidth)
+        } else if Int(point.x) > (halfWidth - halfVewportWidth) {
+            point.x = CGFloat(halfWidth - halfVewportWidth)
+        }
+        
+        if Int(point.y) <= -(halfHeight - halfVewportHeight) {
+            point.y = -CGFloat(halfHeight - halfVewportHeight)
+        } else if Int(point.y) > (halfHeight - halfVewportHeight) {
+            point.y = CGFloat(halfHeight - halfVewportHeight)
+        }
+        
+        return point
     }
 }

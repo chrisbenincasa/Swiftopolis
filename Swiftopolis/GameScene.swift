@@ -92,7 +92,6 @@ class GameScene: SKScene, Subscriber {
     
     override func didMoveToView(view: SKView) {
         if let mapView = view as? MainSceneView {
-            println("what")
             mapView.currentPoint = self.camera.position
             mapView.city = self.city
         }
@@ -265,7 +264,6 @@ class GameScene: SKScene, Subscriber {
     
     func citySoundFired(data: [NSObject : AnyObject]) {
         if let sound = data["sound"] as? Sound {
-            println("sound fired!")
         }
     }
 }

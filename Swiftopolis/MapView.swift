@@ -75,8 +75,12 @@ class MapView: NSView {
                 }
             }
         }
-        
-        CGContextFlush(context)
+    }
+    
+    func getViewport() -> NSRect {
+        let point = normalizeMapPoint(self.currentMapPoint)
+        let size = CGSizeMake(CGFloat(VIEWPORT_WIDTH), CGFloat(VIEWPORT_HEIGHT))
+        return NSRect(origin: point, size: size)
     }
     
     private func cameraPositionToMapPosition(x: Int, _ y: Int, invertedY: Bool = INVERT_Y_AXIS) -> (Int, Int) {
@@ -98,22 +102,42 @@ class MapView: NSView {
     }
     
     private func normalizeWorldPoint(var point: CGPoint) -> CGPoint {
-        let halfVewportWidth = VIEWPORT_WIDTH >> 1   // Ints round down
-        let halfVewportHeight = VIEWPORT_HEIGHT >> 1 // Ints round down
+        let halfViewportWidth = VIEWPORT_WIDTH >> 1   // Ints round down
+        let halfViewportHeight = VIEWPORT_HEIGHT >> 1 // Ints round down
         let halfWidth = city.map.width >> 1
         let halfHeight = city.map.height >> 1
 
-        
-        if Int(point.x) <= -(halfWidth - halfVewportWidth) {
-            point.x = -CGFloat(halfWidth - halfVewportWidth)
-        } else if Int(point.x) > (halfWidth - halfVewportWidth) {
-            point.x = CGFloat(halfWidth - halfVewportWidth)
+        if Int(point.x) <= -(halfWidth - halfViewportWidth) {
+            point.x = -CGFloat(halfWidth - halfViewportWidth)
+        } else if Int(point.x) > (halfWidth - halfViewportWidth) {
+            point.x = CGFloat(halfWidth - halfViewportWidth)
         }
         
-        if Int(point.y) <= -(halfHeight - halfVewportHeight) {
-            point.y = -CGFloat(halfHeight - halfVewportHeight)
-        } else if Int(point.y) > (halfHeight - halfVewportHeight) {
-            point.y = CGFloat(halfHeight - halfVewportHeight)
+        if Int(point.y) <= -(halfHeight - halfViewportHeight) {
+            point.y = -CGFloat(halfHeight - halfViewportHeight)
+        } else if Int(point.y) > (halfHeight - halfViewportHeight) {
+            point.y = CGFloat(halfHeight - halfViewportHeight)
+        }
+        
+        return point
+    }
+    
+    private func normalizeMapPoint(var point: CGPoint) -> CGPoint {
+        let halfViewportWidth = VIEWPORT_WIDTH >> 1   // Ints round down
+        let halfViewportHeight = VIEWPORT_HEIGHT >> 1 // Ints round down
+        let halfWidth = city.map.width >> 1
+        let halfHeight = city.map.height >> 1
+        
+        if Int(point.x) - halfViewportWidth < 0 {
+            point.x = CGFloat(halfViewportWidth)
+        } else if Int(point.x) + halfViewportWidth > city.map.width {
+            point.x = CGFloat(city.map.width - halfViewportWidth)
+        }
+        
+        if Int(point.y) - halfViewportHeight < 0 {
+            point.y = CGFloat(halfViewportHeight)
+        } else if Int(point.y) + halfViewportHeight > city.map.height {
+            point.y = CGFloat(city.map.height - halfViewportHeight)
         }
         
         return point
