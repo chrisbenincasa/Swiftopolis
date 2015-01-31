@@ -24,6 +24,8 @@ class TileJsonLoader: TileLoader {
                 let tile = processTile(subJson)
             }
         }
+        
+        Tiles.sharedInstance.tiles.foreach(resolveTileReferences)
     }
     
     func processTile(tile: JSON) -> Tile {
@@ -31,20 +33,56 @@ class TileJsonLoader: TileLoader {
         let tileName = tile["name"].string!
         
         let t = Tile(tileNumber: tileNumber, tileName: tileName)
-        let rawDict = tile.dictionaryObject
-        if let images = rawDict?["images"] as? [String] {
+        
+        if let images = tile["images"].arrayObject as? [String] {
             t.images = images
         }
         
-        if let flammable = rawDict?["flammable"] as? Bool {
-            t.canBurn = flammable
-        } else {
-            t.canBurn = false
+        t.canBurn = tile["flammeable"].bool.getOrElse(false)
+        t.canBulldoze = tile["bulldozable"].bool.getOrElse(false)
+        t.canConduct = tile["conducts"].bool.getOrElse(false)
+        t.overWater = tile["overWater"].bool.getOrElse(false)
+        t.isZone = tile["zone"].bool.getOrElse(false)
+        if let ownerNumber = tile["owner"].int {
+            t.ownerTileNumber = ownerNumber
+            t.ownerOffsetX = tile["ownerOffsetX"].int
+            t.ownerOffsetY = tile["ownerOffsetY"].int
+        }
+        t.nextAnimationTile = tile["animNext"].int
+        t.onPower = tile["onPower"].int
+        t.onShutdown = tile["onShutdown"].int
+        
+        t.attributes = (tile["attributes"].dictionaryObject as? [String:String]).getOrElse([:])
+        
+        let buildingWidth = tile["buildingInfo"]["width"][0].int
+        let buildingHeight = tile["buildingInfo"]["height"][0].int
+        let buildingMembers = tile["buildingInfo"]["members"][0].arrayObject as? [Int]
+        
+        if buildingWidth != nil && buildingHeight != nil && buildingMembers != nil {
+            let buildingInfo = BuildingInfo(width: buildingWidth!, height: buildingHeight!, memberTileNumbers: buildingMembers!, members: [])
+            t.buildingInfo = buildingInfo
+        } else if tile["buildingInfo"] != nil {
+            println("width = \(buildingWidth), height = \(buildingHeight), members = \(buildingMembers)")
+            println("nil stuff but building info isn't nil")
         }
         
         Tiles.sharedInstance.tilesByName.updateValue(t, forKey: tileName)
         Tiles.sharedInstance.tiles.append(t)
         
         return t
+    }
+    
+    func resolveTileReferences(tile: Tile) {
+        if let ownerNumber = tile.ownerTileNumber {
+            tile.owner = Tiles.load(ownerNumber)
+        }
+        
+        if var buildingInfo = tile.buildingInfo {
+            for num in buildingInfo.memberTileNumbers {
+                buildingInfo.members.append(Tiles.load(num))
+            }
+            
+            tile.buildingInfo = buildingInfo
+        }
     }
 }

@@ -19,6 +19,7 @@ class Tile {
     var canConduct: Bool = true
     var overWater: Bool = true
     var isZone: Bool = false
+    var ownerTileNumber: Int?
     var owner: Tile?
     var ownerOffsetX: Int?
     var ownerOffsetY: Int?
@@ -66,7 +67,7 @@ class Tile {
     private func resolveBuildingInfo(tileMap: [String:Tile]) {
         if let info = self.getAttribute("building") {
             let dimensions = info.componentsSeparatedByString("x")
-            var bi = BuildingInfo(width: dimensions[0].toInt()!, height: dimensions[1].toInt()!, members: [])
+            var bi = BuildingInfo(width: dimensions[0].toInt()!, height: dimensions[1].toInt()!, memberTileNumbers: [], members: [])
             var startTile = self.name.toInt()!
             
             if bi.width >= 3 {
@@ -93,5 +94,6 @@ class Tile {
 struct BuildingInfo {
     var width: Int
     var height: Int
+    var memberTileNumbers: [Int] = []
     var members: [Tile] = []
 }
