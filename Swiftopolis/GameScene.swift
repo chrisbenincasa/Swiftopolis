@@ -17,6 +17,7 @@ class GameScene: SKScene, Subscriber {
             initCursor()
         }
     }
+    private var currentStroke: ToolStroke?
     private var toolNode: SKShapeNode?
     
     private var city: City!
@@ -124,8 +125,8 @@ class GameScene: SKScene, Subscriber {
         if var tool = toolNode {
             let location = theEvent.locationInNode(self)
             let cityPoint = getPoint(location)
-            let x = Int(cityPoint.x) * TILE_SIZE - 4
-            let y = Int(cityPoint.y) * TILE_SIZE - 4
+            let x = Int(cityPoint.x - 1) * TILE_SIZE
+            let y = Int(cityPoint.y - 1) * TILE_SIZE
             let newPoint = CGPoint(x: x, y: y)
             if tool.position != newPoint {
                 tool.position = newPoint
@@ -152,21 +153,52 @@ class GameScene: SKScene, Subscriber {
         */
         
         // convert to map point
+        
         let x = (Int(location.x) / TILE_SIZE) + (city.map.width >> 1)
         let y = (city.map.height >> 1) - (Int(location.y) / TILE_SIZE)
         
-        // This is still a little busted because we don't validate/normalize the point we set to the new camera
-        // location, so you can keep clicking but the map won't move
-        // The map validates/normalizes the requested point to draw around, but we set blindly
-        // TODO: Factor out the validation methods so we can use them here before blindly setting the camera point
-        self.camera.position = location
-        
-        if let v = self.view as? MainSceneView {
-            v.currentPoint = CGPoint(x: x, y: y)
-            v.needsDisplay = true
-            v.needsToDrawRect(v.frame)
+        let pressedButtons = NSEvent.pressedMouseButtons()
+        switch pressedButtons {
+        case 1: // left mouse
+            if currentTool == nil {
+                return
+            }
+            
+            if currentTool == .Query {
+                //
+            } else {
+                currentStroke = currentTool.beginStroke(city, x: x, y: y)
+                previewTool()
+            }
+            
+            break
+        case 2: break
+        default: // any other button
+            // This is still a little busted because we don't validate/normalize the point we set to the new camera
+            // location, so you can keep clicking but the map won't move
+            // The map validates/normalizes the requested point to draw around, but we set blindly
+            // TODO: Factor out the validation methods so we can use them here before blindly setting the camera point
+            self.camera.position = location
+            
+            if let v = self.view as? MainSceneView {
+                v.currentPoint = CGPoint(x: x, y: y)
+                v.needsDisplay = true
+                v.needsToDrawRect(v.frame)
+            }
+            break
         }
-
+    }
+    
+    override func mouseUp(theEvent: NSEvent) {
+        if let stroke = currentStroke {
+            let location = stroke.getLocation()
+            let result = stroke.apply()
+            showToolResult(location, result: result)
+            currentStroke = nil
+            
+        }
+        
+        
     }
     
     // MARK: Simulation Helpers
@@ -258,6 +290,31 @@ class GameScene: SKScene, Subscriber {
         toolNode!.strokeColor = toolCursor.borderColor
 
         return toolNode!
+    }
+    
+    private func previewTool() {
+        if let stroke = currentStroke {
+            let preview = stroke.getPreview()
+            let bounds = preview.getBounds()
+            let dirtyRect = NSRect(x: Int(bounds.origin.x) * TILE_SIZE, y: Int(bounds.origin.y) * TILE_SIZE, width: Int(bounds.width) * TILE_SIZE, height: Int(bounds.height) * TILE_SIZE)
+            self.view?.needsToDrawRect(dirtyRect)
+        }
+    }
+    
+    private func showToolResult(location: CityLocation, result: ToolResult) {
+        switch result {
+        case .Success:
+            // TODO fire sound
+            break
+        case .None: break
+        case .InvalidPosition:
+            // TODO show message about bad position
+            break
+        case .InsufficientFunds:
+            // TODO sound + message
+            break
+        default: break
+        }
     }
     
     // MARK: Subscriber Protocol

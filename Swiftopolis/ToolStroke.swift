@@ -107,6 +107,10 @@ class ToolStroke {
         return CGRect(x: x, y: y, width: width, height: height)
     }
     
+    func getLocation() -> CityLocation {
+        return CityLocation(x: self.xSrc, y: self.ySrc)
+    }
+    
     func applyZone(effect: AbstractToolEffect, _ base: Tile) -> Bool {
         if let buildingInfo = base.buildingInfo {
             var cost = tool.cost()
