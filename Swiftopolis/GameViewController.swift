@@ -17,10 +17,25 @@ class GameViewController: NSViewController {
     @IBOutlet var map: MapView!
     @IBOutlet var smallMap: OverlayMapView!
     
+    weak var selectedButton: NSButton? = nil
+    
     // Tool Buttons
     @IBOutlet weak var dozerButton: NSButton!
     @IBOutlet weak var powerButton: NSButton!
     @IBOutlet weak var parkButton: NSButton!
+    @IBOutlet weak var roadButton: NSButton!
+    @IBOutlet weak var railButton: NSButton!
+    @IBOutlet weak var resButton: NSButton!
+    @IBOutlet weak var comButton: NSButton!
+    @IBOutlet weak var indButton: NSButton!
+    @IBOutlet weak var fireButton: NSButton!
+    @IBOutlet weak var queryButton: NSButton!
+    @IBOutlet weak var policeButon: NSButton!
+    @IBOutlet weak var coalButon: NSButton!
+    @IBOutlet weak var nuclearButon: NSButton!
+    @IBOutlet weak var stadiumButon: NSButton!
+    @IBOutlet weak var seaportButon: NSButton!
+    @IBOutlet weak var airportButon: NSButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,10 +89,34 @@ class GameViewController: NSViewController {
     }
     
     @IBAction func useResidentialZoneTool(sender: AnyObject!) {
-//        mapView.onToolChanged(.Residential)
+        (sender as? NSButton).foreach(swapSelectedButton)
+        mainView.onToolChanged(.Residential)
     }
     
     @IBAction func useCommercialZoneTool(sender: AnyObject!) {
-//        mapView.onToolChanged(.Commercial)
+        (sender as? NSButton).foreach(swapSelectedButton)
+        mainView.onToolChanged(.Commercial)
+    }
+    
+    private func swapSelectedButton(button: NSButton) {
+        selectedButton.map(setButtonAsUnselected)
+        setButtonAsSelected(button)
+        selectedButton = button
+    }
+    
+    private func setButtonAsSelected(button: NSButton) {
+        if let originalName = button.image?.name() {
+            let newName = originalName + "hi"
+            button.image = NSImage(named: newName)
+        }
+    }
+    
+    private func setButtonAsUnselected(button: NSButton) {
+        if var originalName = button.image?.name() {
+            if originalName.hasSuffix("hi") {
+                originalName.removeRange(advance(originalName.endIndex, -2)...advance(originalName.endIndex, -1))
+                button.image = NSImage(named: originalName)
+            }
+        }
     }
 }

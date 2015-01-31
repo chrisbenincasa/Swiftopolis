@@ -16,6 +16,15 @@ extension Optional {
         }
     }
     
+    func foreach(f: T -> Void) -> Void {
+        switch self {
+        case .Some(let x):
+            f(x)
+            return
+        case .None: return
+        }
+    }
+    
     func flatMap<Z>(f: T -> Z?) -> Z? {
         switch self {
         case .Some(let a):

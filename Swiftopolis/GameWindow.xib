@@ -23,10 +23,20 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="hbk-MQ-WrP">
-                        <rect key="frame" x="368" y="421" width="120" height="300"/>
+                        <rect key="frame" x="368" y="378" width="120" height="343"/>
                         <subviews>
-                            <button translatesAutoresizingMaskIntoConstraints="NO" id="hhR-HZ-L94">
-                                <rect key="frame" x="0.0" y="266" width="34" height="34"/>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="4Nk-zx-kpu" userLabel="Park">
+                                <rect key="frame" x="86" y="309" width="34" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="7bz-nt-mUo"/>
+                                </constraints>
+                                <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="icpark" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="d7b-Oo-Xsr">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="hhR-HZ-L94" userLabel="Bulldozer">
+                                <rect key="frame" x="0.0" y="309" width="34" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="Sg4-aX-7Nd"/>
                                 </constraints>
@@ -35,8 +45,8 @@
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                             </button>
-                            <button identifier="wire" translatesAutoresizingMaskIntoConstraints="NO" id="Sdf-mI-Til">
-                                <rect key="frame" x="43" y="266" width="34" height="34"/>
+                            <button identifier="wire" translatesAutoresizingMaskIntoConstraints="NO" id="Sdf-mI-Til" userLabel="Wire">
+                                <rect key="frame" x="43" y="309" width="34" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="34" id="6PF-Kc-c42"/>
                                     <constraint firstAttribute="height" constant="34" id="mFz-gg-YJW"/>
@@ -46,29 +56,184 @@
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                             </button>
-                            <button translatesAutoresizingMaskIntoConstraints="NO" id="4Nk-zx-kpu">
-                                <rect key="frame" x="86" y="266" width="34" height="34"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="34" id="7bz-nt-mUo"/>
-                                </constraints>
-                                <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="icpark" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="d7b-Oo-Xsr">
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="YcD-V3-uHn" userLabel="Road">
+                                <rect key="frame" x="0.0" y="277" width="56" height="24"/>
+                                <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="icroad" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="PqK-hK-xe5">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system" size="10"/>
+                                </buttonCell>
+                            </button>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="0Dj-jR-K5u" userLabel="Rail">
+                                <rect key="frame" x="64" y="277" width="56" height="24"/>
+                                <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="icrail" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="Lxt-rc-9vX">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system" size="10"/>
+                                </buttonCell>
+                            </button>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="Eja-fj-Kit" userLabel="Residential">
+                                <rect key="frame" x="0.0" y="219" width="34" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="78a-FX-JfU"/>
+                                    <constraint firstAttribute="width" constant="34" id="e1V-KU-RtY"/>
+                                </constraints>
+                                <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="icres" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="QnF-cr-vg1">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system" size="10"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="useResidentialZoneTool:" target="JOD-MV-PV4" id="rxB-Th-kRg"/>
+                                </connections>
+                            </button>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="a1i-Iw-sxO" userLabel="Commercial">
+                                <rect key="frame" x="43" y="219" width="34" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="34" id="P9t-eV-flJ"/>
+                                    <constraint firstAttribute="height" constant="50" id="wZ8-fg-ZSr"/>
+                                </constraints>
+                                <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="iccom" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="wTa-NJ-PQ8">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system" size="10"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="useCommercialZoneTool:" target="JOD-MV-PV4" id="3jw-Ch-x5f"/>
+                                </connections>
+                            </button>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="NCj-n8-enV" userLabel="Industrial">
+                                <rect key="frame" x="86" y="219" width="34" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="nRJ-2u-aXK"/>
+                                    <constraint firstAttribute="width" constant="34" id="p2X-I8-Mbh"/>
+                                </constraints>
+                                <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="icind" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="Wrb-dh-RU2">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system" size="10"/>
+                                </buttonCell>
+                            </button>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="5Bb-wz-cCm" userLabel="Fire">
+                                <rect key="frame" x="0.0" y="176" width="34" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="cA5-0f-O3j"/>
+                                </constraints>
+                                <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="icfire" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="TpP-E1-sUG">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="B6j-9Q-kDJ" userLabel="Query">
+                                <rect key="frame" x="43" y="176" width="34" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="ZeY-f6-ij8"/>
+                                </constraints>
+                                <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="icqry" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="yln-Qb-Cfc">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="tCN-cd-806" userLabel="Police">
+                                <rect key="frame" x="86" y="176" width="34" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="GKe-yx-TlP"/>
+                                </constraints>
+                                <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="icpol" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="J2f-fB-iHb">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="F8f-Bh-psA" userLabel="Nuclear">
+                                <rect key="frame" x="64" y="126" width="42" height="42"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="42" id="4Mn-wC-GiI"/>
+                                    <constraint firstAttribute="height" constant="42" id="CLC-d4-eaS"/>
+                                </constraints>
+                                <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="icnuc" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="pso-Sv-Buq">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="Qvw-Mj-leE" userLabel="Stadium">
+                                <rect key="frame" x="14" y="76" width="42" height="42"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="42" id="Ql7-BH-kdh"/>
+                                    <constraint firstAttribute="height" constant="42" id="U6j-QM-2mc"/>
+                                </constraints>
+                                <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="icstad" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="Nbh-ur-oRf">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="ib3-Mo-ciy" userLabel="Seaport">
+                                <rect key="frame" x="64" y="76" width="42" height="42"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="42" id="O9m-7E-Nv2"/>
+                                    <constraint firstAttribute="width" constant="42" id="fUA-Wz-zEI"/>
+                                </constraints>
+                                <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="icseap" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="KBc-TW-19j">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="tEu-k2-5pu" userLabel="Airport">
+                                <rect key="frame" x="31" y="10" width="58" height="58"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="58" id="9O9-L7-ZLS"/>
+                                    <constraint firstAttribute="height" constant="58" id="w8w-rJ-AXa"/>
+                                </constraints>
+                                <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="icairp" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="q7l-Oi-V7K">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="Cpj-aw-MQI" userLabel="Coal">
+                                <rect key="frame" x="14" y="126" width="42" height="42"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="42" id="CHS-M7-Pr3"/>
+                                    <constraint firstAttribute="height" constant="42" id="qqP-BC-d3G"/>
+                                </constraints>
+                                <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="iccoal" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="3qs-KE-rcO">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                             </button>
                         </subviews>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="tEu-k2-5pu" secondAttribute="trailing" constant="31" id="2C9-sr-qQF"/>
+                            <constraint firstItem="Cpj-aw-MQI" firstAttribute="centerY" secondItem="F8f-Bh-psA" secondAttribute="centerY" id="2pP-ba-SFf"/>
+                            <constraint firstItem="a1i-Iw-sxO" firstAttribute="top" secondItem="YcD-V3-uHn" secondAttribute="bottom" constant="8" symbolic="YES" id="7BF-Da-ubq"/>
+                            <constraint firstItem="YcD-V3-uHn" firstAttribute="leading" secondItem="5Bb-wz-cCm" secondAttribute="leading" id="7V5-IR-rm5"/>
                             <constraint firstItem="hhR-HZ-L94" firstAttribute="leading" secondItem="hbk-MQ-WrP" secondAttribute="leading" id="7rW-RW-dFa"/>
+                            <constraint firstItem="Cpj-aw-MQI" firstAttribute="top" secondItem="5Bb-wz-cCm" secondAttribute="bottom" constant="8" symbolic="YES" id="9mN-v9-qCU"/>
+                            <constraint firstItem="ib3-Mo-ciy" firstAttribute="centerY" secondItem="Qvw-Mj-leE" secondAttribute="centerY" id="AvN-fI-Oov"/>
+                            <constraint firstItem="YcD-V3-uHn" firstAttribute="leading" secondItem="hhR-HZ-L94" secondAttribute="leading" id="EGP-I0-CvW"/>
                             <constraint firstItem="4Nk-zx-kpu" firstAttribute="top" secondItem="Sdf-mI-Til" secondAttribute="top" id="EwN-Pc-WBu"/>
+                            <constraint firstItem="YcD-V3-uHn" firstAttribute="top" secondItem="hhR-HZ-L94" secondAttribute="bottom" constant="8" symbolic="YES" id="I9O-Ol-T3H"/>
+                            <constraint firstItem="tCN-cd-806" firstAttribute="leading" secondItem="NCj-n8-enV" secondAttribute="leading" id="Mn8-XY-Ecp"/>
+                            <constraint firstItem="tCN-cd-806" firstAttribute="leading" secondItem="4Nk-zx-kpu" secondAttribute="leading" id="Muj-Oi-3S0"/>
+                            <constraint firstItem="F8f-Bh-psA" firstAttribute="leading" secondItem="Cpj-aw-MQI" secondAttribute="trailing" constant="8" symbolic="YES" id="NNr-PO-ke2"/>
+                            <constraint firstItem="Qvw-Mj-leE" firstAttribute="top" secondItem="Cpj-aw-MQI" secondAttribute="bottom" constant="8" symbolic="YES" id="OqJ-RP-fyn"/>
+                            <constraint firstItem="ib3-Mo-ciy" firstAttribute="leading" secondItem="F8f-Bh-psA" secondAttribute="leading" id="RZn-E5-b2r"/>
+                            <constraint firstItem="0Dj-jR-K5u" firstAttribute="leading" secondItem="YcD-V3-uHn" secondAttribute="trailing" constant="8" symbolic="YES" id="SRR-LF-ECk"/>
+                            <constraint firstItem="Cpj-aw-MQI" firstAttribute="leading" secondItem="Qvw-Mj-leE" secondAttribute="leading" id="TuX-G8-Tfl"/>
+                            <constraint firstItem="YcD-V3-uHn" firstAttribute="leading" secondItem="Eja-fj-Kit" secondAttribute="leading" id="XCk-bd-j2J"/>
                             <constraint firstItem="Sdf-mI-Til" firstAttribute="top" secondItem="hbk-MQ-WrP" secondAttribute="top" id="YBj-HU-Y5B"/>
                             <constraint firstAttribute="trailing" secondItem="4Nk-zx-kpu" secondAttribute="trailing" id="Z3X-rv-gGd"/>
+                            <constraint firstAttribute="bottom" secondItem="Cpj-aw-MQI" secondAttribute="bottom" constant="126" id="ZqV-5o-AHo"/>
+                            <constraint firstItem="Cpj-aw-MQI" firstAttribute="top" secondItem="B6j-9Q-kDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="adU-LD-6eD"/>
                             <constraint firstItem="4Nk-zx-kpu" firstAttribute="baseline" secondItem="Sdf-mI-Til" secondAttribute="baseline" id="b3R-VU-Q2I"/>
+                            <constraint firstItem="Eja-fj-Kit" firstAttribute="top" secondItem="YcD-V3-uHn" secondAttribute="bottom" constant="8" symbolic="YES" id="b9J-j8-iQW"/>
                             <constraint firstItem="4Nk-zx-kpu" firstAttribute="top" secondItem="hbk-MQ-WrP" secondAttribute="top" id="d1W-BO-nAf"/>
+                            <constraint firstItem="Cpj-aw-MQI" firstAttribute="top" secondItem="F8f-Bh-psA" secondAttribute="top" id="eZ1-Fn-cef"/>
                             <constraint firstItem="Sdf-mI-Til" firstAttribute="bottom" secondItem="hhR-HZ-L94" secondAttribute="bottom" id="gSs-9S-TbW"/>
+                            <constraint firstAttribute="bottom" secondItem="tEu-k2-5pu" secondAttribute="bottom" constant="10" id="gfh-yH-Udd"/>
                             <constraint firstItem="hhR-HZ-L94" firstAttribute="top" secondItem="hbk-MQ-WrP" secondAttribute="top" id="gkt-ti-ILv"/>
-                            <constraint firstAttribute="height" constant="300" id="ldf-7S-iWa"/>
+                            <constraint firstItem="YcD-V3-uHn" firstAttribute="top" secondItem="0Dj-jR-K5u" secondAttribute="top" id="jig-w5-K95"/>
+                            <constraint firstAttribute="height" constant="343" id="ldf-7S-iWa"/>
                             <constraint firstAttribute="trailing" secondItem="4Nk-zx-kpu" secondAttribute="leading" constant="34" id="mZW-mG-dgK"/>
+                            <constraint firstItem="a1i-Iw-sxO" firstAttribute="leading" secondItem="B6j-9Q-kDJ" secondAttribute="leading" id="nQQ-rq-hAT"/>
+                            <constraint firstItem="tCN-cd-806" firstAttribute="leading" secondItem="B6j-9Q-kDJ" secondAttribute="trailing" constant="9" id="nyX-3k-7s4"/>
+                            <constraint firstItem="Cpj-aw-MQI" firstAttribute="leading" secondItem="hbk-MQ-WrP" secondAttribute="leading" constant="14" id="rj5-pa-Byh"/>
+                            <constraint firstItem="tCN-cd-806" firstAttribute="top" secondItem="B6j-9Q-kDJ" secondAttribute="top" id="xPQ-Kz-5uq"/>
                             <constraint firstItem="Sdf-mI-Til" firstAttribute="centerX" secondItem="hbk-MQ-WrP" secondAttribute="centerX" id="yat-IW-EsE"/>
+                            <constraint firstItem="tCN-cd-806" firstAttribute="top" secondItem="NCj-n8-enV" secondAttribute="bottom" constant="9" id="zp7-7E-yoe"/>
                         </constraints>
                     </customView>
                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="rks-f7-uiq" customClass="MainSceneView" customModule="Swiftopolis">
@@ -196,18 +361,45 @@
         </customObject>
         <viewController id="JOD-MV-PV4" customClass="GameViewController" customModule="Swiftopolis" customModuleProvider="target">
             <connections>
+                <outlet property="airportButon" destination="tEu-k2-5pu" id="f76-km-D08"/>
+                <outlet property="coalButon" destination="Cpj-aw-MQI" id="USh-iQ-LqJ"/>
+                <outlet property="comButton" destination="a1i-Iw-sxO" id="SUv-lo-Zwd"/>
                 <outlet property="dozerButton" destination="hhR-HZ-L94" id="4Gx-jf-3Af"/>
+                <outlet property="fireButton" destination="5Bb-wz-cCm" id="yDk-2a-dD5"/>
+                <outlet property="indButton" destination="NCj-n8-enV" id="XxX-Mm-Zwd"/>
                 <outlet property="mainView" destination="rks-f7-uiq" id="be9-ay-9sZ"/>
+                <outlet property="nuclearButon" destination="F8f-Bh-psA" id="9he-kZ-tma"/>
                 <outlet property="parkButton" destination="4Nk-zx-kpu" id="l1V-Mx-pJZ"/>
+                <outlet property="policeButon" destination="tCN-cd-806" id="rfM-NI-9zE"/>
+                <outlet property="powerButton" destination="Sdf-mI-Til" id="iXA-Fx-8Ka"/>
+                <outlet property="queryButton" destination="B6j-9Q-kDJ" id="rRP-22-YVL"/>
+                <outlet property="railButton" destination="0Dj-jR-K5u" id="Yx0-yb-aEn"/>
+                <outlet property="resButton" destination="Eja-fj-Kit" id="1pd-hh-BY9"/>
+                <outlet property="roadButton" destination="YcD-V3-uHn" id="hTh-hQ-FLc"/>
+                <outlet property="seaportButon" destination="ib3-Mo-ciy" id="vXO-sY-Vrg"/>
                 <outlet property="smallMap" destination="axo-ly-Hr9" id="stL-On-NZL"/>
+                <outlet property="stadiumButon" destination="Qvw-Mj-leE" id="y9G-MJ-o2L"/>
                 <outlet property="view" destination="EiT-Mj-1SZ" id="cs9-e3-9T1"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="qa1-n2-pE2"/>
             </connections>
         </viewController>
     </objects>
     <resources>
+        <image name="icairp" width="58" height="58"/>
+        <image name="iccoal" width="42" height="42"/>
+        <image name="iccom" width="34" height="50"/>
         <image name="icdozr" width="34" height="34"/>
+        <image name="icfire" width="34" height="34"/>
+        <image name="icind" width="34" height="50"/>
+        <image name="icnuc" width="42" height="42"/>
         <image name="icpark" width="34" height="34"/>
+        <image name="icpol" width="34" height="34"/>
+        <image name="icqry" width="34" height="34"/>
+        <image name="icrail" width="56" height="24"/>
+        <image name="icres" width="34" height="50"/>
+        <image name="icroad" width="56" height="24"/>
+        <image name="icseap" width="42" height="42"/>
+        <image name="icstad" width="42" height="42"/>
         <image name="icwire" width="34" height="34"/>
     </resources>
 </document>
