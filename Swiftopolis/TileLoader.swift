@@ -23,8 +23,6 @@ class TileJsonLoader: TileLoader {
             for (_, subJson: JSON) in json {
                 let tile = processTile(subJson)
             }
-            
-            println("Loaded \(Tiles.sharedInstance.tiles.count) tiles.")
         }
     }
     

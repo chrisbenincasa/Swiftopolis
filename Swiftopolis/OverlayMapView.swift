@@ -20,22 +20,22 @@ class OverlayMapView: NSView {
     init(city: City, frame: NSRect) {
         super.init(frame: frame)
         self.city = city
-        self.tileImages = TileImages.instance(self.tileSize)
+        self.tileImages = TileImages.instance(tileSize)
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        self.tileImages = TileImages.instance(self.tileSize)
+        self.tileImages = TileImages.instance(tileSize)
     }
     
     override func mouseDown(theEvent: NSEvent) {
-        let localPoint = self.convertPoint(theEvent.locationInWindow, fromView: nil)
+        let localPoint = convertPoint(theEvent.locationInWindow, fromView: nil)
         let mapPoint = CGPoint(x: Int(localPoint.x) / tileSize, y: city.map.height - Int(localPoint.y) / tileSize)
         moveViewTo(mapPoint)
     }
     
     override func mouseDragged(theEvent: NSEvent) {
-        let localPoint = self.convertPoint(theEvent.locationInWindow, fromView: nil)
+        let localPoint = convertPoint(theEvent.locationInWindow, fromView: nil)
         let mapPoint = CGPoint(x: Int(localPoint.x) / tileSize, y: city.map.height - Int(localPoint.y) / tileSize)
         moveViewTo(mapPoint)
     }
@@ -81,7 +81,7 @@ class OverlayMapView: NSView {
             
             let tSize = CGFloat(tileSize)
             let size = CGSize(width: viewport.width * tSize, height: viewport.height * tSize)
-            let point = CGPointMake(viewport.origin.x * tSize, self.frame.height - (viewport.origin.y * tSize))
+            let point = CGPointMake(viewport.origin.x * tSize, frame.height - (viewport.origin.y * tSize))
             var viewRect = NSRect(origin: point, size: size)
             viewRect.offset(dx: -(viewport.width / 2) * tSize, dy: -(viewport.width / 2) * tSize)
             NSColor.whiteColor().setStroke()
@@ -97,12 +97,12 @@ class OverlayMapView: NSView {
         var newPoint = NSPoint(x: point.x - CGFloat(city.map.width / 2), y: CGFloat(city.map.height / 2) - point.y)
         connectedView.currentMapPoint = point
         connectedView.needsDisplay = true
-        self.needsDisplay = true
+        needsDisplay = true
     }
     
     private func drawTileAtPoint(tile: UInt16, x: Int, y: Int) {
-        let imageInfo = self.tileImages.getTileImageInfo(Int(tile), acycle: 0)
-        let image = self.tileImages.getImage(imageInfo.imageNumber)
+        let imageInfo = tileImages.getTileImageInfo(Int(tile), acycle: 0)
+        let image = tileImages.getImage(imageInfo.imageNumber)
         let position = CGPoint(x: x * tileSize, y: y * tileSize)
         image.drawAtPoint(position, fromRect: NSRect.zeroRect, operation: .CompositeSourceOver, fraction: 1.0)
     }

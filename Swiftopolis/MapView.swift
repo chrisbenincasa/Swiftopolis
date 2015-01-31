@@ -65,6 +65,9 @@ class MapView: NSView {
             for var x = 0, cameraX = xMin; cameraX < xMax; x++, cameraX++ {
                 // Camera positions have (0, 0) at the center of the map while
                 let (mapX, mapY) = cameraPositionToMapPosition(cameraX, cameraY)
+                if !city.withinBounds(x: mapX, y: mapY) {
+                    continue
+                }
                 if let tile = city.map.getTile(x: mapX, y: mapY) {
                     let imageInfo = self.tileImages.getTileImageInfo(Int(tile), acycle: 0)
                     let image = self.tileImages.getImage(imageInfo.imageNumber)

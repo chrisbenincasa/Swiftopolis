@@ -22,18 +22,76 @@
                 <rect key="frame" x="0.0" y="0.0" width="1200" height="800"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="Xce-tm-w46" customClass="MapView" customModule="Swiftopolis">
-                        <rect key="frame" x="0.0" y="401" width="320" height="320"/>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="hbk-MQ-WrP">
+                        <rect key="frame" x="368" y="421" width="120" height="300"/>
+                        <subviews>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="hhR-HZ-L94">
+                                <rect key="frame" x="0.0" y="266" width="34" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="Sg4-aX-7Nd"/>
+                                </constraints>
+                                <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="icdozr" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="LbX-Gr-CG3">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <button identifier="wire" translatesAutoresizingMaskIntoConstraints="NO" id="Sdf-mI-Til">
+                                <rect key="frame" x="43" y="266" width="34" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="34" id="6PF-Kc-c42"/>
+                                    <constraint firstAttribute="height" constant="34" id="mFz-gg-YJW"/>
+                                </constraints>
+                                <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="icwire" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="esO-M0-Oyp">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="4Nk-zx-kpu">
+                                <rect key="frame" x="86" y="266" width="34" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="7bz-nt-mUo"/>
+                                </constraints>
+                                <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="icpark" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="d7b-Oo-Xsr">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="hhR-HZ-L94" firstAttribute="leading" secondItem="hbk-MQ-WrP" secondAttribute="leading" id="7rW-RW-dFa"/>
+                            <constraint firstItem="4Nk-zx-kpu" firstAttribute="top" secondItem="Sdf-mI-Til" secondAttribute="top" id="EwN-Pc-WBu"/>
+                            <constraint firstItem="Sdf-mI-Til" firstAttribute="top" secondItem="hbk-MQ-WrP" secondAttribute="top" id="YBj-HU-Y5B"/>
+                            <constraint firstAttribute="trailing" secondItem="4Nk-zx-kpu" secondAttribute="trailing" id="Z3X-rv-gGd"/>
+                            <constraint firstItem="4Nk-zx-kpu" firstAttribute="baseline" secondItem="Sdf-mI-Til" secondAttribute="baseline" id="b3R-VU-Q2I"/>
+                            <constraint firstItem="4Nk-zx-kpu" firstAttribute="top" secondItem="hbk-MQ-WrP" secondAttribute="top" id="d1W-BO-nAf"/>
+                            <constraint firstItem="Sdf-mI-Til" firstAttribute="bottom" secondItem="hhR-HZ-L94" secondAttribute="bottom" id="gSs-9S-TbW"/>
+                            <constraint firstItem="hhR-HZ-L94" firstAttribute="top" secondItem="hbk-MQ-WrP" secondAttribute="top" id="gkt-ti-ILv"/>
+                            <constraint firstAttribute="height" constant="300" id="ldf-7S-iWa"/>
+                            <constraint firstAttribute="trailing" secondItem="4Nk-zx-kpu" secondAttribute="leading" constant="34" id="mZW-mG-dgK"/>
+                            <constraint firstItem="Sdf-mI-Til" firstAttribute="centerX" secondItem="hbk-MQ-WrP" secondAttribute="centerX" id="yat-IW-EsE"/>
+                        </constraints>
                     </customView>
-                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rks-f7-uiq" customClass="MainSceneView" customModule="Swiftopolis">
-                        <rect key="frame" x="480" y="80" width="720" height="720"/>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="rks-f7-uiq" customClass="MainSceneView" customModule="Swiftopolis">
+                        <rect key="frame" x="496" y="96" width="704" height="704"/>
+                    </customView>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="axo-ly-Hr9" customClass="OverlayMapView" customModule="Swiftopolis" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="421" width="360" height="300"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="300" id="8CY-Tc-U5s"/>
+                            <constraint firstAttribute="width" constant="360" id="UGC-py-SDP"/>
+                        </constraints>
                     </customView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="Xce-tm-w46" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="79" id="2Bw-Go-1xf"/>
-                    <constraint firstItem="Xce-tm-w46" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" id="TbC-M5-ub1"/>
-                    <constraint firstAttribute="trailing" secondItem="Xce-tm-w46" secondAttribute="trailing" constant="880" id="XAR-HX-kSd"/>
-                    <constraint firstAttribute="bottom" secondItem="Xce-tm-w46" secondAttribute="bottom" constant="401" id="Xf4-4F-Hb0"/>
+                    <constraint firstItem="axo-ly-Hr9" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" id="26A-go-pct"/>
+                    <constraint firstItem="rks-f7-uiq" firstAttribute="leading" secondItem="hbk-MQ-WrP" secondAttribute="trailing" constant="8" id="9es-qM-qem"/>
+                    <constraint firstItem="hbk-MQ-WrP" firstAttribute="leading" secondItem="axo-ly-Hr9" secondAttribute="trailing" constant="8" id="IFl-Gs-Qn5"/>
+                    <constraint firstItem="axo-ly-Hr9" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="79" id="Pud-qA-Za1"/>
+                    <constraint firstAttribute="bottom" secondItem="rks-f7-uiq" secondAttribute="bottom" constant="96" id="TTv-Ck-3qc"/>
+                    <constraint firstItem="rks-f7-uiq" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="496" id="aDr-Yx-jyA"/>
+                    <constraint firstAttribute="trailing" secondItem="rks-f7-uiq" secondAttribute="trailing" id="cmQ-Ld-7RO"/>
+                    <constraint firstItem="axo-ly-Hr9" firstAttribute="top" secondItem="hbk-MQ-WrP" secondAttribute="top" id="eUO-Hx-1Qh"/>
+                    <constraint firstItem="rks-f7-uiq" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" id="egw-Ut-Pee"/>
                 </constraints>
             </view>
             <connections>
@@ -138,10 +196,18 @@
         </customObject>
         <viewController id="JOD-MV-PV4" customClass="GameViewController" customModule="Swiftopolis" customModuleProvider="target">
             <connections>
+                <outlet property="dozerButton" destination="hhR-HZ-L94" id="4Gx-jf-3Af"/>
                 <outlet property="mainView" destination="rks-f7-uiq" id="be9-ay-9sZ"/>
+                <outlet property="parkButton" destination="4Nk-zx-kpu" id="l1V-Mx-pJZ"/>
+                <outlet property="smallMap" destination="axo-ly-Hr9" id="stL-On-NZL"/>
                 <outlet property="view" destination="EiT-Mj-1SZ" id="cs9-e3-9T1"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="qa1-n2-pE2"/>
             </connections>
         </viewController>
     </objects>
+    <resources>
+        <image name="icdozr" width="34" height="34"/>
+        <image name="icpark" width="34" height="34"/>
+        <image name="icwire" width="34" height="34"/>
+    </resources>
 </document>

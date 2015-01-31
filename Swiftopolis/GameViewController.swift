@@ -14,11 +14,23 @@ class GameViewController: NSViewController {
     @IBOutlet weak var window: NSWindow!
     @IBOutlet weak var mapView: MapView!
     @IBOutlet weak var mainView: MainSceneView!
-    var map: MapView!
-    var smallMap: OverlayMapView!
+    @IBOutlet var map: MapView!
+    @IBOutlet var smallMap: OverlayMapView!
+    
+    // Tool Buttons
+    @IBOutlet weak var dozerButton: NSButton!
+    @IBOutlet weak var powerButton: NSButton!
+    @IBOutlet weak var parkButton: NSButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // TODO load this different, better, something
+        let start = NSDate()
+        let tileLoader = TileJsonLoader()
+        tileLoader.readTiles(NSBundle.mainBundle().pathForResource("tiles", ofType: "json")!)
+        let end = NSDate()
+        let timeInterval: Double = end.timeIntervalSinceDate(start)
         
         let cityMap = MapGenerator(city: city, width: city.map.width, height: city.map.height).generateNewCity()
         city.setCityMap(cityMap)
@@ -51,10 +63,9 @@ class GameViewController: NSViewController {
         mainView.needsDisplay = true
         mainView.needsToDrawRect(map.frame)
 
-        let smallMapPosition = CGPoint(x: 0, y: Int(view.bounds.size.height) - 320 - 90)
-        smallMap = OverlayMapView(city: city, frame: NSRect(origin: smallMapPosition, size: CGSize(width: city.map.width * 3, height: city.map.height * 3)))
+        // Set up small map
+        smallMap.city = city
         smallMap.connectedView = map
-        view.addSubview(smallMap)
         smallMap.needsDisplay = true
     }
  

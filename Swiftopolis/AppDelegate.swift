@@ -33,15 +33,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var skView: MainSceneView!
     
     func applicationDidFinishLaunching(aNotification: NSNotification) {
-        println("application did finish launching")
         let barrier = dispatch_queue_create("com.chrisbenincasa.micropolis", DISPATCH_QUEUE_CONCURRENT)
-        
-        // TODO load this different, better, something
-        let start = NSDate()
-        let tileLoader = TileJsonLoader()
-        tileLoader.readTiles(NSBundle.mainBundle().pathForResource("tiles", ofType: "json")!)
-        let end = NSDate()
-        let timeInterval: Double = end.timeIntervalSinceDate(start)
         
 //        if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
 //            self.skView!.allowsTransparency = true
