@@ -27,15 +27,15 @@ class OffsetToolEffect: AbstractToolEffect {
     }
     
     func getTile(dx: Int, _ dy: Int) -> UInt16 {
-        return base.getTile(dx, dy)
+        return base.getTile(self.dx + dx, self.dy + dy)
     }
     
     func setTile(dx: Int, _ dy: Int, _ tile: UInt16) {
-        base.setTile(dx, dy, tile)
+        base.setTile(self.dx + dx, self.dy + dy, tile)
     }
     
     func makeSound(dx: Int, _ dy: Int, sound: Sound) {
-        base.makeSound(dx, dy, sound: sound)
+        base.makeSound(self.dx + dx, self.dy + dy, sound: sound)
     }
     
     func spend(amount: Int) {

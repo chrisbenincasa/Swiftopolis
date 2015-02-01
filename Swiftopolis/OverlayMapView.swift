@@ -11,15 +11,22 @@ import Cocoa
 
 class OverlayMapView: NSView {
     
-    var city: City!
-    var connectedView: MapView!
+    var engine: Engine!
+    var connectedView: MainSceneView!
+    
+    private var city: City {
+        get {
+            return engine.city
+        }
+    }
+    
     private let tileSize = 3
     private var tileImages: TileImages!
     private var mapState: MapState = .All
     
-    init(city: City, frame: NSRect) {
+    init(engine: Engine, frame: NSRect) {
         super.init(frame: frame)
-        self.city = city
+        self.engine = engine
         self.tileImages = TileImages.instance(tileSize)
     }
 
@@ -95,7 +102,7 @@ class OverlayMapView: NSView {
         }
         
         var newPoint = NSPoint(x: point.x - CGFloat(city.map.width / 2), y: CGFloat(city.map.height / 2) - point.y)
-        connectedView.currentMapPoint = point
+        engine.setCurrentMapPoint(point)
         connectedView.needsDisplay = true
         needsDisplay = true
     }

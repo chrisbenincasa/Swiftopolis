@@ -20,7 +20,14 @@ class GameScene: SKScene, Subscriber {
     private var currentStroke: ToolStroke?
     private var toolNode: SKShapeNode?
     
-    private var city: City!
+    private var engine: Engine!
+    
+    // Convenience accessor for city
+    private var city: City {
+        get {
+            return engine.city
+        }
+    }
     private let barrier = dispatch_queue_create("com.chrisbenincasa.micropolis", DISPATCH_QUEUE_CONCURRENT)
     
     private var debugOverlay = DebugOverlay()
@@ -37,15 +44,15 @@ class GameScene: SKScene, Subscriber {
         commonInit()
     }
     
-    init(city: City) {
+    init(engine: Engine) {
         super.init()
-        self.city = city
+        self.engine = engine
         commonInit()
     }
     
-    init(city: City, size: CGSize) {
+    init(engine: Engine, size: CGSize) {
         super.init(size: size)
-        self.city = city
+        self.engine = engine
         commonInit()
     }
     
@@ -92,10 +99,9 @@ class GameScene: SKScene, Subscriber {
     // MARK: Overrides and Animation
     
     override func didMoveToView(view: SKView) {
-        if let mapView = view as? MainSceneView {
-            mapView.currentPoint = self.camera.position
-            mapView.city = self.city
-        }
+//        if let mapView = view as? MainSceneView {
+//            mapView.city = self.city
+//        }
         
         view.needsDisplay = true
         view.needsToDrawRect(view.frame)
@@ -153,9 +159,9 @@ class GameScene: SKScene, Subscriber {
         */
         
         // convert to map point
-        
-        let x = (Int(location.x) / TILE_SIZE) + (city.map.width >> 1)
-        let y = (city.map.height >> 1) - (Int(location.y) / TILE_SIZE)
+        let point = engine.currentMapPoint
+        let x = Int(point.x) + (Int(location.x) / TILE_SIZE)
+        let y = Int(point.y) - (Int(location.y) / TILE_SIZE)
         
         let pressedButtons = NSEvent.pressedMouseButtons()
         switch pressedButtons {
@@ -181,7 +187,7 @@ class GameScene: SKScene, Subscriber {
             self.camera.position = location
             
             if let v = self.view as? MainSceneView {
-                v.currentPoint = CGPoint(x: x, y: y)
+                engine.setCurrentMapPoint(CGPoint(x: x, y: y))
                 v.needsDisplay = true
                 v.needsToDrawRect(v.frame)
             }
@@ -195,10 +201,10 @@ class GameScene: SKScene, Subscriber {
             let result = stroke.apply()
             showToolResult(location, result: result)
             currentStroke = nil
-            
+            println(result.toString())
         }
         
-        
+        view?.needsDisplay = true
     }
     
     // MARK: Simulation Helpers
@@ -235,12 +241,12 @@ class GameScene: SKScene, Subscriber {
     // MARK: Drawing Helpers
     
     private func drawGrid() {
-        for var x = -64, y = 0; x <= 64; x += TILE_SIZE, y++ {
+        for var x = -Int(frame.width/2), y = 0; x <= Int(frame.width/2); x += TILE_SIZE, y++ {
             var path = CGPathCreateMutable()
             CGPathMoveToPoint(path, nil, CGFloat(x), 64)
             CGPathAddLineToPoint(path, nil, CGFloat(x), -64)
             let node = SKShapeNode(path: path)
-            if x == -64 || x == 64 {
+            if x == -Int(frame.width/2) || x == Int(frame.width/2) {
                 node.strokeColor = NSColor.redColor()
             } else {
                 node.strokeColor = NSColor.blackColor()
@@ -248,13 +254,13 @@ class GameScene: SKScene, Subscriber {
             world.addChild(node)
         }
         
-        for var y = -64, x = 0; y <= 64; y += TILE_SIZE, x++ {
+        for var y = -Int(frame.height/2), x = 0; y <= Int(frame.height/2); y += TILE_SIZE, x++ {
             var path = CGPathCreateMutable()
             CGPathMoveToPoint(path, nil, -64, CGFloat(y))
             CGPathAddLineToPoint(path, nil, 64, CGFloat(y))
             let node = SKShapeNode(path: path)
             
-            if y == -64 || y == 64 {
+            if y == -Int(frame.height/2) || y == Int(frame.height/2) {
                 node.strokeColor = NSColor.redColor()
             } else {
                 node.strokeColor = NSColor.blackColor()

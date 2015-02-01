@@ -98,6 +98,7 @@
 		14DBB9521A6ABE01006DD969 /* TileReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DBB9511A6ABE01006DD969 /* TileReader.swift */; };
 		14DFA6F81A59B6CD008A43E7 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 146ABA6D1A4F0EE0002A1B6B /* MainMenu.xib */; };
 		14DFA6FC1A59BD75008A43E7 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DFA6FB1A59BD75008A43E7 /* SwiftyJSON.swift */; };
+		14E489671A7E96A00099287F /* Engine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E489661A7E96A00099287F /* Engine.swift */; };
 		14FB3BF81A704634000DA4E7 /* Option_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142420B91A6575F200CB273C /* Option_Extensions.swift */; };
 		14FB3BF91A70478F000DA4E7 /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148069361A5B6CC40004A7B0 /* ArrayExtensions.swift */; };
 /* End PBXBuildFile section */
@@ -248,6 +249,7 @@
 		14DBB9511A6ABE01006DD969 /* TileReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileReader.swift; sourceTree = "<group>"; };
 		14DFA6FA1A59BD75008A43E7 /* SwiftyJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwiftyJSON.h; sourceTree = "<group>"; };
 		14DFA6FB1A59BD75008A43E7 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		14E489661A7E96A00099287F /* Engine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Engine.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -356,6 +358,7 @@
 				14AB41A71A5B4BEE003A4F7D /* Tile Behaviors */,
 				142F22F61A71AF1C00663165 /* Tools */,
 				14999AD91A674E5800BF9F20 /* User Interface */,
+				14E489661A7E96A00099287F /* Engine.swift */,
 			);
 			path = Swiftopolis;
 			sourceTree = "<group>";
@@ -664,6 +667,7 @@
 				14938FF81A6482510093AC02 /* MonsterSprite.swift in Sources */,
 				1454AC781A5EEA1F008F35B6 /* NuclearTileBehavior.swift in Sources */,
 				14999ADB1A674E6E00BF9F20 /* CityWorld.swift in Sources */,
+				14E489671A7E96A00099287F /* Engine.swift in Sources */,
 				146ABAB81A509640002A1B6B /* ToolStroke.swift in Sources */,
 				146ABABC1A509889002A1B6B /* Tool.swift in Sources */,
 				141D9C5E1A583EC900B053DF /* CityProblem.swift in Sources */,

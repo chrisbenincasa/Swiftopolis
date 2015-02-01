@@ -13,10 +13,7 @@ private let INVERT_Y_AXIS = false
 
 class MapView: NSView {
     
-    private(set) var city: City!
-    lazy var currentMapPoint: CGPoint = {
-        [unowned self] in return CGPoint(x: self.city.map.width / 2, y: self.city.map.height / 2)
-    }()
+    private(set) var engine: Engine!
     
     private var VIEWPORT_WIDTH: Int {
         get {
@@ -31,9 +28,9 @@ class MapView: NSView {
     private(set) var tileSize: Int = 16   // Tile size in pixels
     private var tileImages: TileImages!
     
-    init(tileSize: Int, city: City, frame: NSRect) {
+    init(tileSize: Int, engine: Engine, frame: NSRect) {
         super.init(frame: frame)
-        self.city = city
+        self.engine = engine
         self.tileSize = tileSize
         self.tileImages = TileImages.instance(tileSize)
     }
@@ -44,13 +41,9 @@ class MapView: NSView {
     }
     
     override func drawRect(dirtyRect: NSRect) {
-        if city == nil {
-            return
-        }
-        
         var context = NSGraphicsContext.currentContext()!.CGContext
         
-        let viewPoint = mapPointToViewPoint(self.currentMapPoint)
+        let viewPoint = mapPointToViewPoint(engine.currentMapPoint)
         
         var point = normalizeWorldPoint(viewPoint)
         
@@ -65,10 +58,10 @@ class MapView: NSView {
             for var x = 0, cameraX = xMin; cameraX < xMax; x++, cameraX++ {
                 // Camera positions have (0, 0) at the center of the map while
                 let (mapX, mapY) = cameraPositionToMapPosition(cameraX, cameraY)
-                if !city.withinBounds(x: mapX, y: mapY) {
+                if !engine.city.withinBounds(x: mapX, y: mapY) {
                     continue
                 }
-                if let tile = city.map.getTile(x: mapX, y: mapY) {
+                if let tile = engine.city.map.getTile(x: mapX, y: mapY) {
                     let imageInfo = self.tileImages.getTileImageInfo(Int(tile), acycle: 0)
                     let image = self.tileImages.getImage(imageInfo.imageNumber)
                     let position = CGPoint(x: x * tileSize, y: y * tileSize)
@@ -81,34 +74,34 @@ class MapView: NSView {
     }
     
     func getViewport() -> NSRect {
-        let point = normalizeMapPoint(self.currentMapPoint)
+        let point = normalizeMapPoint(engine.currentMapPoint)
         let size = CGSizeMake(CGFloat(VIEWPORT_WIDTH), CGFloat(VIEWPORT_HEIGHT))
         return NSRect(origin: point, size: size)
     }
     
     private func cameraPositionToMapPosition(x: Int, _ y: Int, invertedY: Bool = INVERT_Y_AXIS) -> (Int, Int) {
-        let mapX = x + (city.map.width / 2)
+        let mapX = x + (engine.city.map.width / 2)
         
         if invertedY {
-            return (mapX, y + (city.map.height / 2))
+            return (mapX, y + (engine.city.map.height / 2))
         } else {
-            return (mapX, city.map.height - (y + (city.map.height / 2)) - 1)
+            return (mapX, engine.city.map.height - (y + (engine.city.map.height / 2)) - 1)
         }
     }
 
     private func mapPointToViewPoint(point: CGPoint) -> CGPoint {
-        return CGPoint(x: Int(point.x) - (city.map.width / 2), y: (city.map.height / 2) - Int(point.y))
+        return CGPoint(x: Int(point.x) - (engine.city.map.width / 2), y: (engine.city.map.height / 2) - Int(point.y))
     }
     
     private func viewPointToMapPoint(point: CGPoint) -> CGPoint {
-        return CGPoint(x: Int(point.x) + (city.map.width / 2), y: (city.map.height / 2) - Int(point.y))
+        return CGPoint(x: Int(point.x) + (engine.city.map.width / 2), y: (engine.city.map.height / 2) - Int(point.y))
     }
     
     private func normalizeWorldPoint(var point: CGPoint) -> CGPoint {
         let halfViewportWidth = VIEWPORT_WIDTH >> 1   // Ints round down
         let halfViewportHeight = VIEWPORT_HEIGHT >> 1 // Ints round down
-        let halfWidth = city.map.width >> 1
-        let halfHeight = city.map.height >> 1
+        let halfWidth = engine.city.map.width >> 1
+        let halfHeight = engine.city.map.height >> 1
 
         if Int(point.x) <= -(halfWidth - halfViewportWidth) {
             point.x = -CGFloat(halfWidth - halfViewportWidth)
@@ -128,19 +121,19 @@ class MapView: NSView {
     private func normalizeMapPoint(var point: CGPoint) -> CGPoint {
         let halfViewportWidth = VIEWPORT_WIDTH >> 1   // Ints round down
         let halfViewportHeight = VIEWPORT_HEIGHT >> 1 // Ints round down
-        let halfWidth = city.map.width >> 1
-        let halfHeight = city.map.height >> 1
+        let halfWidth = engine.city.map.width >> 1
+        let halfHeight = engine.city.map.height >> 1
         
         if Int(point.x) - halfViewportWidth < 0 {
             point.x = CGFloat(halfViewportWidth)
-        } else if Int(point.x) + halfViewportWidth > city.map.width {
-            point.x = CGFloat(city.map.width - halfViewportWidth)
+        } else if Int(point.x) + halfViewportWidth > engine.city.map.width {
+            point.x = CGFloat(engine.city.map.width - halfViewportWidth)
         }
         
         if Int(point.y) - halfViewportHeight < 0 {
             point.y = CGFloat(halfViewportHeight)
-        } else if Int(point.y) + halfViewportHeight > city.map.height {
-            point.y = CGFloat(city.map.height - halfViewportHeight)
+        } else if Int(point.y) + halfViewportHeight > engine.city.map.height {
+            point.y = CGFloat(engine.city.map.height - halfViewportHeight)
         }
         
         return point

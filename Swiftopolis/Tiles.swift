@@ -41,4 +41,8 @@ class Tiles {
             return nil
         }
     }
+    
+    class func getTileCount() -> Int {
+        return sharedInstance.tiles.count
+    }
 }

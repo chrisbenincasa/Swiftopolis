@@ -9,7 +9,7 @@
 import Cocoa
 
 class GameViewController: NSViewController {
-    private var city = City()
+    private var engine: Engine!
     
     @IBOutlet weak var window: NSWindow!
     @IBOutlet weak var mapView: MapView!
@@ -19,7 +19,7 @@ class GameViewController: NSViewController {
     
     weak var selectedButton: NSButton? = nil
     
-    // Tool Buttons
+    // MARK: Tool Button outlets
     @IBOutlet weak var dozerButton: NSButton!
     @IBOutlet weak var powerButton: NSButton!
     @IBOutlet weak var parkButton: NSButton!
@@ -40,6 +40,9 @@ class GameViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Create the game engine instance and start injecting it
+        engine = Engine()
+        
         // TODO load this different, better, something
         let start = NSDate()
         let tileLoader = TileJsonLoader()
@@ -47,40 +50,26 @@ class GameViewController: NSViewController {
         let end = NSDate()
         let timeInterval: Double = end.timeIntervalSinceDate(start)
         
-        let cityMap = MapGenerator(city: city, width: city.map.width, height: city.map.height).generateNewCity()
-        city.setCityMap(cityMap)
+        let cityMap = MapGenerator(city: engine.city, width: engine.city.map.width, height: engine.city.map.height).generateNewCity()
+        engine.city.setCityMap(cityMap)
         
         // TODO: factor out view construction
         var baseFrame = mainView.frame
-        baseFrame.origin = CGPoint(x: 0, y: 0)
-        map = MapView(tileSize: 16, city: city, frame: baseFrame)
+        baseFrame.origin = CGPoint.zeroPoint
+        map = MapView(tileSize: 16, engine: engine, frame: baseFrame)
         mainView.addSubview(map)
-        mainView.city = city
+        mainView.map = map
+        mainView.engine = engine
         
-        // TODO: factor out game scene creation
-        let scene = GameScene(city: city, size: self.mainView.frame.size)
-        // Set up SKView
-        self.mainView!.allowsTransparency = true
+        // Set up game scene
+        initGameScene()
         
-        /* Set the scale mode to scale to fit the window */
-        scene.scaleMode = .ResizeFill
-        
-        self.mainView!.presentScene(scene)
-        
-        /* Sprite Kit applies additional optimizations to improve rendering performance */
-        self.mainView!.ignoresSiblingOrder = true
-        
-        self.mainView!.asynchronous = true
-        
-        window.acceptsMouseMovedEvents = true
-        window.makeFirstResponder(self.mainView.scene)
-        
-        mainView.needsDisplay = true
-        mainView.needsToDrawRect(map.frame)
-
         // Set up small map
-        smallMap.city = city
-        smallMap.connectedView = map
+        smallMap.engine = engine
+        smallMap.connectedView = mainView
+        
+        // Redraw
+        mainView.needsDisplay = true
         smallMap.needsDisplay = true
     }
  
@@ -88,6 +77,7 @@ class GameViewController: NSViewController {
         
     }
     
+    // MARK: Tool functions
     @IBAction func useResidentialZoneTool(sender: AnyObject!) {
         (sender as? NSButton).foreach(swapSelectedButton)
         mainView.onToolChanged(.Residential)
@@ -118,5 +108,24 @@ class GameViewController: NSViewController {
                 button.image = NSImage(named: originalName)
             }
         }
+    }
+    
+    private func initGameScene() {
+        let scene = GameScene(engine: engine, size: mainView.frame.size)
+        // Set up SKView
+        self.mainView!.allowsTransparency = true
+        
+        /* Set the scale mode to scale to fit the window */
+        scene.scaleMode = .ResizeFill
+        
+        self.mainView!.presentScene(scene)
+        
+        /* Sprite Kit applies additional optimizations to improve rendering performance */
+        self.mainView!.ignoresSiblingOrder = true
+        
+        self.mainView!.asynchronous = true
+        
+        window.acceptsMouseMovedEvents = true
+        window.makeFirstResponder(self.mainView.scene)
     }
 }

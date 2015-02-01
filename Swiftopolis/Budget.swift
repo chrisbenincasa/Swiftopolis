@@ -43,7 +43,7 @@ class Budget {
     var fireEffect: Int = 1000
     var policeEffect: Int = 1000
     
-    var totalFunds: Int = 0
+    var totalFunds: Int = 50000
     var cashFlow: Int = 0
     
     // Income

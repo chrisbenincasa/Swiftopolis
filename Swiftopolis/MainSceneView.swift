@@ -11,19 +11,8 @@ import Cocoa
 import SpriteKit
 
 class MainSceneView: SKView {
-    var city: City?
-    
-    var currentPoint: CGPoint? {
-        didSet {
-            if self.currentPoint != nil {
-                for subview in subviews {
-                    if let map = subview as? MapView {
-                        map.currentMapPoint = self.currentPoint!
-                    }
-                }
-            }
-        }
-    }
+    var engine: Engine!
+    var map: MapView!
     
     private var trackingArea: NSTrackingArea?
     
@@ -61,6 +50,10 @@ class MainSceneView: SKView {
         if let s = self.scene as? GameScene {
             s.setCurrentTool(newTool)
         }
+    }
+    
+    func getViewport() -> NSRect {
+        return map.getViewport()
     }
     
     override func updateTrackingAreas() {

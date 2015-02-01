@@ -69,10 +69,10 @@ class ToolStroke {
             tile = TileConstants.RESCLR
             break
         case .Commercial:
-            tile = TileConstants.COMBASE
+            tile = TileConstants.COMCLR
             break
         case .Industrial:
-            tile = TileConstants.INDBASE
+            tile = TileConstants.INDCLR
             break
         default: fatalError("Unexpected tool \(tool)")
         }
@@ -88,9 +88,10 @@ class ToolStroke {
             x -= 1
         }
         
-        width = (self.xDest - self.xSrc / (toolSize + 1)) * toolSize
-        
-        if self.xDest < self.xSrc {
+        if xDest >= xSrc {
+            width = ((xDest - xSrc) / toolSize + 1) * toolSize
+        } else {
+            width = ((xDest - xSrc) / toolSize + 1) * toolSize
             x += toolSize - width
         }
         
@@ -98,9 +99,10 @@ class ToolStroke {
             y -= 1
         }
         
-        height = (self.yDest - self.ySrc / (toolSize + 1)) * toolSize
-        
-        if self.yDest < self.ySrc {
+        if yDest >= ySrc {
+            height = ((yDest - ySrc) / toolSize + 1) * toolSize
+        } else {
+            height = ((yDest - ySrc) / toolSize + 1) * toolSize
             y += toolSize - height
         }
         

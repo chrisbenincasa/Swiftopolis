@@ -106,5 +106,7 @@ class ToolPreview: AbstractToolEffect {
             tiles = newArr
             offsetY += add
         }
+        
+        println("offsetX = \(offsetX), offsetY = \(offsetY)")
     }
 }

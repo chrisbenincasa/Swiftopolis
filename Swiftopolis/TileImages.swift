@@ -45,7 +45,8 @@ class TileImages {
         let data = NSFileManager.defaultManager().contentsAtPath(path!)
         let json = JSON(data: data!)
         let length = json.arrayValue.count
-        Utils.initializeArray(&self.tileImages, size: length, value: nil)
+        // TODO remove hardcoded size
+        Utils.initializeArray(&self.tileImages, size: 1000, value: nil)
         for (_, subJson: JSON) in json {
             let tileName = subJson["name"].string
             var tileImage: TileImage? = nil
@@ -67,9 +68,7 @@ class TileImages {
                 tileImage = animatedTile
             }
             
-            if tileName != nil && tileImage != nil {
-                tileImages.insert(tileImage!, atIndex: tileName!.toInt()!)
-            }
+            tileImages[tileName!.toInt()!] = tileImage!
         }
     }
     

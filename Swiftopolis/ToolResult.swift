@@ -13,4 +13,13 @@ enum ToolResult {
     case None
     case InvalidPosition
     case InsufficientFunds
+    
+    func toString() -> String {
+        switch self {
+        case .Success: return "success"
+        case .None: return "error"
+        case .InvalidPosition: return "invalid position"
+        case .InsufficientFunds: return "insufficient funds"
+        }
+    }
 }
