@@ -80,12 +80,14 @@ class TileReader {
                 for frame in a.frames {
                     if let s = frame.image as? TileImageSprite {
                         mapping.ref.drawInRect(&imageRect, offsetX: nil, offsetY: nil, time: t)
+                        imageRect.origin.y -= CGFloat(tileSize)
                     }
                     
                     t += frame.duration
                 }
             } else if let d = mapping.dest as? TileImageSprite {
                 mapping.ref.drawInRect(&imageRect, offsetX: nil, offsetY: nil, time: nil)
+                imageRect.origin.y -= CGFloat(tileSize)
             }
         }
         

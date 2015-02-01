@@ -106,8 +106,6 @@ class SourceImage: TileImage {
             let scaled = scaleImage(basisRect)
             scaled.drawAtPoint(rect.origin, fromRect: NSRect.zeroRect, operation: .CompositeSourceOver, fraction: 1.0)
         }
-
-        rect.origin.y -= CGFloat(targetSize)
     }
     
     private func scaleImage(sourceRect: NSRect) -> NSImage {
