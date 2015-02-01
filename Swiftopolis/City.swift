@@ -207,7 +207,7 @@ class City {
         let end = NSDate()
         let timeInterval: Double = end.timeIntervalSinceDate(start)
         if timeInterval > 1/60 {
-            println("Long simulation step occurred \(phase): \(timeInterval) seconds");
+//            println("Long simulation step occurred \(phase): \(timeInterval) seconds");
         }
     }
     
@@ -498,7 +498,7 @@ class City {
         }
         
         var timeInterval: Double = NSDate().timeIntervalSinceDate(start)
-        println("big for-loop (\(i) iterations) took \(timeInterval) seconds");
+//        println("big for-loop (\(i) iterations) took \(timeInterval) seconds");
         
         census.landValueAverage = landValueCount != 0 ? (landValueTotal / landValueCount) : 0
         
@@ -507,7 +507,7 @@ class City {
         Smoothers.smoothN(&tem, n: 2)
         
         timeInterval = NSDate().timeIntervalSinceDate(start)
-        println("smootnN took \(timeInterval) seconds")
+//        println("smootnN took \(timeInterval) seconds")
         
         start = NSDate()
         
@@ -531,14 +531,14 @@ class City {
         }
         
         timeInterval = NSDate().timeIntervalSinceDate(start)
-        println("second double-for (\(i) iterations) took \(timeInterval) seconds")
+//        println("second double-for (\(i) iterations) took \(timeInterval) seconds")
         
         census.pollutionAverage = landValueCount != 0 ? (landValueTotal / landValueCount) : 0
         
         start = NSDate()
         Smoothers.smoothTerrain(&tem)
         timeInterval = NSDate().timeIntervalSinceDate(start)
-        println("smoothTerrain took \(timeInterval) seconds")
+//        println("smoothTerrain took \(timeInterval) seconds")
         
         map.setTerrainFeatures(tem)
         
@@ -548,7 +548,7 @@ class City {
     
     private func crimeScan() {
         var policeMap = self.map.policeMap
-        for _ in 0...2 {
+        for i in 0...2 {
             Smoothers.smoothFirePoliceMap(&policeMap)
         }
         
@@ -557,11 +557,11 @@ class City {
         map.setPoliceReachMap(policeMap)
         
         var count = 0, sum = 0, cmax = 0
-        map.foreachLandValue { (value: UInt16, index: (Int, Int)) in
+        map.foreachLandValue { [unowned self] (value: UInt16, index: (Int, Int)) in
             let (x, y) = index
             if value != 0 {
                 count++
-                var z: Int = Int(128 - value + self.map.getPopulationDensityAtLocation(x: x, y: y, factor: 1))
+                var z = 128 - Int(value) + Int(self.map.getPopulationDensityAtLocation(x: x, y: y, factor: 1))
                 z = min(300, z)
                 z -= self.map.getPoliceCoverageAtLocation(x: x, y: y, factor: 4)
                 z = min(250, z)
@@ -569,7 +569,8 @@ class City {
                 self.map.setCrimeAtLocation(x: x, y: y, value: UInt16(z), factor: 1)
                 
                 sum += z
-                if z > cmax || (z == cmax && arc4random_uniform(4) == 0) {
+                let rando = arc4random_uniform(4)
+                if z > cmax || (z == cmax && rando == 0) {
                     cmax = z
                     self.map.crimeMaxLocation = CityLocation(x: x * 2, y: y * 2)
                 }
@@ -578,7 +579,7 @@ class City {
             }
         }
 
-        census.crimeAverage = count != 0 ? sum / count : 0
+        census.crimeAverage = count != 0 ? (sum / count) : 0
         
         // TODO: send Police overlay map change event
     }
@@ -968,6 +969,12 @@ class City {
         for subscriber in self.subscribers {
             subscriber.mapOverlayDataChanged?(data)
         }
+    }
+    
+    // MARK: Animation
+    
+    func getAnimationCycle() -> Int {
+        return acycle
     }
     
     // MARK: Private Helpers
