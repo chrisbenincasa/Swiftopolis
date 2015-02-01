@@ -28,6 +28,9 @@ class MapView: NSView {
     private(set) var tileSize: Int = 16   // Tile size in pixels
     private var tileImages: TileImages!
     
+    private var animatedTiles: [CGPoint] = []
+    private var blinkingTiles: [CGPoint] = []
+    
     init(tileSize: Int, engine: Engine, frame: NSRect) {
         super.init(frame: frame)
         self.engine = engine
@@ -76,11 +79,18 @@ class MapView: NSView {
                 if !engine.city.withinBounds(x: mapX, y: mapY) {
                     continue
                 }
-                if let tile = engine.city.map.getTile(x: mapX, y: mapY) {
-                    let imageInfo = self.tileImages.getTileImageInfo(Int(tile), acycle: 0)
+                if var tile = engine.city.map.getTile(x: mapX, y: mapY) {
+                    if TileConstants.isZoneCenter(tile) && !engine.city.isTilePowered(x: mapX, y: mapY) {
+                        tile = TileConstants.LIGHTNINGBOLT
+                    }
+                    let imageInfo = self.tileImages.getTileImageInfo(Int(tile), acycle: engine.city.getAnimationCycle())
                     let image = self.tileImages.getImage(imageInfo.imageNumber)
                     let position = CGPoint(x: x * tileSize, y: y * tileSize)
                     image.drawAtPoint(position, fromRect: NSRect.zeroRect, operation: .CompositeSourceOver, fraction: 1.0)
+                    
+                    if imageInfo.animated {
+                        self.animatedTiles.append(CGPoint(x: mapX, y: mapY))
+                    }
                 } else {
                     println("tile not found. \(mapX, mapY)")
                 }
