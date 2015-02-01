@@ -356,7 +356,6 @@
         <customObject id="7kN-SC-agC" customClass="AppDelegate" customModule="Swiftopolis" customModuleProvider="target">
             <connections>
                 <outlet property="gameViewController" destination="JOD-MV-PV4" id="9hf-b4-MFy"/>
-                <outlet property="skView" destination="rks-f7-uiq" id="VyM-Gd-xq1"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="UTR-AW-6Bt"/>
             </connections>
         </customObject>
