@@ -41,6 +41,22 @@ class MapView: NSView {
     }
     
     override func drawRect(dirtyRect: NSRect) {
+        if dirtyRect == frame {
+            println("request to draw entire frame")
+            drawEntireMap()
+        } else {
+            // TODO: optimize drawing when we don't have to redraw the entire frame
+            drawPortionOfMap(dirtyRect)
+        }
+    }
+    
+    func getViewport() -> NSRect {
+        let point = normalizeMapPoint(engine.currentMapPoint)
+        let size = CGSizeMake(CGFloat(VIEWPORT_WIDTH), CGFloat(VIEWPORT_HEIGHT))
+        return NSRect(origin: point, size: size)
+    }
+    
+    private func drawEntireMap() {
         var context = NSGraphicsContext.currentContext()!.CGContext
         
         let viewPoint = mapPointToViewPoint(engine.currentMapPoint)
@@ -52,7 +68,6 @@ class MapView: NSView {
         let yMin = Int(point.y) - (VIEWPORT_HEIGHT >> 1)
         let yMax = Int(point.y) + (VIEWPORT_HEIGHT >> 1)
         
-//        println("xMin = \(xMin), yMin = \(yMin), xMax = \(xMax), yMax = \(yMax)")
         // for var y = 0, cameraY = yMax - 1; cameraY >= yMin; y++, cameraY-- { // inverted Y axis
         for var y = 0, cameraY = yMin; cameraY < yMax; y++, cameraY++ {
             for var x = 0, cameraX = xMin; cameraX < xMax; x++, cameraX++ {
@@ -73,10 +88,8 @@ class MapView: NSView {
         }
     }
     
-    func getViewport() -> NSRect {
-        let point = normalizeMapPoint(engine.currentMapPoint)
-        let size = CGSizeMake(CGFloat(VIEWPORT_WIDTH), CGFloat(VIEWPORT_HEIGHT))
-        return NSRect(origin: point, size: size)
+    private func drawPortionOfMap(rect: NSRect) {
+        
     }
     
     private func cameraPositionToMapPosition(x: Int, _ y: Int, invertedY: Bool = INVERT_Y_AXIS) -> (Int, Int) {

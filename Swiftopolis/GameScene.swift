@@ -86,6 +86,7 @@ class GameScene: SKScene, Subscriber {
         self.addChild(debugOverlay)
         debugOverlay.addChild(worldCircle)
         debugOverlay.addChild(cameraCircle)
+//        drawGrid()
         
         // Create main nodes
         // World represents the city and camera is the viewpoint.
@@ -93,7 +94,6 @@ class GameScene: SKScene, Subscriber {
         self.addChild(world)
         self.camera.name = "camera"
         world.addChild(camera)
-        println("world started at \(world.position)")
     }
     
     // MARK: Overrides and Animation
@@ -129,11 +129,17 @@ class GameScene: SKScene, Subscriber {
     override func mouseMoved(theEvent: NSEvent) {
         // TODO toss events that are out of the bounds of the scene
         if var tool = toolNode {
-            let location = theEvent.locationInNode(self)
-            let cityPoint = getPoint(location)
-            let x = Int(cityPoint.x - 1) * TILE_SIZE
-            let y = Int(cityPoint.y - 1) * TILE_SIZE
-            let newPoint = CGPoint(x: x, y: y)
+            let location = theEvent.locationInNode(world)
+            var p = Int(floor(location.x) / CGFloat(TILE_SIZE)) - 1 // Adjust for tool center
+            var q = Int(floor(location.y) / CGFloat(TILE_SIZE))
+            
+            if currentTool.size() >= 3 {
+                p--
+                q--
+            }
+            
+            let newPoint = CGPoint(x: p * TILE_SIZE, y: q * TILE_SIZE)
+            
             if tool.position != newPoint {
                 tool.position = newPoint
             }
@@ -173,7 +179,10 @@ class GameScene: SKScene, Subscriber {
             if currentTool == .Query {
                 //
             } else {
-                currentStroke = currentTool.beginStroke(city, x: x, y: y)
+                // Start the current stroke
+                // The point that was clicked represents the center of the current tool, but strokes begin in the top-left
+                // of the tool. Because of this, we adjust the point passed in so it matches what the preview is showing
+                currentStroke = currentTool.beginStroke(city, x: x - currentTool.size() / 2, y: y - currentTool.size() / 2)
                 previewTool()
             }
             
@@ -203,7 +212,7 @@ class GameScene: SKScene, Subscriber {
             currentStroke = nil
             println(result.toString())
         }
-        
+     
         view?.needsDisplay = true
     }
     
@@ -243,8 +252,8 @@ class GameScene: SKScene, Subscriber {
     private func drawGrid() {
         for var x = -Int(frame.width/2), y = 0; x <= Int(frame.width/2); x += TILE_SIZE, y++ {
             var path = CGPathCreateMutable()
-            CGPathMoveToPoint(path, nil, CGFloat(x), 64)
-            CGPathAddLineToPoint(path, nil, CGFloat(x), -64)
+            CGPathMoveToPoint(path, nil, CGFloat(x), frame.width)
+            CGPathAddLineToPoint(path, nil, CGFloat(x), -frame.width)
             let node = SKShapeNode(path: path)
             if x == -Int(frame.width/2) || x == Int(frame.width/2) {
                 node.strokeColor = NSColor.redColor()
@@ -256,8 +265,8 @@ class GameScene: SKScene, Subscriber {
         
         for var y = -Int(frame.height/2), x = 0; y <= Int(frame.height/2); y += TILE_SIZE, x++ {
             var path = CGPathCreateMutable()
-            CGPathMoveToPoint(path, nil, -64, CGFloat(y))
-            CGPathAddLineToPoint(path, nil, 64, CGFloat(y))
+            CGPathMoveToPoint(path, nil, -frame.height, CGFloat(y))
+            CGPathAddLineToPoint(path, nil, frame.height, CGFloat(y))
             let node = SKShapeNode(path: path)
             
             if y == -Int(frame.height/2) || y == Int(frame.height/2) {

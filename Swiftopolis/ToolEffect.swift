@@ -71,7 +71,6 @@ class ToolEffect: AbstractToolEffect {
             for var x = 0; x < preview.tiles[y].count; x++ {
                 let tile = preview.tiles[y][x]
                 if tile != TileConstants.CLEAR {
-                    println("setting tile (\(originX + x - preview.offsetX), \(originY + y - preview.offsetY))")
                     city.setTile(x: originX + x - preview.offsetX, y: originY + y - preview.offsetY, tile: tile)
                     newTileSet = true
                 }
