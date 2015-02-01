@@ -28,7 +28,7 @@ class GameScene: SKScene, Subscriber {
             return engine.city
         }
     }
-    private let barrier = dispatch_queue_create("com.chrisbenincasa.micropolis", DISPATCH_QUEUE_CONCURRENT)
+    private let barrier = dispatch_queue_create("com.chrisbenincasa.micropolis", DISPATCH_QUEUE_SERIAL)
     
     private var debugOverlay = DebugOverlay()
     private var world: CityWorld = CityWorld()
@@ -74,7 +74,7 @@ class GameScene: SKScene, Subscriber {
         city.addSubscriber(self)
         
         // Start the simulation
-        // startSimulationTimer()
+        startSimulationTimer()
         
         // Turn off gravity
         self.physicsWorld.gravity = CGVectorMake(0, 0)
