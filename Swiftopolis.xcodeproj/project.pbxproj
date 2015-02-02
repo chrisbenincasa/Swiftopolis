@@ -30,7 +30,6 @@
 		143059D61A5A5CE7009AF7C2 /* TileLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143059D51A5A5CE7009AF7C2 /* TileLoader.swift */; };
 		14450D181A5CAF7C00218A5E /* Zone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14450D171A5CAF7C00218A5E /* Zone.swift */; };
 		1447BC671A6811C5000872BE /* TileImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1447BC661A6811C5000872BE /* TileImages.swift */; };
-		1447BC6A1A682A14000872BE /* images.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 1447BC691A682A14000872BE /* images.atlas */; };
 		145351481A62BEB8004F8C46 /* MapGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145351471A62BEB8004F8C46 /* MapGenerator.swift */; };
 		1454AC6E1A5E1703008F35B6 /* HospitalChurchTerrainBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1454AC6D1A5E1703008F35B6 /* HospitalChurchTerrainBehavior.swift */; };
 		1454AC701A5EDA11008F35B6 /* CommercialTileBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1454AC6F1A5EDA11008F35B6 /* CommercialTileBehavior.swift */; };
@@ -176,7 +175,6 @@
 		143059D51A5A5CE7009AF7C2 /* TileLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileLoader.swift; sourceTree = "<group>"; };
 		14450D171A5CAF7C00218A5E /* Zone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Zone.swift; sourceTree = "<group>"; };
 		1447BC661A6811C5000872BE /* TileImages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileImages.swift; sourceTree = "<group>"; };
-		1447BC691A682A14000872BE /* images.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = images.atlas; sourceTree = "<group>"; };
 		145351471A62BEB8004F8C46 /* MapGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapGenerator.swift; sourceTree = "<group>"; };
 		1454AC6D1A5E1703008F35B6 /* HospitalChurchTerrainBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HospitalChurchTerrainBehavior.swift; sourceTree = "<group>"; };
 		1454AC6F1A5EDA11008F35B6 /* CommercialTileBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommercialTileBehavior.swift; sourceTree = "<group>"; };
@@ -323,7 +321,6 @@
 		146ABA621A4F0EE0002A1B6B /* Swiftopolis */ = {
 			isa = PBXGroup;
 			children = (
-				1447BC691A682A14000872BE /* images.atlas */,
 				146ABA651A4F0EE0002A1B6B /* AppDelegate.swift */,
 				148069361A5B6CC40004A7B0 /* ArrayExtensions.swift */,
 				141D9C571A56FABD00B053DF /* Budget.swift */,
@@ -598,7 +595,6 @@
 				146987B01A7574C40029F630 /* GameWindow.xib in Resources */,
 				1489D1241A5A1C490055EF58 /* tiles.json in Resources */,
 				14DFA6F81A59B6CD008A43E7 /* MainMenu.xib in Resources */,
-				1447BC6A1A682A14000872BE /* images.atlas in Resources */,
 				146ABA6A1A4F0EE0002A1B6B /* GameScene.sks in Resources */,
 				146ABA6C1A4F0EE0002A1B6B /* Images.xcassets in Resources */,
 				14B822F81A761A9A0071F299 /* final-3x3.png in Resources */,
