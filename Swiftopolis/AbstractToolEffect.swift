@@ -15,7 +15,13 @@ protocol AbstractToolEffect {
     func spend(amount: Int)
 }
 
-class OffsetToolEffect: AbstractToolEffect {
+class OffsetToolEffect: AbstractToolEffect, Printable {
+    // Printable
+    var name = "OffsetToolEffect"
+    var description: String {
+        return "\(name)(\(dx), \(dy))"
+    }
+    
     private(set) var base: AbstractToolEffect
     private(set) var dx: Int
     private(set) var dy: Int
