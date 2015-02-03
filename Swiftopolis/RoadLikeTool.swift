@@ -35,17 +35,28 @@ class RoadLikeTool : ToolStroke {
         var changed = false
         let bounds = getBounds()
         
-        for var i = bounds.height - 1; i >= 0; i-- {
-            for var j = bounds.width - 1; j >= 0; j-- {
-                changed = changed || applySingle(effect)
+        for var i = Int(bounds.height - 1); i >= 0; i-- {
+            for var j = Int(bounds.width - 1); j >= 0; j-- {
+                let translated = OffsetToolEffect(base: effect, dx: Int(bounds.origin.x) + j, dy: Int(bounds.origin.y) + i)
+                changed = changed || applySingle(translated)
             }
         }
         
-        return false
+        return changed
     }
     
     func applyForward(effect: AbstractToolEffect) -> Bool {
-        return false
+        var changed = false
+        let bounds = getBounds()
+        
+        for var i = 0; i <= Int(bounds.height - 1); i++ {
+            for var j = 0; j <= Int(bounds.width - 1); j++ {
+                let translated = OffsetToolEffect(base: effect, dx: Int(bounds.origin.x) + j, dy: Int(bounds.origin.y) + i)
+                changed = changed || applySingle(translated)
+            }
+        }
+        
+        return changed
     }
     
     override func getBounds() -> NSRect {

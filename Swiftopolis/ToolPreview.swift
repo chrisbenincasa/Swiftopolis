@@ -75,13 +75,14 @@ class ToolPreview: AbstractToolEffect {
                 let newLength = offsetX + dx + 1
                 var newArr: [UInt16] = []
                 Utils.initializeArray(&newArr, size: newLength, value: TileConstants.CLEAR)
-                newArr.replaceRange(0..<tile.count, with: tile)
+                newArr[0..<tile.count] = tile[0..<tile.count]
                 tiles[i] = newArr
             } else if offsetX + dx < 0 {
-                let newLength = tile.count - (offsetX + dx)
+                let addLength = -(offsetX + dx)
+                let newLength = tile.count + addLength
                 var newArr: [UInt16] = []
                 Utils.initializeArray(&newArr, size: newLength, value: TileConstants.CLEAR)
-                newArr.replaceRange((offsetX + dx)..<tile.count, with: tile)
+                newArr[addLength..<addLength+tile.count] = tile[0..<tile.count]
                 tiles[i] = newArr
             }
         }
@@ -95,14 +96,14 @@ class ToolPreview: AbstractToolEffect {
             let newLength = offsetY + dy + 1
             var newArr: [[UInt16]] = []
             Utils.initializeMatrix(&newArr, width: newLength, height: width, value: TileConstants.CLEAR)
-            newArr.replaceRange(0..<tiles.count, with: tiles)
+            newArr[0..<tiles.count] = tiles[0..<tiles.count]
             tiles = newArr
         } else if offsetY + dy < 0 {
             let add = -(offsetY + dy)
             let newLength = tiles.count + add
             var newArr: [[UInt16]] = []
             Utils.initializeMatrix(&newArr, width: newLength, height: width, value: TileConstants.CLEAR)
-            newArr.replaceRange(add..<tiles.count, with: tiles)
+            newArr[add..<add+tiles.count] = tiles[0..<tiles.count]
             tiles = newArr
             offsetY += add
         }

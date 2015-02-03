@@ -45,7 +45,6 @@ class MapView: NSView {
     
     override func drawRect(dirtyRect: NSRect) {
         if dirtyRect == frame {
-            println("request to draw entire frame")
             drawEntireMap()
         } else {
             // TODO: optimize drawing when we don't have to redraw the entire frame
@@ -62,9 +61,7 @@ class MapView: NSView {
     private func drawEntireMap() {
         var context = NSGraphicsContext.currentContext()!.CGContext
         
-        let viewPoint = mapPointToViewPoint(engine.currentMapPoint)
-        
-        var point = normalizeWorldPoint(viewPoint)
+        let point = mapPointToViewPoint(engine.currentMapPoint)
         
         let xMin = Int(point.x) - (VIEWPORT_WIDTH >> 1)
         let xMax = Int(point.x) + (VIEWPORT_WIDTH >> 1)

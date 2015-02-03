@@ -45,7 +45,7 @@ class Smoothers {
         }
         
         let timeInterval: Double = NSDate().timeIntervalSinceDate(start)
-        println("smooth (\(i) iterations) took \(timeInterval) seconds");
+//        println("smooth (\(i) iterations) took \(timeInterval) seconds");
     }
     
     class func smoothN(inout tem: [[Int]], n: Int = 2) {

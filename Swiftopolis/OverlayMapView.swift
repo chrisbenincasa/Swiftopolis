@@ -101,8 +101,8 @@ class OverlayMapView: NSView {
             return
         }
         
-        var newPoint = NSPoint(x: point.x - CGFloat(city.map.width / 2), y: CGFloat(city.map.height / 2) - point.y)
-        engine.setCurrentMapPoint(point)
+        let normalized = normalizeMapPoint(point, viewport: connectedView.getViewport().size)
+        engine.setCurrentMapPoint(normalized)
         connectedView.needsDisplay = true
         needsDisplay = true
     }
@@ -114,22 +114,22 @@ class OverlayMapView: NSView {
         image.drawAtPoint(position, fromRect: NSRect.zeroRect, operation: .CompositeSourceOver, fraction: 1.0)
     }
     
-    private func normalizeMapPoint(var point: CGPoint, viewport: CGSize = CGSize.zeroSize) -> CGPoint {
-        let halfVewportWidth = Int(viewport.width) >> 1   // Ints round down
-        let halfVewportHeight = Int(viewport.height) >> 1 // Ints round down
-        let halfWidth = city.map.width >> 1
-        let halfHeight = city.map.height >> 1
+    private func normalizeMapPoint(var point: CGPoint, viewport: NSSize = NSSize.zeroSize) -> CGPoint {
+        let halfViewportWidth = Int(viewport.width) >> 1   // Ints round down
+        let halfViewportHeight = Int(viewport.height) >> 1 // Ints round down
+        let halfWidth = engine.city.map.width >> 1
+        let halfHeight = engine.city.map.height >> 1
         
-        if Int(point.x) <= -(halfWidth - halfVewportWidth) {
-            point.x = -CGFloat(halfWidth - halfVewportWidth)
-        } else if Int(point.x) > (halfWidth - halfVewportWidth) {
-            point.x = CGFloat(halfWidth - halfVewportWidth)
+        if Int(point.x) - halfViewportWidth < 0 {
+            point.x = CGFloat(halfViewportWidth)
+        } else if Int(point.x) + halfViewportWidth > engine.city.map.width {
+            point.x = CGFloat(engine.city.map.width - halfViewportWidth)
         }
         
-        if Int(point.y) <= -(halfHeight - halfVewportHeight) {
-            point.y = -CGFloat(halfHeight - halfVewportHeight)
-        } else if Int(point.y) > (halfHeight - halfVewportHeight) {
-            point.y = CGFloat(halfHeight - halfVewportHeight)
+        if Int(point.y) - halfViewportHeight < 0 {
+            point.y = CGFloat(halfViewportHeight)
+        } else if Int(point.y) + halfViewportHeight > engine.city.map.height {
+            point.y = CGFloat(engine.city.map.height - halfViewportHeight)
         }
         
         return point

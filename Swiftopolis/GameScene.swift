@@ -165,9 +165,12 @@ class GameScene: SKScene, Subscriber {
         */
         
         // convert to map point
+        // TODO: fix this up because this implementation is terrible.
+        // There's no way we should have to do calculations like this in each method
+        // Normalize coordinate systems and make them easily convertable between each other
         let point = engine.currentMapPoint
-        let x = Int(point.x) + (Int(location.x) / TILE_SIZE)
-        let y = Int(point.y) - (Int(location.y) / TILE_SIZE)
+        let x = Int(point.x) + (Int(location.x) / TILE_SIZE) - 1
+        let y = Int(point.y) - (Int(location.y) / TILE_SIZE) - 1
         
         let pressedButtons = NSEvent.pressedMouseButtons()
         switch pressedButtons {
@@ -182,7 +185,7 @@ class GameScene: SKScene, Subscriber {
                 // Start the current stroke
                 // The point that was clicked represents the center of the current tool, but strokes begin in the top-left
                 // of the tool. Because of this, we adjust the point passed in so it matches what the preview is showing
-                currentStroke = currentTool.beginStroke(city, x: x - currentTool.size() / 2, y: y - currentTool.size() / 2)
+                currentStroke = currentTool.beginStroke(city, x: x - (currentTool.size() / 2), y: y - (currentTool.size() / 2))
                 previewTool()
             }
             
@@ -210,7 +213,6 @@ class GameScene: SKScene, Subscriber {
             let result = stroke.apply()
             showToolResult(location, result: result)
             currentStroke = nil
-            println(result.toString())
         }
      
         view?.needsDisplay = true
@@ -255,7 +257,9 @@ class GameScene: SKScene, Subscriber {
             CGPathMoveToPoint(path, nil, CGFloat(x), frame.width)
             CGPathAddLineToPoint(path, nil, CGFloat(x), -frame.width)
             let node = SKShapeNode(path: path)
-            if x == -Int(frame.width/2) || x == Int(frame.width/2) {
+            if x == 0 {
+                node.strokeColor = NSColor.greenColor()
+            } else if x % 5 == 0 {
                 node.strokeColor = NSColor.redColor()
             } else {
                 node.strokeColor = NSColor.blackColor()
@@ -269,7 +273,9 @@ class GameScene: SKScene, Subscriber {
             CGPathAddLineToPoint(path, nil, frame.height, CGFloat(y))
             let node = SKShapeNode(path: path)
             
-            if y == -Int(frame.height/2) || y == Int(frame.height/2) {
+            if y == 0 {
+                node.strokeColor = NSColor.greenColor()
+            } else if y % 5 == 0 {
                 node.strokeColor = NSColor.redColor()
             } else {
                 node.strokeColor = NSColor.blackColor()
@@ -288,8 +294,9 @@ class GameScene: SKScene, Subscriber {
         if currentTool != nil {
             let lastNode = toolNode
             let lastPosition = lastNode != nil ? lastNode!.position : NSPoint(x: 0, y: 0)
+            lastNode?.removeFromParent()
             let newRect = NSRect(origin: NSPoint(x: 0, y: 0), size: NSSize(width: currentTool.size(), height: currentTool.size()))
-            toolCursor = ToolCursor.toolCursorForTool(currentTool, rect: newRect)
+            toolCursor = ToolCursor(tool: currentTool, withRect: newRect)
             toolNode = makeToolCursor()
             toolNode!.position = lastPosition
             self.addChild(toolNode!)
