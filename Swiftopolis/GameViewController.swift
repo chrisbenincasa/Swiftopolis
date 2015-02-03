@@ -88,6 +88,71 @@ class GameViewController: NSViewController {
         mainView.onToolChanged(.Commercial)
     }
     
+    @IBAction func useIndustrailZoneTool(sender: AnyObject!) {
+        (sender as? NSButton).foreach(swapSelectedButton)
+        mainView.onToolChanged(.Industrial)
+    }
+    
+    @IBAction func useBulldozerTool(sender: AnyObject!) {
+        (sender as? NSButton).foreach(swapSelectedButton)
+        mainView.onToolChanged(.Bulldozer)
+    }
+    
+    @IBAction func useParkTool(sender: AnyObject!) {
+        (sender as? NSButton).foreach(swapSelectedButton)
+        mainView.onToolChanged(.Park)
+    }
+    
+    @IBAction func useWireTool(sender: AnyObject!) {
+        (sender as? NSButton).foreach(swapSelectedButton)
+        mainView.onToolChanged(.Wire)
+    }
+    
+    @IBAction func useRoadTool(sender: AnyObject!) {
+        (sender as? NSButton).foreach(swapSelectedButton)
+        mainView.onToolChanged(.Road)
+    }
+    
+    @IBAction func useRailTool(sender: AnyObject!) {
+        (sender as? NSButton).foreach(swapSelectedButton)
+        mainView.onToolChanged(.Rail)
+    }
+    
+    @IBAction func useFireStationTool(sender: AnyObject!) {
+        (sender as? NSButton).foreach(swapSelectedButton)
+        mainView.onToolChanged(.FireStation)
+    }
+    
+    @IBAction func usePoliceStationTool(sender: AnyObject!) {
+        (sender as? NSButton).foreach(swapSelectedButton)
+        mainView.onToolChanged(.PoliceStation)
+    }
+    
+    @IBAction func useQueryTool(sender: AnyObject!) {
+        (sender as? NSButton).foreach(swapSelectedButton)
+        mainView.onToolChanged(.Query)
+    }
+    
+    @IBAction func useCoalTool(sender: AnyObject!) {
+        (sender as? NSButton).foreach(swapSelectedButton)
+        mainView.onToolChanged(.Coal)
+    }
+    
+    @IBAction func useNuclearTool(sender: AnyObject!) {
+        (sender as? NSButton).foreach(swapSelectedButton)
+        mainView.onToolChanged(.Nuclear)
+    }
+    
+    @IBAction func useAirportTool(sender: AnyObject!) {
+        (sender as? NSButton).foreach(swapSelectedButton)
+        mainView.onToolChanged(.Airport)
+    }
+    
+    @IBAction func useSeaportTool(sender: AnyObject!) {
+        (sender as? NSButton).foreach(swapSelectedButton)
+        mainView.onToolChanged(.Seaport)
+    }
+    
     private func swapSelectedButton(button: NSButton) {
         selectedButton.map(setButtonAsUnselected)
         setButtonAsSelected(button)
