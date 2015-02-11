@@ -2,7 +2,7 @@ Swiftopolis
 ===
 
 Swiftopolis is a port of [Micropolis](https://code.google.com/p/micropolis/) written in Swift. Swiftopolis is heavily based on both 
-Micropolis and [MicropolisJ](https://github.com/jason17055/micropolis-java) written by @jason17055.
+Micropolis and [MicropolisJ](https://github.com/jason17055/micropolis-java) written by [@jason17055](https://github.com/jason17055).
 
 ### Why make another port?
 
