@@ -45,8 +45,10 @@ class MapView: NSView {
     
     override func drawRect(dirtyRect: NSRect) {
         if dirtyRect == frame {
+//            println("needs to draw entire view")
             drawEntireMap()
         } else {
+            println("needs to draw rect = \(dirtyRect)")
             // TODO: optimize drawing when we don't have to redraw the entire frame
             drawPortionOfMap(dirtyRect)
         }
@@ -80,6 +82,14 @@ class MapView: NSView {
                     if TileConstants.isZoneCenter(tile) && !engine.city.isTilePowered(x: mapX, y: mapY) {
                         tile = TileConstants.LIGHTNINGBOLT
                     }
+                    
+                    if let currentPreview = engine.toolPreview {
+                        let t = currentPreview.getTile(mapX, mapY)
+                        if t != TileConstants.CLEAR {
+                            tile = t
+                        }
+                    }
+                    
                     let imageInfo = self.tileImages.getTileImageInfo(Int(tile), acycle: engine.city.getAnimationCycle())
                     let image = self.tileImages.getImage(imageInfo.imageNumber)
                     let position = CGPoint(x: x * tileSize, y: y * tileSize)
@@ -96,7 +106,8 @@ class MapView: NSView {
     }
     
     private func drawPortionOfMap(rect: NSRect) {
-        
+        let point = mapPointToViewPoint(rect.origin)
+        println(point)
     }
     
     private func cameraPositionToMapPosition(x: Int, _ y: Int, invertedY: Bool = INVERT_Y_AXIS) -> (Int, Int) {

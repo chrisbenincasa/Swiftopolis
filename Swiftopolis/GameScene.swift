@@ -14,7 +14,7 @@ class GameScene: SKScene, Subscriber {
     private var toolCursor: ToolCursor!
     private var currentTool: Tool! {
         didSet {
-            initCursor()
+            setToolCursor()
         }
     }
     private var currentStroke: ToolStroke?
@@ -38,6 +38,9 @@ class GameScene: SKScene, Subscriber {
     
     private var pixelWidth = 0
     private var pixelHeight = 0
+    
+    private var lastPoint: CGPoint?
+    private var dragInProgress = false
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -130,20 +133,47 @@ class GameScene: SKScene, Subscriber {
         // TODO toss events that are out of the bounds of the scene
         if var tool = toolNode {
             let location = theEvent.locationInNode(world)
-            var p = Int(floor(location.x) / CGFloat(TILE_SIZE)) - 1 // Adjust for tool center
-            var q = Int(floor(location.y) / CGFloat(TILE_SIZE))
-            
-            if currentTool.size() >= 3 {
-                p--
-                q--
-            }
-            
-            let newPoint = CGPoint(x: p * TILE_SIZE, y: q * TILE_SIZE)
+            let newPoint = getToolPoint(location)
             
             if tool.position != newPoint {
                 tool.position = newPoint
             }
         }
+    }
+    
+    override func mouseDragged(theEvent: NSEvent) {
+        if currentTool == nil {
+            return
+        }
+        
+        dragInProgress = true
+        
+        let location = theEvent.locationInNode(world)
+        let point = engine.currentMapPoint
+        let x = Int(point.x) + (Int(location.x) / TILE_SIZE) - 1
+        let y = Int(point.y) - (Int(location.y) / TILE_SIZE) - 1
+        let newLocation = CGPoint(x: x, y: x)
+        
+        println("location in world = \(location), new location = \(newLocation)")
+        
+        if lastPoint != nil && lastPoint! == newLocation {
+            return
+        }
+        
+        if let stroke = currentStroke {
+            stroke.dragTo(x, y)
+            previewTool()
+            setToolCursor(bounds: stroke.getBounds())
+            
+            let newPoint = getToolPoint(location)
+            if toolNode!.position != newPoint && (newPoint.x < toolNode!.position.x) {
+                toolNode!.position = newPoint
+            }
+        } else if currentTool != nil && currentTool! == .Query {
+            // doQueryTool
+        }
+        
+        lastPoint = newLocation
     }
     
     override func mouseDown(theEvent: NSEvent) {
@@ -208,11 +238,15 @@ class GameScene: SKScene, Subscriber {
     }
     
     override func mouseUp(theEvent: NSEvent) {
+        dragInProgress = false
+        
         if let stroke = currentStroke {
             let location = stroke.getLocation()
             let result = stroke.apply()
             showToolResult(location, result: result)
             currentStroke = nil
+            setToolCursor()
+            println(result.toString())
         }
      
         view?.needsDisplay = true
@@ -290,21 +324,45 @@ class GameScene: SKScene, Subscriber {
         self.currentTool = tool
     }
     
-    private func initCursor() {
+    private func getToolPoint(locationInWorld: CGPoint) -> CGPoint {
+        var p = Int(locationInWorld.x / CGFloat(TILE_SIZE)) // Adjust for tool center
+        var q = Int(locationInWorld.y / CGFloat(TILE_SIZE))
+        
+        if p < 0 {
+            p--
+        }
+        
+        if q < 0 {
+            q--
+        }
+        
+        if currentTool != nil && currentTool.size() >= 3 {
+            p--
+            q--
+        }
+        
+        return CGPoint(x: p * TILE_SIZE, y: q * TILE_SIZE)
+    }
+    
+    private func setToolCursor(bounds: NSRect? = nil) {
         if currentTool != nil {
             let lastNode = toolNode
-            let lastPosition = lastNode != nil ? lastNode!.position : NSPoint(x: 0, y: 0)
+            
+            let standardSize = NSSize(width: currentTool.size(), height: currentTool.size())
+            let newRect = bounds.getOrElse(NSRect(origin: NSPoint.zeroPoint, size: standardSize))
+            let lastPosition = lastNode != nil ? lastNode!.position : NSPoint.zeroPoint
+            
             lastNode?.removeFromParent()
-            let newRect = NSRect(origin: NSPoint(x: 0, y: 0), size: NSSize(width: currentTool.size(), height: currentTool.size()))
+            
             toolCursor = ToolCursor(tool: currentTool, withRect: newRect)
-            toolNode = makeToolCursor()
+            toolNode = makeToolCursor(newRect)
             toolNode!.position = lastPosition
-            self.addChild(toolNode!)
+            world.addChild(toolNode!)
         }
     }
     
-    private func makeToolCursor() -> SKShapeNode {
-        let shapeRect = NSRect(x: 0, y: 0, width: currentTool.size() * TILE_SIZE, height: currentTool.size() * TILE_SIZE)
+    private func makeToolCursor(rect: NSRect) -> SKShapeNode {
+        let shapeRect = NSRect(x: 0, y: 0, width: Int(rect.size.width) * TILE_SIZE, height: Int(rect.size.height) * TILE_SIZE)
         toolNode = SKShapeNode(rect: shapeRect)
         toolNode!.fillColor = toolCursor.fillColor
         toolNode!.lineWidth = 2.0
@@ -319,7 +377,11 @@ class GameScene: SKScene, Subscriber {
             let preview = stroke.getPreview()
             let bounds = preview.getBounds()
             let dirtyRect = NSRect(x: Int(bounds.origin.x) * TILE_SIZE, y: Int(bounds.origin.y) * TILE_SIZE, width: Int(bounds.width) * TILE_SIZE, height: Int(bounds.height) * TILE_SIZE)
-            self.view?.needsToDrawRect(dirtyRect)
+            
+            engine.setToolPreview(preview)
+            
+            view?.needsToDrawRect(dirtyRect)
+            view?.needsDisplay = true
         }
     }
     

@@ -17,6 +17,8 @@ class Engine {
     
     private(set) var currentMapPoint: CGPoint
     
+    private(set) var toolPreview: ToolPreview?
+    
     convenience init() {
         self.init(city: City())
     }
@@ -29,5 +31,9 @@ class Engine {
     // TODO: make this super safe
     func setCurrentMapPoint(point: CGPoint) {
         self.currentMapPoint = point
+    }
+    
+    func setToolPreview(preview: ToolPreview?) {
+        self.toolPreview = preview
     }
 }
