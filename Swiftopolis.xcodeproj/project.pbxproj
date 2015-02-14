@@ -95,7 +95,6 @@
 		14DBB94A1A6AB7AE006DD969 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DBB9491A6AB7AE006DD969 /* main.swift */; };
 		14DBB9501A6ABCAC006DD969 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DFA6FB1A59BD75008A43E7 /* SwiftyJSON.swift */; };
 		14DBB9521A6ABE01006DD969 /* TileReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DBB9511A6ABE01006DD969 /* TileReader.swift */; };
-		14DFA6F81A59B6CD008A43E7 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 146ABA6D1A4F0EE0002A1B6B /* MainMenu.xib */; };
 		14DFA6FC1A59BD75008A43E7 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DFA6FB1A59BD75008A43E7 /* SwiftyJSON.swift */; };
 		14E489671A7E96A00099287F /* Engine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E489661A7E96A00099287F /* Engine.swift */; };
 		14FB3BF81A704634000DA4E7 /* Option_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142420B91A6575F200CB273C /* Option_Extensions.swift */; };
@@ -196,7 +195,6 @@
 		146ABA671A4F0EE0002A1B6B /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		146ABA691A4F0EE0002A1B6B /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		146ABA6B1A4F0EE0002A1B6B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		146ABA6E1A4F0EE0002A1B6B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		146ABA741A4F0EE0002A1B6B /* SwiftopolisTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftopolisTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		146ABA791A4F0EE0002A1B6B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		146ABA7A1A4F0EE0002A1B6B /* SwiftopolisTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftopolisTests.swift; sourceTree = "<group>"; };
@@ -412,7 +410,6 @@
 				1447BC661A6811C5000872BE /* TileImages.swift */,
 				14A822F91A71630500F1590B /* ToolCursor.swift */,
 				146987AF1A7574C40029F630 /* GameWindow.xib */,
-				146ABA6D1A4F0EE0002A1B6B /* MainMenu.xib */,
 				14B822F91A767FB10071F299 /* OverlayMapView.swift */,
 			);
 			name = "User Interface";
@@ -594,7 +591,6 @@
 				14A599641A6D4D020092714A /* tiles_index.json in Resources */,
 				146987B01A7574C40029F630 /* GameWindow.xib in Resources */,
 				1489D1241A5A1C490055EF58 /* tiles.json in Resources */,
-				14DFA6F81A59B6CD008A43E7 /* MainMenu.xib in Resources */,
 				146ABA6A1A4F0EE0002A1B6B /* GameScene.sks in Resources */,
 				146ABA6C1A4F0EE0002A1B6B /* Images.xcassets in Resources */,
 				14B822F81A761A9A0071F299 /* final-3x3.png in Resources */,
@@ -743,17 +739,6 @@
 			targetProxy = 14DBB9541A6ABF67006DD969 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		146ABA6D1A4F0EE0002A1B6B /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				146ABA6E1A4F0EE0002A1B6B /* Base */,
-			);
-			name = MainMenu.xib;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		146ABA7C1A4F0EE0002A1B6B /* Debug */ = {
