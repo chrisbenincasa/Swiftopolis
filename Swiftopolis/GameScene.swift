@@ -150,26 +150,34 @@ class GameScene: SKScene, Subscriber {
         
         let location = theEvent.locationInNode(world)
         let point = engine.currentMapPoint
-        let x = Int(point.x) + (Int(location.x) / TILE_SIZE) - 1
-        let y = Int(point.y) - (Int(location.y) / TILE_SIZE) - 1
-        let newLocation = CGPoint(x: x, y: x)
+        let mapPoint = getToolPoint(location)
+        let x = Int(point.x) + (Int(mapPoint.x) / TILE_SIZE)
+        let y = Int(point.y) - (Int(mapPoint.y) / TILE_SIZE) - 1
+        let newLocation = CGPoint(x: x, y: y)
         
-        println("location in world = \(location), new location = \(newLocation)")
-        
-        if lastPoint != nil && lastPoint! == newLocation {
+        if lastPoint.isDefined() && lastPoint! == newLocation {
             return
         }
         
         if let stroke = currentStroke {
             stroke.dragTo(x, y)
             previewTool()
+            var strokeBounds = stroke.getBounds()
+            let newPoint = getToolPoint(location)
+            
             setToolCursor(bounds: stroke.getBounds())
             
-            let newPoint = getToolPoint(location)
-            if toolNode!.position != newPoint && (newPoint.x < toolNode!.position.x) {
-                toolNode!.position = newPoint
+            // Update toolNode position if we're moving west -> east or north -> south
+            lastPoint.foreach { point in
+                if newLocation.x < point.x {
+                    self.toolNode!.position = newPoint
+                } else if newLocation.y > point.y {
+                    self.toolNode!.position = newPoint
+                }
             }
-        } else if currentTool != nil && currentTool! == .Query {
+            
+            view?.needsDisplay = true
+        } else if currentTool != nil && currentTool == .Query {
             // doQueryTool
         }
         
@@ -199,8 +207,12 @@ class GameScene: SKScene, Subscriber {
         // There's no way we should have to do calculations like this in each method
         // Normalize coordinate systems and make them easily convertable between each other
         let point = engine.currentMapPoint
-        let x = Int(point.x) + (Int(location.x) / TILE_SIZE) - 1
-        let y = Int(point.y) - (Int(location.y) / TILE_SIZE) - 1
+        let mapPoint = getToolPoint(location)
+        let x = Int(point.x) + (Int(mapPoint.x) / TILE_SIZE)
+        let y = Int(point.y) - (Int(mapPoint.y) / TILE_SIZE) - 1
+        
+//        println("location in world = \(location)")
+//        println("computed point = \(x), \(y)")
         
         let pressedButtons = NSEvent.pressedMouseButtons()
         switch pressedButtons {
@@ -325,16 +337,8 @@ class GameScene: SKScene, Subscriber {
     }
     
     private func getToolPoint(locationInWorld: CGPoint) -> CGPoint {
-        var p = Int(locationInWorld.x / CGFloat(TILE_SIZE)) // Adjust for tool center
-        var q = Int(locationInWorld.y / CGFloat(TILE_SIZE))
-        
-        if p < 0 {
-            p--
-        }
-        
-        if q < 0 {
-            q--
-        }
+        var p = Int(floor(locationInWorld.x / CGFloat(TILE_SIZE))) // Adjust for tool center
+        var q = Int(floor(locationInWorld.y / CGFloat(TILE_SIZE)))
         
         if currentTool != nil && currentTool.size() >= 3 {
             p--

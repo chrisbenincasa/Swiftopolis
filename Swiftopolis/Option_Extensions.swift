@@ -9,6 +9,18 @@
 import Cocoa
 
 extension Optional {
+    func isEmpty() -> Bool {
+        return self == nil
+    }
+    
+    func isDefined() -> Bool {
+        return !isEmpty()
+    }
+    
+    func get() -> T {
+        return self!
+    }
+    
     func getOrElse(f: @autoclosure () -> T) -> T {
         switch (self) {
         case let .Some(x): return x
