@@ -143,6 +143,12 @@ class City {
         
         switch phase {
         case 0:
+            scycle = (scycle + 1) % 1024
+            cityTime++
+            if (scycle % 2 == 0) {
+//                setValves()
+            }
+//            clearCensus()
             break
         case 1...7:
             mapScan((phase - 1) * band, x1: phase * band)
