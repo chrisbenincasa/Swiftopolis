@@ -78,8 +78,8 @@ class ToolEffect: AbstractToolEffect {
             }
         }
         
-        for sound in preview.sounds {
-//            city
+        for soundInfo in preview.sounds {
+            city.makeSound(soundInfo.sound, location: CityLocation(x: soundInfo.x, y: soundInfo.y))
         }
         
         if newTileSet && preview.cost != 0 {

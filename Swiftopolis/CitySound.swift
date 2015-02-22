@@ -49,8 +49,8 @@ class ExplosionSound: Sound {
     }
 }
 
-class EarthquakeSound: Sound {
+class BuildSound: Sound {
     convenience init() {
-        self.init("earthquake")
+        self.init("layzone")
     }
 }

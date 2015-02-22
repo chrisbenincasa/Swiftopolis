@@ -20,6 +20,20 @@
 		141D9C5A1A56FBCE00B053DF /* Speed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141D9C591A56FBCE00B053DF /* Speed.swift */; };
 		141D9C5C1A56FD4F00B053DF /* Simulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141D9C5B1A56FD4F00B053DF /* Simulation.swift */; };
 		141D9C5E1A583EC900B053DF /* CityProblem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141D9C5D1A583EC900B053DF /* CityProblem.swift */; };
+		1423A9171A9A6CC400480828 /* bop.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1423A9081A9A6C6D00480828 /* bop.wav */; };
+		1423A9181A9A6CC400480828 /* explosion-high.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1423A9091A9A6C6D00480828 /* explosion-high.wav */; };
+		1423A9191A9A6CC400480828 /* explosion-low.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1423A90A1A9A6C6D00480828 /* explosion-low.wav */; };
+		1423A91A1A9A6CC400480828 /* heavytraffic.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1423A90B1A9A6C6D00480828 /* heavytraffic.wav */; };
+		1423A91B1A9A6CC400480828 /* honkhonk-hi.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1423A90C1A9A6C6D00480828 /* honkhonk-hi.wav */; };
+		1423A91C1A9A6CC400480828 /* honkhonk-high.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1423A90D1A9A6C6D00480828 /* honkhonk-high.wav */; };
+		1423A91D1A9A6CC400480828 /* honkhonk-low.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1423A90E1A9A6C6D00480828 /* honkhonk-low.wav */; };
+		1423A91E1A9A6CC400480828 /* honkhonk-med.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1423A90F1A9A6C6D00480828 /* honkhonk-med.wav */; };
+		1423A91F1A9A6CC400480828 /* layzone.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1423A9101A9A6C6D00480828 /* layzone.wav */; };
+		1423A9201A9A6CC400480828 /* monster.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1423A9111A9A6C6D00480828 /* monster.wav */; };
+		1423A9211A9A6CC400480828 /* siren.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1423A9121A9A6C6D00480828 /* siren.wav */; };
+		1423A9221A9A6CC400480828 /* sorry.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1423A9131A9A6C6D00480828 /* sorry.wav */; };
+		1423A9231A9A6CC400480828 /* uhuh.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1423A9141A9A6C6D00480828 /* uhuh.wav */; };
+		1423A9241A9A6CC400480828 /* zombie-roar-5.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1423A9151A9A6C6D00480828 /* zombie-roar-5.wav */; };
 		142420BA1A6575F200CB273C /* Option_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142420B91A6575F200CB273C /* Option_Extensions.swift */; };
 		142420BC1A658BD800CB273C /* DifficultyLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142420BB1A658BD800CB273C /* DifficultyLevel.swift */; };
 		142F22F81A71AF2900663165 /* RoadLikeTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142F22F71A71AF2900663165 /* RoadLikeTool.swift */; };
@@ -139,6 +153,29 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		1423A9161A9A6CA100480828 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = sounds;
+			dstSubfolderSpec = 7;
+			files = (
+				1423A9171A9A6CC400480828 /* bop.wav in CopyFiles */,
+				1423A9181A9A6CC400480828 /* explosion-high.wav in CopyFiles */,
+				1423A9191A9A6CC400480828 /* explosion-low.wav in CopyFiles */,
+				1423A91A1A9A6CC400480828 /* heavytraffic.wav in CopyFiles */,
+				1423A91B1A9A6CC400480828 /* honkhonk-hi.wav in CopyFiles */,
+				1423A91C1A9A6CC400480828 /* honkhonk-high.wav in CopyFiles */,
+				1423A91D1A9A6CC400480828 /* honkhonk-low.wav in CopyFiles */,
+				1423A91E1A9A6CC400480828 /* honkhonk-med.wav in CopyFiles */,
+				1423A91F1A9A6CC400480828 /* layzone.wav in CopyFiles */,
+				1423A9201A9A6CC400480828 /* monster.wav in CopyFiles */,
+				1423A9211A9A6CC400480828 /* siren.wav in CopyFiles */,
+				1423A9221A9A6CC400480828 /* sorry.wav in CopyFiles */,
+				1423A9231A9A6CC400480828 /* uhuh.wav in CopyFiles */,
+				1423A9241A9A6CC400480828 /* zombie-roar-5.wav in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		14DBB9451A6AB7AE006DD969 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -164,6 +201,20 @@
 		141D9C591A56FBCE00B053DF /* Speed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Speed.swift; sourceTree = "<group>"; };
 		141D9C5B1A56FD4F00B053DF /* Simulation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Simulation.swift; sourceTree = "<group>"; };
 		141D9C5D1A583EC900B053DF /* CityProblem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityProblem.swift; sourceTree = "<group>"; };
+		1423A9081A9A6C6D00480828 /* bop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bop.wav; sourceTree = "<group>"; };
+		1423A9091A9A6C6D00480828 /* explosion-high.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "explosion-high.wav"; sourceTree = "<group>"; };
+		1423A90A1A9A6C6D00480828 /* explosion-low.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "explosion-low.wav"; sourceTree = "<group>"; };
+		1423A90B1A9A6C6D00480828 /* heavytraffic.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = heavytraffic.wav; sourceTree = "<group>"; };
+		1423A90C1A9A6C6D00480828 /* honkhonk-hi.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "honkhonk-hi.wav"; sourceTree = "<group>"; };
+		1423A90D1A9A6C6D00480828 /* honkhonk-high.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "honkhonk-high.wav"; sourceTree = "<group>"; };
+		1423A90E1A9A6C6D00480828 /* honkhonk-low.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "honkhonk-low.wav"; sourceTree = "<group>"; };
+		1423A90F1A9A6C6D00480828 /* honkhonk-med.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "honkhonk-med.wav"; sourceTree = "<group>"; };
+		1423A9101A9A6C6D00480828 /* layzone.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = layzone.wav; sourceTree = "<group>"; };
+		1423A9111A9A6C6D00480828 /* monster.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = monster.wav; sourceTree = "<group>"; };
+		1423A9121A9A6C6D00480828 /* siren.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = siren.wav; sourceTree = "<group>"; };
+		1423A9131A9A6C6D00480828 /* sorry.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sorry.wav; sourceTree = "<group>"; };
+		1423A9141A9A6C6D00480828 /* uhuh.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = uhuh.wav; sourceTree = "<group>"; };
+		1423A9151A9A6C6D00480828 /* zombie-roar-5.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "zombie-roar-5.wav"; sourceTree = "<group>"; };
 		142420B91A6575F200CB273C /* Option_Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Option_Extensions.swift; sourceTree = "<group>"; };
 		142420BB1A658BD800CB273C /* DifficultyLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DifficultyLevel.swift; sourceTree = "<group>"; };
 		142F22F71A71AF2900663165 /* RoadLikeTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoadLikeTool.swift; sourceTree = "<group>"; };
@@ -276,6 +327,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1423A9071A9A6C6D00480828 /* sounds */ = {
+			isa = PBXGroup;
+			children = (
+				1423A9081A9A6C6D00480828 /* bop.wav */,
+				1423A9091A9A6C6D00480828 /* explosion-high.wav */,
+				1423A90A1A9A6C6D00480828 /* explosion-low.wav */,
+				1423A90B1A9A6C6D00480828 /* heavytraffic.wav */,
+				1423A90C1A9A6C6D00480828 /* honkhonk-hi.wav */,
+				1423A90D1A9A6C6D00480828 /* honkhonk-high.wav */,
+				1423A90E1A9A6C6D00480828 /* honkhonk-low.wav */,
+				1423A90F1A9A6C6D00480828 /* honkhonk-med.wav */,
+				1423A9101A9A6C6D00480828 /* layzone.wav */,
+				1423A9111A9A6C6D00480828 /* monster.wav */,
+				1423A9121A9A6C6D00480828 /* siren.wav */,
+				1423A9131A9A6C6D00480828 /* sorry.wav */,
+				1423A9141A9A6C6D00480828 /* uhuh.wav */,
+				1423A9151A9A6C6D00480828 /* zombie-roar-5.wav */,
+			);
+			name = sounds;
+			path = resources/sounds;
+			sourceTree = "<group>";
+		};
 		142F22F61A71AF1C00663165 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
@@ -295,6 +368,7 @@
 		146ABA571A4F0EE0002A1B6B = {
 			isa = PBXGroup;
 			children = (
+				1423A9071A9A6C6D00480828 /* sounds */,
 				1489D1231A5A1C490055EF58 /* tiles.json */,
 				14A599601A6D4CF00092714A /* build */,
 				14A599651A6D5E6D0092714A /* Frameworks */,
@@ -492,6 +566,7 @@
 				146ABA5C1A4F0EE0002A1B6B /* Sources */,
 				146ABA5D1A4F0EE0002A1B6B /* Frameworks */,
 				146ABA5E1A4F0EE0002A1B6B /* Resources */,
+				1423A9161A9A6CA100480828 /* CopyFiles */,
 			);
 			buildRules = (
 				1447BC681A682987000872BE /* PBXBuildRule */,

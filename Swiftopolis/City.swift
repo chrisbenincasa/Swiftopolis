@@ -727,7 +727,7 @@ class City {
             break
         case 6:
             let centerOfMass = CityLocation(x: self.map.centerOfMassX, y: self.map.centerOfMassY)
-            onCitySound(EarthquakeSound(), location: centerOfMass)
+            onCitySound(ExplosionSound(isHigh: false), location: centerOfMass)
             onEarthquakeStarted()
             onCityMessage(CityMessage(message: "EARTHquake!!"), location: centerOfMass)
             self.disasters.makeEarthquake()
@@ -863,6 +863,12 @@ class City {
         }
     }
     
+    // MARK: Sounds
+    
+    func makeSound(sound: Sound, location: CityLocation? = nil) {
+        onCitySound(sound, location: location)
+    }
+    
     // MARK: Traffic API
     
     func trafficDensityAtLocation(x xpos: Int, y ypos: Int) -> UInt16 {
@@ -921,7 +927,6 @@ class City {
     
     func addSubscriber(sub: Subscriber) {
         self.subscribers.append(sub)
-        self.onCitySound(EarthquakeSound(), location: nil)
     }
 
     private func onCityMessage(message: CityMessage, location: CityLocation?) {

@@ -381,7 +381,8 @@ class GameScene: SKScene, Subscriber {
     private func showToolResult(location: CityLocation, result: ToolResult) {
         switch result {
         case .Success:
-            // TODO fire sound
+            // TODO: should this be in ToolEffect?
+            playSound(currentTool == .Bulldozer ? ExplosionSound(isHigh: true) : BuildSound())
             break
         case .None: break
         case .InvalidPosition:
@@ -411,7 +412,19 @@ class GameScene: SKScene, Subscriber {
     
     func citySoundFired(data: [NSObject : AnyObject]) {
         if let sound = data["sound"] as? Sound {
-            println("sound fired")
+            playSound(sound)
         }
+    }
+    
+    // MARK: Private helpers
+    
+    private func playSound(sound: Sound) {
+        self.playSound(sound.getSoundFilename())
+    }
+    
+    private func playSound(name: String) {
+        // TODO "sounds/" should be a constant.
+        let soundFile = "sounds/" + name
+        runAction(SKAction.playSoundFileNamed(soundFile, waitForCompletion: false))
     }
 }
