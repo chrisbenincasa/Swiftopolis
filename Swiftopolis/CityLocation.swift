@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class CityLocation {
+class CityLocation : Equatable {
     private(set) var x: Int
     private(set) var y: Int
     
@@ -29,4 +29,12 @@ class CityLocation {
     func setY(y: Int) {
         self.y = y
     }
+    
+    func equalsPoint(point: CGPoint) -> Bool {
+        return self.x == Int(point.x) && self.y == Int(point.y)
+    }
+}
+
+func ==(lhs: CityLocation, rhs: CityLocation) -> Bool {
+    return lhs.x == rhs.x && lhs.y == rhs.y
 }
