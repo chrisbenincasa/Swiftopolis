@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class GameViewController: NSViewController {
+class GameViewController: NSViewController, EngineEventListener {
     private var engine: Engine!
     
     @IBOutlet weak var window: NSWindow!
@@ -37,11 +37,15 @@ class GameViewController: NSViewController {
     @IBOutlet weak var seaportButon: NSButton!
     @IBOutlet weak var airportButon: NSButton!
     
+    @IBOutlet weak var dateLabel: NSTextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Create the game engine instance and start injecting it
         engine = Engine()
+        
+        engine.registerListener(self)
         
         // TODO load this different, better, something
         let start = NSDate()
@@ -157,6 +161,27 @@ class GameViewController: NSViewController {
         selectedButton.map(setButtonAsUnselected)
         setButtonAsSelected(button)
         selectedButton = button
+    }
+    
+    func timerFired() {
+        updateDateLabel()
+    }
+    
+    private func updateDateLabel() {
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "MMM yyyy"
+        let calendar = NSCalendar.currentCalendar()
+        let components = NSDateComponents()
+        let time = self.engine.city.cityTime
+        components.year = 1900 + time / 48
+        components.month = (time % 48) / 4
+        components.day = (time % 4) * 7 + 1
+//        println(components)
+        
+        // Ensure UI update happens on main thread
+        dispatch_async(dispatch_get_main_queue()) { [unowned self] in
+            self.dateLabel.stringValue = formatter.stringFromDate(calendar.dateFromComponents(components)!)
+        }
     }
     
     private func setButtonAsSelected(button: NSButton) {

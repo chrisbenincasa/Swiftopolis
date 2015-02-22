@@ -285,6 +285,14 @@
                             <constraint firstAttribute="width" constant="360" id="UGC-py-SDP"/>
                         </constraints>
                     </customView>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f0f-rw-JnQ">
+                        <rect key="frame" x="250" y="783" width="112" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" id="kxd-Yg-Ews">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
                 <constraints>
                     <constraint firstItem="axo-ly-Hr9" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" id="26A-go-pct"/>
@@ -403,6 +411,7 @@
                 <outlet property="airportButon" destination="tEu-k2-5pu" id="f76-km-D08"/>
                 <outlet property="coalButon" destination="Cpj-aw-MQI" id="USh-iQ-LqJ"/>
                 <outlet property="comButton" destination="a1i-Iw-sxO" id="SUv-lo-Zwd"/>
+                <outlet property="dateLabel" destination="f0f-rw-JnQ" id="Bc0-kG-WDd"/>
                 <outlet property="dozerButton" destination="hhR-HZ-L94" id="4Gx-jf-3Af"/>
                 <outlet property="fireButton" destination="5Bb-wz-cCm" id="yDk-2a-dD5"/>
                 <outlet property="indButton" destination="NCj-n8-enV" id="XxX-Mm-Zwd"/>
