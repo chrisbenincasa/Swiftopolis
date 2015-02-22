@@ -39,7 +39,7 @@ class GameScene: SKScene, Subscriber {
     private var pixelWidth = 0
     private var pixelHeight = 0
     
-    private var lastPoint: CGPoint?
+    private var lastPoint: CityLocation?
     private var dragInProgress = false
     
     required init?(coder aDecoder: NSCoder) {
@@ -83,13 +83,14 @@ class GameScene: SKScene, Subscriber {
         self.physicsWorld.gravity = CGVectorMake(0, 0)
         
         // Set anchor point to the middle of the screen
-        self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+//        self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         
         // DEBUG
+        worldCircle.fillColor = NSColor.greenColor()
         self.addChild(debugOverlay)
         debugOverlay.addChild(worldCircle)
         debugOverlay.addChild(cameraCircle)
-//        drawGrid()
+        drawGrid()
         
         // Create main nodes
         // World represents the city and camera is the viewpoint.
@@ -116,7 +117,7 @@ class GameScene: SKScene, Subscriber {
     }
     
     override func didFinishUpdate() {
-        centerOnCamera()
+//        centerOnCamera()
         
         self.addChild(debugOverlay)
         
@@ -133,7 +134,7 @@ class GameScene: SKScene, Subscriber {
         // TODO toss events that are out of the bounds of the scene
         if var tool = toolNode {
             let location = theEvent.locationInNode(world)
-            let newPoint = getToolPoint(location)
+            var newPoint = getToolPoint(location)
             
             if tool.position != newPoint {
                 tool.position = newPoint
@@ -148,14 +149,21 @@ class GameScene: SKScene, Subscriber {
         
         dragInProgress = true
         
-        let location = theEvent.locationInNode(world)
-        let point = engine.currentMapPoint
-        let mapPoint = getToolPoint(location)
-        let x = Int(point.x) + (Int(mapPoint.x) / TILE_SIZE)
-        let y = Int(point.y) - (Int(mapPoint.y) / TILE_SIZE) - 1
-        let newLocation = CGPoint(x: x, y: y)
+        let location = theEvent.locationInNode(self)
         
-        if lastPoint.isDefined() && lastPoint! == newLocation {
+        // 1. Find the tile offset from top-left based on click location (set p and q)
+        // 2. Find the top left point of the current view (subtract 1/2 tile width/height from current center)
+        // 3. Find the map position by adding offsets calculated in 1 to top left calculated in 3
+        let p = Int(floor(location.x) / CGFloat(TILE_SIZE))
+        let q = Int(floor((view!.frame.height) - location.y) / CGFloat(TILE_SIZE))
+        let point = engine.currentMapPoint
+        let halfViewportSizeInTiles = (Int(view!.frame.width) / TILE_SIZE) >> 1
+        let topLeft = CGPoint(x: Int(point.x) - halfViewportSizeInTiles, y: Int(point.y) - halfViewportSizeInTiles)
+        let x = Int(topLeft.x) + p
+        let y = Int(topLeft.y) + q
+        let newLocation = cityLocationFromClickPoint(location)
+        
+        if lastPoint.isDefined() && lastPoint == newLocation {
             return
         }
         
@@ -185,34 +193,13 @@ class GameScene: SKScene, Subscriber {
     }
     
     override func mouseDown(theEvent: NSEvent) {
-        let location = theEvent.locationInNode(world)
-        
-        /* Uncomment for camera move animation
-        let moveAction = SKAction.moveTo(point, duration: 1.0)
-        moveAction.timingMode = .EaseIn
-        let drawAction = SKAction.customActionWithDuration(1.0, actionBlock: { (node, elapsed) -> Void in
-        if let v = self.view as? MapView {
-        v.currentPoint = CGPoint(x: node.position.x / 16.0, y: node.position.y / 16.0)
-        //                println(CGPoint(x: Int(point.x / 16), y: Int(point.y / 16)))
-        v.needsDisplay = true
-        v.needsToDrawRect(v.frame)
-        }
-        })
-        let group = SKAction.group([moveAction, drawAction])
-        self.camera.runAction(group)
-        */
+        let location = theEvent.locationInNode(self)
         
         // convert to map point
         // TODO: fix this up because this implementation is terrible.
         // There's no way we should have to do calculations like this in each method
         // Normalize coordinate systems and make them easily convertable between each other
-        let point = engine.currentMapPoint
-        let mapPoint = getToolPoint(location)
-        let x = Int(point.x) + (Int(mapPoint.x) / TILE_SIZE)
-        let y = Int(point.y) - (Int(mapPoint.y) / TILE_SIZE) - 1
-        
-//        println("location in world = \(location)")
-//        println("computed point = \(x), \(y)")
+        let cityLocation = cityLocationFromClickPoint(location)
         
         let pressedButtons = NSEvent.pressedMouseButtons()
         switch pressedButtons {
@@ -227,7 +214,7 @@ class GameScene: SKScene, Subscriber {
                 // Start the current stroke
                 // The point that was clicked represents the center of the current tool, but strokes begin in the top-left
                 // of the tool. Because of this, we adjust the point passed in so it matches what the preview is showing
-                currentStroke = currentTool.beginStroke(city, x: x - (currentTool.size() / 2), y: y - (currentTool.size() / 2))
+                currentStroke = currentTool.beginStroke(city, x: cityLocation.x, y: cityLocation.y)
                 previewTool()
             }
             
@@ -241,7 +228,7 @@ class GameScene: SKScene, Subscriber {
             self.camera.position = location
             
             if let v = self.view as? MainSceneView {
-                engine.setCurrentMapPoint(CGPoint(x: x, y: y))
+                engine.setCurrentMapPoint(CGPoint(x: cityLocation.x, y: cityLocation.y))
                 v.needsDisplay = true
                 v.needsToDrawRect(v.frame)
             }
@@ -269,6 +256,7 @@ class GameScene: SKScene, Subscriber {
     private func startSimulationTimer() {
         let delay: Double = Double(self.city.speed.delay) / 1000.0
         var wait = SKAction.waitForDuration(delay)
+        engine.startTimers()
         var run = SKAction.runBlock({
             let speed = self.city.speed
             for _ in 0...speed.steps - 1 {
@@ -337,12 +325,13 @@ class GameScene: SKScene, Subscriber {
     }
     
     private func getToolPoint(locationInWorld: CGPoint) -> CGPoint {
-        var p = Int(floor(locationInWorld.x / CGFloat(TILE_SIZE))) // Adjust for tool center
-        var q = Int(floor(locationInWorld.y / CGFloat(TILE_SIZE)))
+        var p = Int(floor(locationInWorld.x) / CGFloat(TILE_SIZE)) // Adjust for tool center
+        var q = Int(floor(locationInWorld.y) / CGFloat(TILE_SIZE))
         
+        // Center the tool on the cursor
         if currentTool != nil && currentTool.size() >= 3 {
-            p--
-            q--
+            p -= currentTool.size() / 2
+            q -= currentTool.size() / 2
         }
         
         return CGPoint(x: p * TILE_SIZE, y: q * TILE_SIZE)
@@ -405,10 +394,24 @@ class GameScene: SKScene, Subscriber {
         }
     }
     
+    private func cityLocationFromClickPoint(eventPoint: CGPoint) -> CityLocation {
+        // 1. Find the tile offset from top-left based on click location (set p and q)
+        // 2. Find the top left point of the current view (subtract 1/2 tile width/height from current center)
+        // 3. Find the map position by adding offsets calculated in 1 to top left calculated in 3
+        let p = Int(floor(eventPoint.x) / CGFloat(TILE_SIZE))
+        let q = Int(floor((view!.frame.height) - eventPoint.y) / CGFloat(TILE_SIZE))
+        let point = engine.currentMapPoint
+        let halfViewportSizeInTiles = (Int(view!.frame.width) / TILE_SIZE) >> 1
+        let topLeft = CGPoint(x: Int(point.x) - halfViewportSizeInTiles, y: Int(point.y) - halfViewportSizeInTiles)
+        
+        return CityLocation(x: Int(topLeft.x) + p, y: Int(topLeft.y) + q)
+    }
+    
     // MARK: Subscriber Protocol
     
     func citySoundFired(data: [NSObject : AnyObject]) {
         if let sound = data["sound"] as? Sound {
+            println("sound fired")
         }
     }
 }
