@@ -52,7 +52,16 @@ class TileJsonLoader: TileLoader {
         t.onPower = tile["onPower"].int
         t.onShutdown = tile["onShutdown"].int
         
-        t.attributes = (tile["attributes"].dictionaryObject as? [String:String]).getOrElse([:])
+        let rawAttributes = (tile["attributes"].dictionaryObject as? [String:[String]]).getOrElse([:])
+        var tileAttributes: [String:String] = [:]
+        
+        for (key, value) in rawAttributes {
+            if value.count > 0 {
+                tileAttributes[key] = value.first!
+            }
+        }
+        
+        t.attributes = tileAttributes
         
         let buildingWidth = tile["buildingInfo"]["width"][0].int
         let buildingHeight = tile["buildingInfo"]["height"][0].int
