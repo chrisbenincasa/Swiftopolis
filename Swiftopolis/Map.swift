@@ -282,6 +282,12 @@ class Map {
         self.fireReachMap = map
     }
     
+    func clearFireMap() {
+        let y = fireMap.count
+        let x = fireMap.count > 0 ? fireMap[0].count : 0
+        Utils.initializeMatrix(&fireMap, width: y, height: x, value: 0)
+    }
+    
     // MARK: Police Map
     
     func adjustPoliceMapAtLocation(x xpos: Int, y ypos: Int, amount: Int) {
@@ -318,6 +324,12 @@ class Map {
     
     func setPoliceMap(arr: [[Int]]) {
         self.policeMap = arr
+    }
+    
+    func clearPoliceMap() {
+        let y = policeMap.count
+        let x = policeMap.count > 0 ? policeMap[0].count : 0
+        Utils.initializeMatrix(&policeMap, width: y, height: x, value: 0)
     }
     
     // MARK: Terrain Map

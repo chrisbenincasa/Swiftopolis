@@ -46,4 +46,27 @@ class Census {
     // Ramps?
     var crimeRamp: Int = 0
     var pollutionRamp: Int = 0
+    
+    func clear() {
+        poweredZoneCount = 0
+        unpoweredZoneCount = 0
+        roadTotal = 0
+        railTotal = 0
+        firePop = 0
+        residentialZones = 0
+        commercialZones = 0
+        industrialZones = 0
+        residentialPopulation = 0
+        commercialPopulation = 0
+        industrialPopulation = 0
+        hospitalCount = 0
+        churchCount = 0
+        policeCount = 0
+        fireStationCount = 0
+        stadiumCount = 0
+        coalCount = 0
+        nuclearCount = 0
+        seaportCount = 0
+        airportCount = 0
+    }
 }

@@ -146,9 +146,14 @@ class City {
             scycle = (scycle + 1) % 1024
             cityTime++
             if (scycle % 2 == 0) {
-//                setValves()
+                updateDemand()
             }
-//            clearCensus()
+            
+            // Clear census
+            census.clear()
+            powerPlants = []
+            map.clearFireMap()
+            map.clearPoliceMap()
             break
         case 1...7:
             mapScan((phase - 1) * band, x1: phase * band)
@@ -237,6 +242,67 @@ class City {
         } else {
             return
         }
+    }
+    
+    private func updateDemand() {
+        let normalizedResPop = Double(census.residentialPopulation) / 8.0
+        census.totalPopulation = Int(normalizedResPop) + census.commercialPopulation + census.industrialPopulation
+        
+        let employment = normalizedResPop != 0.0 ? Double(history.commercial[1] + history.industrial[1]) / normalizedResPop : 1
+        let migration = normalizedResPop * (employment - 1)
+        let BIRTH_RATE = 0.02
+        let births = Double(normalizedResPop) * BIRTH_RATE
+        let projectedResPop = normalizedResPop + migration + births
+        
+        let temp = Double(history.commercial[1] + history.industrial[1])
+        var laborBase = temp != 0.0 ? Double(history.residential[1]) / temp : 1
+        
+        laborBase = max(0.0, min(1.3, laborBase))
+        let internalMarket = normalizedResPop + Double(census.commercialPopulation + census.industrialPopulation) / 3.7 // ?? 
+        let projectedComPop = internalMarket * laborBase
+        
+        var industrialModifier: Double = {
+            switch self.difficultyLevel {
+            case .Easy: return 1.2
+            case .Medium: return 1.1
+            case .Hard: return 0.98
+            default: return 1.0
+            }
+        }()
+        
+        let projectedIndPop = max(0.5, Double(census.industrialPopulation) * laborBase * industrialModifier)
+        
+        var resRatio = normalizedResPop != 0.0 ? (projectedResPop / normalizedResPop) : 1.3 // ??
+        var comRatio = census.commercialPopulation != 0 ? (projectedComPop / Double(census.commercialPopulation)) : projectedComPop
+        var indRatio = census.industrialPopulation != 0 ? (projectedIndPop / Double(census.industrialPopulation)) : projectedIndPop
+        
+        resRatio = min(2.0, resRatio)
+        comRatio = min(2.0, comRatio)
+        indRatio = min(2.0, indRatio)
+        
+        let taxTableIndex = budget.taxEffect + difficultyLevel.rawValue
+        
+        resRatio = (resRatio - 1) * 600.0 + Double(BudgetConstants.taxTable[taxTableIndex])
+        comRatio = (comRatio - 1) * 600.0 + Double(BudgetConstants.taxTable[taxTableIndex])
+        indRatio = (indRatio - 1) * 600.0 + Double(BudgetConstants.taxTable[taxTableIndex])
+        
+        demand.residentialDemand = Utils.clamp(demand.residentialDemand + Int(resRatio), min: -2000, max: 2000)
+        demand.commercialDemand = Utils.clamp(demand.residentialDemand + Int(resRatio), min: -2000, max: 2000)
+        demand.industrialDemand = Utils.clamp(demand.residentialDemand + Int(resRatio), min: -2000, max: 2000)
+
+        if demand.stadiumDemand && demand.residentialDemand > 0 {
+            demand.residentialDemand = 0
+        }
+        
+        if demand.airportDemand && demand.commercialDemand > 0 {
+            demand.commercialDemand = 0
+        }
+        
+        if demand.seaportDemand && demand.industrialDemand > 0 {
+            demand.industrialDemand = 0
+        }
+        
+        onDemandChanged()
     }
     
     private func takeCensus(historical: Bool) {
@@ -979,6 +1045,12 @@ class City {
         let data: [NSObject : AnyObject] = [NSString(string: "state") : state.rawValue]
         for subscriber in self.subscribers {
             subscriber.mapOverlayDataChanged?(data)
+        }
+    }
+    
+    private func onDemandChanged() {
+        for subscriber in self.subscribers {
+            subscriber.demandChanged?([:])
         }
     }
     

@@ -24,4 +24,14 @@ class Utils {
             a.append(arr)
         }
     }
+    
+    class func clamp<T : Comparable>(num: T, min: T, max: T) -> T {
+        if num < min {
+            return min
+        } else if num > max {
+            return max
+        } else {
+            return num
+        }
+    }
 }

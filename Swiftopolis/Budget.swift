@@ -30,6 +30,11 @@ struct BudgetConstants {
         default: return 1.0
         }
     }
+    
+    static let taxTable = [
+        200, 150, 120, 100, 80, 50, 30, 0, -10, -40, -100,
+        -150, -200, -250, -300, -350, -400, -450, -500, -550, -600
+    ]
 }
 
 class Budget {

@@ -9,9 +9,9 @@
 import Cocoa
 
 class Demand {
-    private(set) var residentialDemand: Int = 0
-    private(set) var commercialDemand: Int = 0
-    private(set) var industrialDemand: Int = 0
+    var residentialDemand: Int = 0
+    var commercialDemand: Int = 0
+    var industrialDemand: Int = 0
     
     private(set) var needHospital: Int = 0
     private(set) var needChurch: Int = 0
