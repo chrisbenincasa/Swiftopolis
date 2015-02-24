@@ -22,7 +22,7 @@ class IndustrialTileBehavior: BuildingZoneBehavior {
             doIndustrialOut(population, value: Int(arc4random_uniform(2)))
             return
         }
-        
+
         if arc4random_uniform(8) == 0 {
             let locationValue = evalIndustrial(trafficGood)
             var zScore = city.demand.industrialDemand + locationValue
@@ -31,12 +31,12 @@ class IndustrialTileBehavior: BuildingZoneBehavior {
                 zScore = -500
             }
             
-            if zScore > -350 && zScore - 26380 > Int(arc4random_uniform(0x10000) - 0x8000) {
+            if zScore > -350 && zScore - 26380 > Int(arc4random_uniform(0x10000)) - 0x8000 {
                 doIndustrialIn(population, value: Int(arc4random_uniform(2)))
                 return
             }
             
-            if zScore < 350 && zScore + 26380 < Int(arc4random_uniform(0x10000) - 0x8000) {
+            if zScore < 350 && zScore + 26380 < Int(arc4random_uniform(0x10000)) - 0x8000 {
                 doIndustrialOut(population, value: Int(arc4random_uniform(2)))
             }
         }

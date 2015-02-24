@@ -18,12 +18,11 @@ class CommercialTileBehavior: BuildingZoneBehavior {
         city.adjustCommercialPopulation(amount: population)
         
         let trafficGood = population > Int(arc4random_uniform(6)) ? makeTraffic(.Commercial) : 1
-        
         if trafficGood == -1 {
             doCommercialOut(population, value: getCRValue())
             return
         }
-        
+
         if arc4random_uniform(8) == 0 {
             let locationValue = evalCommercial(trafficGood)
             var zScore = city.demand.commercialDemand + locationValue
@@ -32,11 +31,11 @@ class CommercialTileBehavior: BuildingZoneBehavior {
                 zScore = -500
             }
             
-            if trafficGood != 0 && zScore > -350 && zScore - 26380 > Int(arc4random_uniform(0x10000) - 0x8000) {
+            if trafficGood != 0 && zScore > -350 && zScore - 26380 > Int(arc4random_uniform(0x10000)) - 0x8000 {
                 doCommercialIn(population, value: getCRValue())
             }
             
-            if zScore < 350 && zScore + 26380 < Int(arc4random_uniform(0x10000) - 0x8000) {
+            if zScore < 350 && zScore + 26380 < Int(arc4random_uniform(0x10000)) - 0x8000 {
                 doCommercialOut(population, value: getCRValue())
             }
         }

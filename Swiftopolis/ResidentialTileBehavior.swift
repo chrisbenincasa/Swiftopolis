@@ -9,6 +9,7 @@
 import Cocoa
 
 class ResidentialTileBehavior: BuildingZoneBehavior {
+
     
     override func apply() {
         let isZonePowered = checkZonePower()
@@ -23,25 +24,25 @@ class ResidentialTileBehavior: BuildingZoneBehavior {
             doResidentialOut(tpop, value: getCRValue())
             return
         }
-        
-        if tile == TileConstants.RESCLR || arc4random_uniform(8) == 0 {
+
+        if tile == TileConstants.RESCLR || Int(arc4random_uniform(8)) == 0 {
             var zoneScore = city.demand.residentialDemand + evaluateResidentialZone(trafficGood)
             
             if !isZonePowered {
                 zoneScore -= 500
             }
-            
-            if zoneScore > -350 && zoneScore - 26380 > Int(arc4random_uniform(0x10000) - 0x8000) {
+
+            if zoneScore > -350 && zoneScore - 26380 > Int(arc4random_uniform(0x10000)) - 0x8000 {
                 if tpop == 0 && arc4random_uniform(4) == 0 {
                     // makeHospital()
                     return
                 }
-                
+
                 doResidentialIn(tpop, value: getCRValue())
                 return
             }
-            
-            if zoneScore < 350 && zoneScore + 26380 < Int(arc4random_uniform(0x10000) - 0x8000) {
+
+            if zoneScore < 350 && zoneScore + 26380 < Int(arc4random_uniform(0x10000)) - 0x8000 {
                 doResidentialOut(tpop, value: getCRValue())
             }
         }
