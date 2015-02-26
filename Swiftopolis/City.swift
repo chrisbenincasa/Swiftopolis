@@ -236,11 +236,7 @@ class City {
         if let behaviorString = TileConstants.getTileBehavior(tile) {
             if let behavior = tileBehaviors[behaviorString] {
                 behavior.processTile(x, y: y)
-            } else {
-                return
             }
-        } else {
-            return
         }
     }
     
@@ -459,12 +455,14 @@ class City {
         let maxPower = census.coalCount * 700 + census.nuclearCount * 2000
         var numPower = 0, i = 0
         
-        for location in powerPlants {
+        while !powerPlants.isEmpty {
+            let location = powerPlants.removeAtIndex(0)
             var aDir = 4, conNum = 0
             do {
                 numPower++
                 if numPower > maxPower {
                     // brownout
+                    return
                 }
                 
                 //move power location
@@ -480,12 +478,10 @@ class City {
                 }
                 
                 // TODO: Look into this -- seems weird
-                if conNum <= 1 {
-                    powerPlants.removeAtIndex(i)
+                if conNum > 1 {
+                    powerPlants.append(CityLocation(x: location.x, y: location.y))
                 }
             } while (conNum != 0)
-            
-            i++
         }
     }
     
@@ -952,19 +948,19 @@ class City {
     // MARK: Population API
     // TODO: rename this function
     func doFreePop(x xpos: Int, y ypos: Int) -> Int {
-        var count = 0
+        var c = 0
         for x in (xpos - 1)...(xpos + 1) {
             for y in (ypos - 1)...(ypos + 1) {
                 if withinBounds(x: x, y: y) {
                     let loc = getTile(x: x, y: y)
                     if loc >= TileConstants.LHTHR && loc <= TileConstants.HHTHR {
-                        count++
+                        c++
                     }
                 }
             }
         }
         
-        return count
+        return c
     }
     
     func getPopulationDensity(x xpos: Int, y ypos: Int) -> UInt16 {
