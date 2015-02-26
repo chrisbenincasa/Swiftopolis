@@ -33,8 +33,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var gameViewController: GameViewController!
     
     func applicationDidFinishLaunching(aNotification: NSNotification) {
-        let barrier = dispatch_queue_create("com.chrisbenincasa.micropolis", DISPATCH_QUEUE_CONCURRENT)
-        
 //        if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
 //            self.skView!.allowsTransparency = true
 //            
