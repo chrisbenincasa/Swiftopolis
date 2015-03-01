@@ -199,6 +199,6 @@ class ResidentialTileBehavior: BuildingZoneBehavior {
             landValue = 6000
         }
         
-        return landValue - 3000
+        return Int(landValue) - 3000
     }
 }
