@@ -67,6 +67,7 @@ class Map {
             smallWidth = (self.width + 7) / 8
         
         Utils.initializeMatrix(&self.rateOfGrowthMem, width: smallHeight, height: smallWidth, value: 0)
+        Utils.initializeMatrix(&self.commercialRate, width: smallHeight, height: smallWidth, value: 0)
         Utils.initializeMatrix(&self.fireMap, width: smallHeight, height: smallWidth, value: 0)
         Utils.initializeMatrix(&self.policeMap, width: smallHeight, height: smallWidth, value: 0)
         Utils.initializeMatrix(&self.policeReachMap, width: smallHeight, height: smallWidth, value: 0)
