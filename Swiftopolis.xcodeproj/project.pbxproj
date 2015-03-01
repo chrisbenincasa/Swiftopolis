@@ -42,6 +42,8 @@
 		143059D21A5A1CFF009AF7C2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 143059D11A5A1CFF009AF7C2 /* Cocoa.framework */; };
 		143059D41A5A5C04009AF7C2 /* Tiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143059D31A5A5C04009AF7C2 /* Tiles.swift */; };
 		143059D61A5A5CE7009AF7C2 /* TileLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143059D51A5A5CE7009AF7C2 /* TileLoader.swift */; };
+		143F70F71A9F807400077AA4 /* CGPoint-Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143F70F61A9F807400077AA4 /* CGPoint-Extensions.swift */; };
+		143F70F91A9F881900077AA4 /* CGSize-Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143F70F81A9F881900077AA4 /* CGSize-Extensions.swift */; };
 		14450D181A5CAF7C00218A5E /* Zone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14450D171A5CAF7C00218A5E /* Zone.swift */; };
 		1447BC671A6811C5000872BE /* TileImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1447BC661A6811C5000872BE /* TileImages.swift */; };
 		145351481A62BEB8004F8C46 /* MapGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145351471A62BEB8004F8C46 /* MapGenerator.swift */; };
@@ -223,6 +225,8 @@
 		143059D11A5A1CFF009AF7C2 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		143059D31A5A5C04009AF7C2 /* Tiles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tiles.swift; sourceTree = "<group>"; };
 		143059D51A5A5CE7009AF7C2 /* TileLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileLoader.swift; sourceTree = "<group>"; };
+		143F70F61A9F807400077AA4 /* CGPoint-Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint-Extensions.swift"; sourceTree = "<group>"; };
+		143F70F81A9F881900077AA4 /* CGSize-Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGSize-Extensions.swift"; sourceTree = "<group>"; };
 		14450D171A5CAF7C00218A5E /* Zone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Zone.swift; sourceTree = "<group>"; };
 		1447BC661A6811C5000872BE /* TileImages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileImages.swift; sourceTree = "<group>"; };
 		145351471A62BEB8004F8C46 /* MapGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapGenerator.swift; sourceTree = "<group>"; };
@@ -428,6 +432,8 @@
 				142F22F61A71AF1C00663165 /* Tools */,
 				14999AD91A674E5800BF9F20 /* User Interface */,
 				14E489661A7E96A00099287F /* Engine.swift */,
+				143F70F61A9F807400077AA4 /* CGPoint-Extensions.swift */,
+				143F70F81A9F881900077AA4 /* CGSize-Extensions.swift */,
 			);
 			path = Swiftopolis;
 			sourceTree = "<group>";
@@ -729,6 +735,7 @@
 				147F2F2E1A62DC9E00E4039E /* Utils.swift in Sources */,
 				146987B21A7575010029F630 /* GameWindow.swift in Sources */,
 				14AB41AB1A5B4C2D003A4F7D /* FloodTerrainBehavior.swift in Sources */,
+				143F70F91A9F881900077AA4 /* CGSize-Extensions.swift in Sources */,
 				143059D61A5A5CE7009AF7C2 /* TileLoader.swift in Sources */,
 				1454AC741A5EE73B008F35B6 /* CoalPowerTileBehavior.swift in Sources */,
 				14938FF81A6482510093AC02 /* MonsterSprite.swift in Sources */,
@@ -772,6 +779,7 @@
 				14B822FA1A767FB10071F299 /* OverlayMapView.swift in Sources */,
 				145351481A62BEB8004F8C46 /* MapGenerator.swift in Sources */,
 				146ABA661A4F0EE0002A1B6B /* AppDelegate.swift in Sources */,
+				143F70F71A9F807400077AA4 /* CGPoint-Extensions.swift in Sources */,
 				147F2F321A6364F700E4039E /* Sprite.swift in Sources */,
 				141617A21A5C664A0066E8F1 /* ResidentialTileBehavior.swift in Sources */,
 				147F2F351A6394EC00E4039E /* TornadoSprite.swift in Sources */,

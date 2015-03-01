@@ -108,7 +108,6 @@ class GameScene: SKScene, Subscriber {
 //        }
         
         view.needsDisplay = true
-        view.needsToDrawRect(view.frame)
     }
     
     override func update(currentTime: CFTimeInterval) {
@@ -133,12 +132,16 @@ class GameScene: SKScene, Subscriber {
     override func mouseMoved(theEvent: NSEvent) {
         // TODO toss events that are out of the bounds of the scene
         if var tool = toolNode {
-            let location = theEvent.locationInNode(world)
+            let location = theEvent.locationInNode(self)
             var newPoint = getToolPoint(location)
+            
+            let cityLocation = cityLocationFromClickPoint(location)
             
             if tool.position != newPoint {
                 tool.position = newPoint
             }
+            
+            setToolCursor(bounds: NSRect(x: cityLocation.x, y: cityLocation.y, width: currentTool.size(), height: currentTool.size()))
         }
     }
     
@@ -184,7 +187,10 @@ class GameScene: SKScene, Subscriber {
                 }
             }
             
-            view?.needsDisplay = true
+            // Invalidate the map view
+            (view as? MainSceneView).foreach { v in
+                v.mapNeedsDisplay()
+            }
         } else if currentTool != nil && currentTool == .Query {
             // doQueryTool
         }
@@ -225,18 +231,21 @@ class GameScene: SKScene, Subscriber {
             // location, so you can keep clicking but the map won't move
             // The map validates/normalizes the requested point to draw around, but we set blindly
             // TODO: Factor out the validation methods so we can use them here before blindly setting the camera point
-            self.camera.position = location
+            println("clicked \(pressedButtons)")
             
             if let v = self.view as? MainSceneView {
-                engine.setCurrentMapPoint(CGPoint(x: cityLocation.x, y: cityLocation.y))
-                v.needsDisplay = true
-                v.needsToDrawRect(v.frame)
+                v.mapNeedsDisplay()
             }
             break
         }
     }
     
     override func mouseUp(theEvent: NSEvent) {
+        let eventLocation = theEvent.locationInNode(self)
+        
+        let p = Int(floor(eventLocation.x) / CGFloat(TILE_SIZE))
+        let q = Int(floor((view!.frame.height) - eventLocation.y) / CGFloat(TILE_SIZE))
+        
         dragInProgress = false
         
         if let stroke = currentStroke {
@@ -340,9 +349,10 @@ class GameScene: SKScene, Subscriber {
     private func setToolCursor(bounds: NSRect? = nil) {
         if currentTool != nil {
             let lastNode = toolNode
-            
             let standardSize = NSSize(width: currentTool.size(), height: currentTool.size())
-            let newRect = bounds.getOrElse(NSRect(origin: NSPoint.zeroPoint, size: standardSize))
+            let point = bounds == nil ? NSPoint.zeroPoint : bounds!.origin
+            let size = bounds?.size == nil ? standardSize : bounds!.size
+            let newRect = NSRect(origin: point, size: size)
             let lastPosition = lastNode != nil ? lastNode!.position : NSPoint.zeroPoint
             
             lastNode?.removeFromParent()
@@ -368,13 +378,7 @@ class GameScene: SKScene, Subscriber {
     private func previewTool() {
         if let stroke = currentStroke {
             let preview = stroke.getPreview()
-            let bounds = preview.getBounds()
-            let dirtyRect = NSRect(x: Int(bounds.origin.x) * TILE_SIZE, y: Int(bounds.origin.y) * TILE_SIZE, width: Int(bounds.width) * TILE_SIZE, height: Int(bounds.height) * TILE_SIZE)
-            
             engine.setToolPreview(preview)
-            
-            view?.needsToDrawRect(dirtyRect)
-            view?.needsDisplay = true
         }
     }
     
@@ -426,5 +430,11 @@ class GameScene: SKScene, Subscriber {
         // TODO "sounds/" should be a constant.
         let soundFile = "sounds/" + name
         runAction(SKAction.playSoundFileNamed(soundFile, waitForCompletion: false))
+    }
+    
+    private func topLeftMapPoint() -> CGPoint {
+        let point = engine.currentMapPoint
+        let halfViewportSizeInTiles = (Int(view!.frame.width) / TILE_SIZE) >> 1
+        return point - halfViewportSizeInTiles
     }
 }

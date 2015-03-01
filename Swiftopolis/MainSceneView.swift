@@ -38,9 +38,17 @@ class MainSceneView: SKView {
     
     override func drawRect(dirtyRect: NSRect) {
         for subview in subviews as [NSView] {
-            subview.needsDisplay = true
-            subview.needsToDrawRect(subview.frame)
+//            subview.needsDisplay = true
+//            subview.needsToDrawRect(subview.frame)
         }
+    }
+    
+    func mapNeedsDisplay() {
+        map.needsDisplay = true
+    }
+    
+    func needsToDrawMapRect(dirtyRect: NSRect) {
+        map.setNeedsDisplayInRect(dirtyRect)
     }
     
     // MARK: Scene events

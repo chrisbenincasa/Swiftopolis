@@ -62,6 +62,15 @@ class Engine {
     func registerListener(listener: EngineEventListener) {
         self.eventListeners.append(listener)
     }
+    
+    // Utility Functions
+    
+    // NOTE: origin is bottom left
+    func mapRectForViewport(viewportSize: CGSize) -> CGRect {
+        let bottomLeft = CGPoint(x: currentMapPoint.x - (viewportSize.width / 2), y: currentMapPoint.y + (viewportSize.height / 2))
+        
+        return CGRect(origin: bottomLeft, size: viewportSize)
+    }
 }
 
 protocol EngineEventListener {

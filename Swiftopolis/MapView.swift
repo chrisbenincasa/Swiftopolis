@@ -44,37 +44,22 @@ class MapView: NSView {
     }
     
     override func drawRect(dirtyRect: NSRect) {
-        if dirtyRect == frame {
-//            println("needs to draw entire view")
-            drawEntireMap()
-        } else {
-            println("needs to draw rect = \(dirtyRect)")
-            // TODO: optimize drawing when we don't have to redraw the entire frame
-            drawPortionOfMap(dirtyRect)
-        }
-    }
-    
-    func getViewport() -> NSRect {
-        let point = normalizeMapPoint(engine.currentMapPoint)
-        let size = CGSizeMake(CGFloat(VIEWPORT_WIDTH), CGFloat(VIEWPORT_HEIGHT))
-        return NSRect(origin: point, size: size)
-    }
-    
-    private func drawEntireMap() {
-        var context = NSGraphicsContext.currentContext()!.CGContext
+        // Get the current visible rectangle based off of the current center point and viewport size
+        let generatedViewport = engine.mapRectForViewport(CGSize(width: VIEWPORT_WIDTH, height: VIEWPORT_HEIGHT))
         
-        let point = mapPointToViewPoint(engine.currentMapPoint)
-        
-        let xMin = Int(point.x) - (VIEWPORT_WIDTH >> 1)
-        let xMax = Int(point.x) + (VIEWPORT_WIDTH >> 1)
-        let yMin = Int(point.y) - (VIEWPORT_HEIGHT >> 1)
-        let yMax = Int(point.y) + (VIEWPORT_HEIGHT >> 1)
+        let origin = generatedViewport.origin +- (dirtyRect.origin / tileSize)
+        let size = dirtyRect.size / tileSize
+        let dRect = CGRect(origin: origin, size: size)
+        let minXPoint = Int(dRect.minX)
+        let minYPoint = max(0, Int(dRect.origin.y - dRect.height))
+        let maxXPoint = Int(dRect.maxX)
+        let maxYPoint = Int(dRect.origin.y)
         
         // for var y = 0, cameraY = yMax - 1; cameraY >= yMin; y++, cameraY-- { // inverted Y axis
-        for var y = 0, cameraY = yMin; cameraY < yMax; y++, cameraY++ {
-            for var x = 0, cameraX = xMin; cameraX < xMax; x++, cameraX++ {
+        for var y = 0, cameraY = minYPoint; cameraY < maxYPoint; y++, cameraY++ {
+            for var x = 0, cameraX = minXPoint; cameraX < maxXPoint; x++, cameraX++ {
                 // Camera positions have (0, 0) at the center of the map while
-                let (mapX, mapY) = cameraPositionToMapPosition(cameraX, cameraY)
+                let (mapX, mapY) = (cameraX, cameraY)
                 if !engine.city.withinBounds(x: mapX, y: mapY) {
                     continue
                 }
@@ -92,7 +77,12 @@ class MapView: NSView {
                     
                     let imageInfo = self.tileImages.getTileImageInfo(Int(tile), acycle: engine.city.getAnimationCycle())
                     let image = self.tileImages.getImage(imageInfo.imageNumber)
-                    let position = CGPoint(x: x * tileSize, y: y * tileSize)
+                    
+                     // Calculate the draw position (bottom left) of the tile
+                    // (y + 1) to adjust for bottom vs. top
+                    let xDrawPosition = Int(dirtyRect.origin.x) + (x * tileSize)
+                    let yDrawPosition = Int(dirtyRect.origin.y) + Int(dirtyRect.height) - ((y + 1) * tileSize)
+                    let position = CGPoint(x: xDrawPosition, y: yDrawPosition)
                     image.drawAtPoint(position, fromRect: NSRect.zeroRect, operation: .CompositeSourceOver, fraction: 1.0)
                     
                     if imageInfo.animated {
@@ -105,11 +95,12 @@ class MapView: NSView {
         }
     }
     
-    private func drawPortionOfMap(rect: NSRect) {
-        let point = mapPointToViewPoint(rect.origin)
-        println(point)
+    func getViewport() -> NSRect {
+        let point = normalizeMapPoint(engine.currentMapPoint)
+        let size = CGSizeMake(CGFloat(VIEWPORT_WIDTH), CGFloat(VIEWPORT_HEIGHT))
+        return NSRect(origin: point, size: size)
     }
-    
+        
     private func cameraPositionToMapPosition(x: Int, _ y: Int, invertedY: Bool = INVERT_Y_AXIS) -> (Int, Int) {
         let mapX = x + (engine.city.map.width / 2)
         
