@@ -29,6 +29,7 @@ class GameScene: SKScene, Subscriber {
         }
     }
     private let barrier = dispatch_queue_create("com.chrisbenincasa.micropolis", DISPATCH_QUEUE_SERIAL)
+    private var _timer: dispatch_source_t!
     
     private var debugOverlay = DebugOverlay()
     private var world: CityWorld = CityWorld()
@@ -60,6 +61,8 @@ class GameScene: SKScene, Subscriber {
     }
     
     private func commonInit() {
+        self._timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, barrier)
+        
         // Make the background clear to the drawn map underneath shows
         self.backgroundColor = NSColor.clearColor()
         
@@ -253,26 +256,57 @@ class GameScene: SKScene, Subscriber {
             let result = stroke.apply()
             showToolResult(location, result: result)
             currentStroke = nil
+            let strokeSize = stroke.getBounds().size
+            
+            let topLeft = topLeftMapPoint()
+            let deltaFromTopLeft = toolCursor.rect.origin - topLeft
+            let yOffsetFromBottom = CGFloat((Int(view!.frame.width) / TILE_SIZE) - Int(deltaFromTopLeft.y)) - 1
+            let centerDeltaFromBottomLeft = CGPoint(x: deltaFromTopLeft.x, y: yOffsetFromBottom)
+            
+            let bottomLeftDeltaFromBottomLeft = centerDeltaFromBottomLeft - (currentTool.size() / 2)
+            
+            let invalidRect = CGRect(origin: bottomLeftDeltaFromBottomLeft * TILE_SIZE, size: toolCursor.rect.size * TILE_SIZE)
+            
+            if let v = view as? MainSceneView {
+                v.needsToDrawMapRect(invalidRect)
+            }
+            
             setToolCursor()
-            println(result.toString())
         }
-     
-        view?.needsDisplay = true
     }
     
     // MARK: Simulation Helpers
     
     private func startSimulationTimer() {
         let delay: Double = Double(self.city.speed.delay) / 1000.0
-        var wait = SKAction.waitForDuration(delay)
         engine.startTimers()
-        var run = SKAction.runBlock({
-            let speed = self.city.speed
-            for _ in 0...speed.steps - 1 {
-                self.city.animate()
+//        var wait = SKAction.waitForDuration(delay)
+////        var run = SKAction.runBlock { () -> Void in
+////            let speed = self.city.speed
+////            for _ in 0...speed.steps - 1 {
+////                self.city.animate()
+////            }
+////        }
+//        var run = SKAction.runBlock({
+//            let speed = self.city.speed
+//            for _ in 0...speed.steps - 1 {
+//                self.city.animate()
+//            }
+//        }, queue: barrier)
+//        self.runAction(SKAction.repeatActionForever(SKAction.sequence([wait, run])), withKey: "simulation")
+        
+        let delayNano = UInt64(16) * NSEC_PER_MSEC
+        dispatch_source_set_timer(_timer, DISPATCH_TIME_NOW, delayNano, 10)
+        dispatch_source_set_event_handler(_timer) { [weak self] in
+            if let s = self {
+                let speed = s.city.speed
+                for _ in 0...speed.steps - 1 {
+                    s.city.animate()
+                }
             }
-        }, queue: barrier)
-        self.runAction(SKAction.repeatActionForever(SKAction.sequence([wait, run])), withKey: "simulation")
+        }
+        // Start the timer
+        dispatch_resume(_timer)
     }
     
     private func stopSimulationTimer() {
