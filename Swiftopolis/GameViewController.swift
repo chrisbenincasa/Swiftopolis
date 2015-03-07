@@ -157,6 +157,11 @@ class GameViewController: NSViewController, EngineEventListener {
         mainView.onToolChanged(.Seaport)
     }
     
+    @IBAction func useStadiumTool(sender: AnyObject!) {
+        (sender as? NSButton).foreach(swapSelectedButton)
+        mainView.onToolChanged(.Stadium)
+    }
+    
     private func swapSelectedButton(button: NSButton) {
         selectedButton.map(setButtonAsUnselected)
         setButtonAsSelected(button)
