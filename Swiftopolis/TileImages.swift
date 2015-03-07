@@ -119,7 +119,7 @@ class TileImages {
             info.animated = false
         } else if let ti = tileImage as? AnimatedTile {
             info.imageNumber = ti.getFrameByTime(acycle).imageNumber
-            info.animated = false
+            info.animated = true
         } else {
             fatalError("busted")
         }
