@@ -11,6 +11,8 @@ import Cocoa
 class CoalPowerTileBehavior: BuildingZoneBehavior {
 
     override func apply() {
+        checkZonePower()
+        
         city.census.coalCount++
         if city.cityTime % 8 == 0 {
             repairZone(TileConstants.POWERPLANT)

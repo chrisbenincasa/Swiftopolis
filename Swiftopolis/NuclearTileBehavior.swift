@@ -11,6 +11,8 @@ import Cocoa
 class NuclearTileBehavior: BuildingZoneBehavior {
 
     override func apply() {
+        checkZonePower()
+        
         if !city.disasterFree && arc4random_uniform(city.nuclearMeltdownProb()) == 0 {
             // city.doMeltdown()
             return
