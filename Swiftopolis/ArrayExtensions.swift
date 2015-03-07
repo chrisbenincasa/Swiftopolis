@@ -9,6 +9,10 @@
 import Cocoa
 
 extension Array {
+    var nonEmpty: Bool {
+        return !self.isEmpty
+    }
+    
     func foreach(f: (element: T) -> Void) {
         for ele in self {
             f(element: ele)
@@ -22,5 +26,9 @@ extension Array {
         }
         
         return ret
+    }
+    
+    mutating func pop() -> T {
+        return self.removeAtIndex(0)
     }
 }

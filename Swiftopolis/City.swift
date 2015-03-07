@@ -399,77 +399,28 @@ class City {
     }
     
     private func powerScan() {
-        let movePowerLocation: (CityLocation, Int) -> Bool = { (loc: CityLocation, dir: Int) -> Bool in
-            switch dir {
-            case 0:
-                if loc.y > 0 {
-                    loc.setY(loc.y - 1)
-                    return true
-                } else {
-                    return false
-                }
-            case 1:
-                if loc.x + 1 < self.map.width {
-                    loc.setX(loc.x + 1)
-                    return true
-                } else {
-                    return false
-                }
-            case 2:
-                if loc.y + 1 < self.map.height {
-                    loc.setY(loc.y + 1)
-                    return true
-                } else {
-                    return false
-                }
-            case 3:
-                if loc.x > 0 {
-                    loc.setX(loc.x - 1)
-                    return true
-                } else {
-                    return false
-                }
-            case 4: return true
-            default: return false
-            }
-        }
-        
-        let testForCond = { (loc: CityLocation, dir: Int) -> Bool in
-            let xSave = loc.x, ySave = loc.y
-            var retVal = false
-            if movePowerLocation(loc, dir) {
-                let tile = self.map.getTile(x: loc.x, y: loc.y)
-                retVal = TileConstants.isConductive(tile!) &&
-                    tile != TileConstants.NUCLEAR &&
-                    tile != TileConstants.POWERPLANT &&
-                    !self.map.isTilePowered(x: loc.x, y: loc.y)
-            }
-            
-            loc.setCoordinates(x: xSave, y: ySave)
-            
-            return retVal
-        }
-        
         map.clearPowerMap()
         
         let maxPower = census.coalCount * 700 + census.nuclearCount * 2000
         var numPower = 0, i = 0
         
-        while !powerPlants.isEmpty {
-            let location = powerPlants.removeAtIndex(0)
+        while powerPlants.nonEmpty {
+            let location = powerPlants.pop()
             var aDir = 4, conNum = 0
             do {
-                numPower++
-                if numPower > maxPower {
+                if ++numPower > maxPower {
                     // brownout
                     return
                 }
                 
-                //move power location
+                movePowerLocation(location, dir: aDir)
                 map.setPowerMap(x: location.x, y: location.y, value: true)
+                
+                conNum = 0
                 var dir = 0
-                while (dir < 4 && conNum < 2) {
-                    if testForCond(location, dir) {
+                
+                while dir < 4 && conNum < 2 {
+                    if testForCond(location, dir: dir) {
                         conNum++
                         aDir = dir
                     }
@@ -477,7 +428,6 @@ class City {
                     dir++
                 }
                 
-                // TODO: Look into this -- seems weird
                 if conNum > 1 {
                     powerPlants.append(CityLocation(x: location.x, y: location.y))
                 }
@@ -485,6 +435,57 @@ class City {
         }
     }
     
+    private func testForCond(loc: CityLocation, dir: Int) -> Bool {
+        let xSave = loc.x, ySave = loc.y
+        var retVal = false
+        if movePowerLocation(loc, dir: dir) {
+            let tile = map.getTile(x: loc.x, y: loc.y)
+            retVal = TileConstants.isConductive(tile!) &&
+                tile != TileConstants.NUCLEAR &&
+                tile != TileConstants.POWERPLANT &&
+                !map.locationHasAccessToPower(x: loc.x, y: loc.y)
+        }
+    
+        loc.setCoordinates(x: xSave, y: ySave)
+    
+        return retVal
+    }
+
+    private func movePowerLocation(loc: CityLocation, dir: Int) -> Bool {
+        switch dir {
+        case 0:
+            if loc.y > 0 {
+                loc.setY(loc.y - 1)
+                return true
+            } else {
+                return false
+            }
+        case 1:
+            if loc.x + 1 < self.map.width {
+                loc.setX(loc.x + 1)
+                return true
+            } else {
+                return false
+            }
+        case 2:
+            if loc.y + 1 < self.map.height {
+                loc.setY(loc.y + 1)
+                return true
+            } else {
+                return false
+            }
+        case 3:
+            if loc.x > 0 {
+                loc.setX(loc.x - 1)
+                return true
+            } else {
+                return false
+            }
+        case 4: return true
+        default: return false
+        }
+    }
+
     private func pollutionTerrainScan() {
         let qX = (map.width + 3) / 4,
             qY = (map.height + 3) / 4
