@@ -24,9 +24,9 @@ class ResidentialTileBehavior: BuildingZoneBehavior {
             doResidentialOut(tpop, value: getCRValue())
             return
         }
-
+        
         if tile == TileConstants.RESCLR || Int(arc4random_uniform(8)) == 0 {
-            var zoneScore = city.demand.residentialDemand + evaluateResidentialZone(trafficGood)
+            var zoneScore = city.demand.residentialDemand + evalResZone(trafficGood)
             
             if !isZonePowered {
                 zoneScore -= 500
@@ -48,7 +48,7 @@ class ResidentialTileBehavior: BuildingZoneBehavior {
         }
     }
     
-    private let Brdr: [UInt16] = [ 0, 3, 6, 1, 4, 7, 2, 5, 8 ];
+    private let Brdr: [UInt16] = [ 0, 3, 6, 1, 4, 7, 2, 5, 8 ]
     
     private func doResidentialIn(population: Int, value: Int) {
         assert(value >= 0 && value < 4, "Wrong value in doResidentialOut")
@@ -122,12 +122,12 @@ class ResidentialTileBehavior: BuildingZoneBehavior {
         let base = (value * 4 + density) * 9 + TileConstants.RZB
         zonePlop(Tiles.load(Int(base)))
     }
-    
+
     private func buildHouse(value: Int) {
         assert(value >= 0 && value < 4, "Wrong value in buildHouse")
         
-        let ZeX = [ 0, -1, 0, 1, -1, 1, -1, 0, 1 ];
-        let ZeY = [ 0, -1, -1, -1, 0, 0, 1, 1, 1 ];
+        let ZeX = [ 0, -1, 0, 1, -1, 1, -1, 0, 1 ]
+        let ZeY = [ 0, -1, -1, -1, 0, 0, 1, 1, 1 ]
         
         var bestLocation = 0, hScore = 0
         
@@ -183,12 +183,16 @@ class ResidentialTileBehavior: BuildingZoneBehavior {
      * number, the more likely the zone is to GROW; the lower the
      * number, the more likely the zone is to SHRINK.
      */
-    private func evaluateResidentialZone(traffic: Int) -> Int {
+    private func evalResZone(traffic: Int) -> Int {
         if traffic < 0 {
             return -3000
         }
         
-        var landValue = city.getLandValue(x: xPos, y: yPos) - city.getPollution(x: xPos, y: yPos)
+        let pollution = city.getPollution(x: xPos, y: yPos)
+        let value = city.getLandValue(x: xPos, y: yPos)
+        
+        var landValue = value &- pollution
+        
         if landValue < 0 {
             landValue = 0
         } else {
