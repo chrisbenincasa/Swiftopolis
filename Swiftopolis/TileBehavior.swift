@@ -85,7 +85,7 @@ class BuildingZoneBehavior: TileBehavior {
     }
     
     internal func getCRValue() -> Int {
-        let landValue = city.getLandValue(x: xPos, y: yPos) - city.getPollution(x: xPos, y: yPos)
+        let landValue = Int(city.getLandValue(x: xPos, y: yPos)) - Int(city.getPollution(x: xPos, y: yPos))
         switch landValue {
         case 0...29: return 0
         case 30...79: return 1
