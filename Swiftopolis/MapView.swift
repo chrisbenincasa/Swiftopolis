@@ -30,6 +30,7 @@ class MapView: NSView {
     
     private var animatedTiles: [CGPoint] = []
     private var blinkingTiles: [CGPoint] = []
+    private var blink = true
     
     init(tileSize: Int, engine: Engine, frame: NSRect) {
         super.init(frame: frame)
@@ -64,34 +65,69 @@ class MapView: NSView {
                     continue
                 }
                 if var tile = engine.city.map.getTile(x: mapX, y: mapY) {
+                    // Calculate the draw position (bottom left) of the tile
+                    // (y + 1) to adjust for bottom vs. top
+                    let xDrawPosition = Int(dirtyRect.origin.x) + (x * tileSize)
+                    let yDrawPosition = Int(dirtyRect.origin.y) + Int(dirtyRect.height) - ((y + 1) * tileSize)
+                    let position = CGPoint(x: xDrawPosition, y: yDrawPosition)
+                    
+                    // Work around some awkwardness in Swift (setting tile in deep nested blocks doesn't take effect
+                    var tileToDraw = tile
+                    
                     if TileConstants.isZoneCenter(tile) && !engine.city.isTilePowered(x: mapX, y: mapY) {
-                        tile = TileConstants.LIGHTNINGBOLT
+                        blinkingTiles.append(CGPoint(x: xDrawPosition, y: yDrawPosition))
+                        
+                        if blink {
+                            tileToDraw = TileConstants.LIGHTNINGBOLT
+                        }
                     }
                     
                     if let currentPreview = engine.toolPreview {
                         let t = currentPreview.getTile(mapX, mapY)
                         if t != TileConstants.CLEAR {
-                            tile = t
+                            tileToDraw = t
                         }
                     }
                     
-                    let imageInfo = self.tileImages.getTileImageInfo(Int(tile), acycle: engine.city.getAnimationCycle())
+                    let imageInfo = self.tileImages.getTileImageInfo(Int(tileToDraw), acycle: engine.city.getAnimationCycle())
                     let image = self.tileImages.getImage(imageInfo.imageNumber)
                     
-                     // Calculate the draw position (bottom left) of the tile
-                    // (y + 1) to adjust for bottom vs. top
-                    let xDrawPosition = Int(dirtyRect.origin.x) + (x * tileSize)
-                    let yDrawPosition = Int(dirtyRect.origin.y) + Int(dirtyRect.height) - ((y + 1) * tileSize)
-                    let position = CGPoint(x: xDrawPosition, y: yDrawPosition)
                     image.drawAtPoint(position, fromRect: NSRect.zeroRect, operation: .CompositeSourceOver, fraction: 1.0)
                     
                     if imageInfo.animated {
-                        self.animatedTiles.append(CGPoint(x: mapX, y: mapY))
+                        self.animatedTiles.append(CGPoint(x: xDrawPosition, y: yDrawPosition))
                     }
                 } else {
                     println("tile not found. \(mapX, mapY)")
                 }
             }
+        }
+        
+        if let cursor = engine.toolCursor {
+            let normalizedX = cursor.rect.origin.x - generatedViewport.minX
+            let normalizedY = cursor.rect.origin.y - generatedViewport.origin.y
+            
+//            let context =
+        }
+    }
+    
+    func doBlink() {
+        blink = !blink
+        
+        let size = CGSize(width: tileSize, height: tileSize)
+        
+        for tile in blinkingTiles {
+            setNeedsDisplayInRect(NSRect(origin: tile, size: size))
+        }
+        
+        blinkingTiles.removeAll(keepCapacity: false)
+    }
+    
+    func animateTiles() {        
+        let size = CGSize(width: tileSize, height: tileSize)
+        
+        for tile in animatedTiles {
+            setNeedsDisplayInRect(NSRect(origin: tile, size: size))
         }
     }
     
@@ -100,17 +136,7 @@ class MapView: NSView {
         let size = CGSizeMake(CGFloat(VIEWPORT_WIDTH), CGFloat(VIEWPORT_HEIGHT))
         return NSRect(origin: point, size: size)
     }
-        
-    private func cameraPositionToMapPosition(x: Int, _ y: Int, invertedY: Bool = INVERT_Y_AXIS) -> (Int, Int) {
-        let mapX = x + (engine.city.map.width / 2)
-        
-        if invertedY {
-            return (mapX, y + (engine.city.map.height / 2))
-        } else {
-            return (mapX, engine.city.map.height - (y + (engine.city.map.height / 2)) - 1)
-        }
-    }
-
+    
     private func mapPointToViewPoint(point: CGPoint) -> CGPoint {
         return CGPoint(x: Int(point.x) - (engine.city.map.width / 2), y: (engine.city.map.height / 2) - Int(point.y))
     }

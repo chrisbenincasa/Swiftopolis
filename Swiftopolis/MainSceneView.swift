@@ -43,12 +43,26 @@ class MainSceneView: SKView {
         }
     }
     
+    // MARK: MapView API
+    
     func mapNeedsDisplay() {
         map.needsDisplay = true
     }
     
     func needsToDrawMapRect(dirtyRect: NSRect) {
         map.setNeedsDisplayInRect(dirtyRect)
+    }
+    
+    func doBlink() {
+        dispatch_async(dispatch_get_main_queue()) { [unowned self] in
+            self.map.doBlink()
+        }
+    }
+    
+    func animateTiles() {
+        dispatch_async(dispatch_get_main_queue()) { [unowned self] in
+            self.map.animateTiles()
+        }
     }
     
     // MARK: Scene events

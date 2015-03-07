@@ -21,6 +21,8 @@ class Engine {
     
     private(set) var toolPreview: ToolPreview?
     
+    var toolCursor: ToolCursor?
+    
     private var eventListeners: [EngineEventListener] = []
     
     convenience init() {

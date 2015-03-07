@@ -130,6 +130,9 @@ class City {
         if acycle % 2 == 0 {
             step()
         }
+        
+        // moveObjects
+        animateTiles()
     }
     
     func step() {
@@ -220,6 +223,22 @@ class City {
         if timeInterval > 1/60 {
 //            println("Long simulation step occurred \(phase): \(timeInterval) seconds");
         }
+    }
+    
+    private func animateTiles() {
+        for var y = 0; y < map.height; y++ {
+            for var x = 0; x < map.width; x++ {
+                let tile = map.getTile(x: x, y: y)
+                if let info = Tiles.get(Int(tile! & TileConstants.LOMASK)) {
+                    if let animNext = info.nextAnimationTile {
+                        let flags = tile! & TileConstants.ALLBITS
+                        map.setTile(x: x, y: y, tile: UInt16(animNext) | flags)
+                    }
+                }
+            }
+        }
+
+        onMapAnimation()
     }
     
     // TODO: factor out scanners
@@ -1048,6 +1067,12 @@ class City {
     private func onDemandChanged() {
         for subscriber in self.subscribers {
             subscriber.demandChanged?([:])
+        }
+    }
+    
+    private func onMapAnimation() {
+        for subscriber in subscribers {
+            subscriber.mapAnimation?([:])
         }
     }
     
