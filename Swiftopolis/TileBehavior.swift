@@ -50,7 +50,15 @@ class BuildingZoneBehavior: TileBehavior {
     lazy var traffic: TrafficGenerator = TrafficGenerator(city: self.city)
     
     internal func checkZonePower() -> Bool {
-        return true
+        let poweredFlag = setZonePower()
+        
+        if poweredFlag {
+            
+        } else {
+            
+        }
+        
+        return poweredFlag
     }
     
     internal func setZonePower() -> Bool {
