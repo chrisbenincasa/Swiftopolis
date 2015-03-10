@@ -19,3 +19,5 @@ DerivedData
 Pods
 
 *.o
+
+.DS_Store
