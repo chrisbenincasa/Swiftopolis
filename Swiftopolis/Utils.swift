@@ -8,6 +8,8 @@
 
 import Cocoa
 
+public let noop: () -> () = { _ in }
+
 class Utils {
 
     class func initializeArray<T>(inout a: Array<T>, size: Int, value: T) {

@@ -38,6 +38,14 @@ func -(left: CGPoint, right: Int) -> CGPoint {
     return left - CGFloat(right)
 }
 
+func -(left: CGPoint, right: (CGFloat, CGFloat)) -> CGPoint {
+    return left - CGPoint(x: right.0, y: right.1)
+}
+
+func -(left: CGPoint, right: (Int, Int)) -> CGPoint {
+    return left - (CGFloat(right.0), CGFloat(right.1))
+}
+
 func *(left: CGPoint, right: CGFloat) -> CGPoint {
     return CGPoint(x: left.x * right, y: left.y * right)
 }

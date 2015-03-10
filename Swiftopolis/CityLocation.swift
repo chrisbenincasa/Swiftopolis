@@ -21,6 +21,10 @@ class CityLocation : Equatable, Printable {
         self.y = y
     }
     
+    convenience init(point: CGPoint) {
+        self.init(x: Int(point.x), y: Int(point.y))
+    }
+    
     func setCoordinates(#x: Int, y: Int) {
         self.x = x
         self.y = y

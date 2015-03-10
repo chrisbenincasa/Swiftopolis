@@ -38,7 +38,7 @@ protocol Subscriber {
     
     optional func spriteMoved(/*** sprite: Sprite ***/) -> Void
     
-    optional func tileChanged(Int, Int) -> Void
+    optional func tileChanged(x: Int, y: Int) -> Void
     
     optional func wholeMapChanged(data: [NSObject: AnyObject]) -> Void
 }

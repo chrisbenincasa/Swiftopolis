@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class ToolStroke {
+class ToolStroke: Printable {
 
     private(set) var city: City
     var xSrc: Int
@@ -17,6 +17,10 @@ class ToolStroke {
     var yDest: Int
     private(set) var tool: Tool
     private(set) var previewing: Bool = false
+    
+    var description: String {
+        return "ToolPreview(xSrc: \(self.xSrc), ySrc: \(self.ySrc), xDest: \(self.xDest), yDest: \(self.yDest))"
+    }
     
     private var currentEffect: ToolEffect?
     
@@ -91,7 +95,7 @@ class ToolStroke {
         if xDest >= xSrc {
             width = ((xDest - xSrc) / toolSize + 1) * toolSize
         } else {
-            width = ((xDest - xSrc) / toolSize + 1) * toolSize
+            width = ((xSrc - xDest) / toolSize + 1) * toolSize
             x += toolSize - width
         }
         
@@ -102,7 +106,7 @@ class ToolStroke {
         if yDest >= ySrc {
             height = ((yDest - ySrc) / toolSize + 1) * toolSize
         } else {
-            height = ((yDest - ySrc) / toolSize + 1) * toolSize
+            height = ((ySrc - yDest) / toolSize + 1) * toolSize
             y += toolSize - height
         }
         
