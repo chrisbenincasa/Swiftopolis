@@ -162,6 +162,12 @@ class GameViewController: NSViewController, EngineEventListener {
         mainView.onToolChanged(.Stadium)
     }
     
+    // Handle ESC button press.
+    override func cancelOperation(sender: AnyObject?) {
+        selectedButton.foreach(setButtonAsUnselected)
+        mainView.onToolCleared()
+    }
+    
     private func swapSelectedButton(button: NSButton) {
         selectedButton.map(setButtonAsUnselected)
         setButtonAsSelected(button)
@@ -209,6 +215,10 @@ class GameViewController: NSViewController, EngineEventListener {
         let scene = GameScene(engine: engine, size: mainView.frame.size)
         // Set up SKView
         self.mainView!.allowsTransparency = true
+        
+        self.mainView!.showsFPS = true
+        self.mainView!.showsDrawCount = true
+        self.mainView!.showsNodeCount = true
         
         /* Set the scale mode to scale to fit the window */
         scene.scaleMode = .ResizeFill

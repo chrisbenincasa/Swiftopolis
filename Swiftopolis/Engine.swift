@@ -37,6 +37,9 @@ class Engine {
     // TODO: make this super safe
     func setCurrentMapPoint(point: CGPoint) {
         self.currentMapPoint = point
+        dispatch_async(dispatch_get_main_queue()) {
+            self.onMapCenterChanged()
+        }
     }
     
     func setToolPreview(preview: ToolPreview?) {
@@ -49,7 +52,7 @@ class Engine {
         dispatch_source_set_timer(_timer, DISPATCH_TIME_NOW, cityAnimDelay, other)
         dispatch_source_set_event_handler(_timer) {
             for listener in self.eventListeners {
-                listener.timerFired()
+                listener.timerFired?()
             }
         }
         
@@ -65,6 +68,12 @@ class Engine {
         self.eventListeners.append(listener)
     }
     
+    func onMapCenterChanged() {
+        for listener in eventListeners {
+            listener.mapCenterChanged?()
+        }
+    }
+    
     // Utility Functions
     
     // NOTE: origin is bottom left
@@ -75,6 +84,9 @@ class Engine {
     }
 }
 
+@objc
 protocol EngineEventListener {
-    func timerFired() -> Void
+    optional func timerFired() -> Void
+    
+    optional func mapCenterChanged() -> Void
 }

@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class GameScene: SKScene, Subscriber {
+class GameScene: SKScene, Subscriber, EngineEventListener {
     private let TILE_SIZE: Int = 16
     
     private var toolCursor: ToolCursor!
@@ -35,14 +35,16 @@ class GameScene: SKScene, Subscriber {
     private var debugOverlay = DebugOverlay()
     private var world: CityWorld = CityWorld()
     private var camera: Camera = Camera()
-    private var worldCircle = SKShapeNode(circleOfRadius: 10.0)
-    private var cameraCircle = SKShapeNode(circleOfRadius: 10.0)
     
     private var pixelWidth = 0
     private var pixelHeight = 0
     
     private var lastPoint: CityLocation?
     private var dragInProgress = false
+    
+    private var tileImages = TileImages.instance(16)
+    
+    private var tiles: [[SKSpriteNode!]] = []
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -81,8 +83,10 @@ class GameScene: SKScene, Subscriber {
         // Listen for city events
         city.addSubscriber(self)
         
+        engine.registerListener(self)
+        
         // Start the simulation
-        startSimulationTimer()
+//        startSimulationTimer()
         
         // Turn off gravity
         self.physicsWorld.gravity = CGVectorMake(0, 0)
@@ -91,11 +95,8 @@ class GameScene: SKScene, Subscriber {
 //        self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         
         // DEBUG
-        worldCircle.fillColor = NSColor.greenColor()
         self.addChild(debugOverlay)
-        debugOverlay.addChild(worldCircle)
-        debugOverlay.addChild(cameraCircle)
-        drawGrid()
+//        drawGrid()
         
         // Create main nodes
         // World represents the city and camera is the viewpoint.
@@ -108,28 +109,36 @@ class GameScene: SKScene, Subscriber {
     // MARK: Overrides and Animation
     
     override func didMoveToView(view: SKView) {
-//        if let mapView = view as? MainSceneView {
-//            mapView.city = self.city
-//        }
+        let viewport = viewportSize()
         
-        view.needsDisplay = true
+        Utils.initializeMatrix(&tiles, width: Int(viewport.height), height: Int(viewport.width), value: nil)
+        
+        let topLeft = topLeftMapPoint()
+        
+        for var y = Int(topLeft.y), i = 0; y < Int(topLeft.y) + Int(viewport.height); y++, i++ {
+            for var x = Int(topLeft.x), j = 0; x < Int(topLeft.x) + Int(viewport.width); x++, j++ {
+                if let tile = engine.city.map.getTile(x: x, y: y) {
+                    let imageInfo = tileImages.getTileImageInfo(Int(tile), acycle: engine.city.getAnimationCycle())
+                    let texture = tileImages.atlas.textureNamed(String(imageInfo.imageNumber))
+                    
+                    let xDrawPosition = (j * TILE_SIZE)
+                    let yDrawPosition = Int(view.frame.height) - ((i + 1) * TILE_SIZE)
+                    
+                    let position = CGPoint(x: xDrawPosition, y: yDrawPosition)
+                    
+                    let sprite = SKSpriteNode(texture: texture)
+                    sprite.size = CGSize(width: TILE_SIZE, height: TILE_SIZE)
+                    sprite.anchorPoint = CGPoint.zeroPoint
+                    sprite.position = position
+                    tiles[i][j] = sprite
+                    world.addChild(tiles[i][j])
+                }
+            }
+        }
     }
     
     override func update(currentTime: CFTimeInterval) {
-        self.debugOverlay.removeFromParent()
-        self.debugOverlay.removeAllChildren()
-    }
-    
-    override func didFinishUpdate() {
-//        centerOnCamera()
         
-        self.addChild(debugOverlay)
-        
-        cameraCircle.fillColor = NSColor.redColor()
-        cameraCircle.position = camera.position
-        
-        worldCircle.fillColor = NSColor.blueColor()
-        worldCircle.position = world.position
     }
     
     // MARK: Mouse Events
@@ -182,9 +191,14 @@ class GameScene: SKScene, Subscriber {
         }
         
         if let stroke = currentStroke {
+            let currentPreview = engine.toolPreview
+            
             stroke.dragTo(x, y)
-            previewTool()
-            var strokeBounds = stroke.getBounds()
+            
+            if let preview = previewTool() {
+                redrawToolPreview(stroke, oldPreview: currentPreview, newPreview: preview)
+            }
+            
             let newPoint = getToolPoint(location)
             let newViewPoint = newPoint * TILE_SIZE
             
@@ -192,6 +206,8 @@ class GameScene: SKScene, Subscriber {
             
             // Update toolNode position if we're moving west -> east or north -> south
             lastPoint.foreach { point in
+                println(point)
+                println(newLocation)
                 if newLocation.x < point.x {
                     self.toolNode!.position = newViewPoint
                 } else if newLocation.y > point.y {
@@ -219,8 +235,6 @@ class GameScene: SKScene, Subscriber {
         // Normalize coordinate systems and make them easily convertable between each other
         let cityLocation = cityLocationFromClickPoint(location)
         
-        println("clicked = \(cityLocation)")
-        
         let pressedButtons = NSEvent.pressedMouseButtons()
         switch pressedButtons {
         case 1: // left mouse
@@ -234,8 +248,11 @@ class GameScene: SKScene, Subscriber {
                 // Start the current stroke
                 // The point that was clicked represents the center of the current tool, but strokes begin in the top-left
                 // of the tool. Because of this, we adjust the point passed in so it matches what the preview is showing
+                let currentPreview = engine.toolPreview
                 currentStroke = currentTool.beginStroke(city, x: cityLocation.x, y: cityLocation.y)
-                previewTool()
+                if let preview = previewTool() {
+                    redrawToolPreview(currentStroke!, oldPreview: currentPreview, newPreview: preview)
+                }
             }
             
             break
@@ -278,6 +295,10 @@ class GameScene: SKScene, Subscriber {
         }
     }
     
+    override func cancelOperation(sender: AnyObject?) {
+        engine.setToolPreview(nil)
+    }
+    
     // MARK: Simulation Helpers
     
     private func startSimulationTimer() {
@@ -311,17 +332,6 @@ class GameScene: SKScene, Subscriber {
         if let action = self.actionForKey("simulation") {
             self.removeActionForKey("simulation")
         }
-    }
-    
-    // MARK: Position Helpers
-    
-    private func getPoint(point: CGPoint) -> CGPoint {
-        return CGPoint(x: Int(point.x) / TILE_SIZE, y: Int(point.y) / TILE_SIZE)
-    }
-    
-    private func centerOnCamera() {
-        let cameraPosition = self.convertPoint(camera.position, fromNode: world)
-        world.position = CGPoint(x: world.position.x - cameraPosition.x, y: world.position.y - cameraPosition.y)
     }
     
     // MARK: Drawing Helpers
@@ -365,6 +375,10 @@ class GameScene: SKScene, Subscriber {
         self.currentTool = tool
     }
     
+    func clearCurrentTool() {
+        self.currentTool = nil
+    }
+    
     /// Returns the bottom-left position of a tool cursor with respect to another point
     ///
     /// Returns a point with the range [0, width in tiles] and [0, height in tiles]
@@ -396,7 +410,6 @@ class GameScene: SKScene, Subscriber {
             toolCursor = ToolCursor(tool: currentTool, withRect: newRect)
             
             engine.toolCursor = toolCursor
-//            println(toolCursor.rect)
             toolNode = makeToolCursor(newRect)
             toolNode!.position = lastPosition
             world.addChild(toolNode!)
@@ -409,15 +422,17 @@ class GameScene: SKScene, Subscriber {
         toolNode!.fillColor = toolCursor.fillColor
         toolNode!.lineWidth = 2.0
         toolNode!.glowWidth = 0.5
+        toolNode!.zPosition = 1.0
         toolNode!.strokeColor = toolCursor.borderColor
 
         return toolNode!
     }
     
-    private func previewTool() {
-        if let stroke = currentStroke {
-            let preview = stroke.getPreview()
-            engine.setToolPreview(preview)
+    private func previewTool() -> ToolPreview? {
+        return currentStroke.map { s in
+            let preview = s.getPreview()
+            self.engine.setToolPreview(preview)
+            return preview
         }
     }
     
@@ -465,7 +480,62 @@ class GameScene: SKScene, Subscriber {
         }
     }
     
+    func tileChanged(x: Int, y: Int) {
+        redrawTile(x, y)
+    }
+    
+    // MARK: EngineEventListener Protocol
+    
+    func mapCenterChanged() {
+        let viewport = viewportSize()
+        let topLeft = topLeftMapPoint()
+        
+        for var y = Int(topLeft.y), i = 0; y < Int(topLeft.y) + Int(viewport.height); y++, i++ {
+            for var x = Int(topLeft.x), j = 0; x < Int(topLeft.x) + Int(viewport.width); x++, j++ {
+                if let tile = engine.city.map.getTile(x: x, y: y) {
+                    let imageInfo = tileImages.getTileImageInfo(Int(tile), acycle: engine.city.getAnimationCycle())
+                    let texture = tileImages.atlas.textureNamed(String(imageInfo.imageNumber))
+
+                    tiles[i][j].texture = texture
+                }
+            }
+        }
+    }
+    
     // MARK: Private helpers
+    
+    private func redrawTile(x: Int, _ y: Int) {
+        let point = CGPoint(x: x, y: y) - topLeftMapPoint()
+        let sprite = tiles[Int(point.y)][Int(point.x)]
+        var tile = engine.city.getTile(x: x, y: y)
+        
+        if TileConstants.isZoneCenter(tile) && !engine.city.isTilePowered(x: x, y: y) {
+            tile = TileConstants.LIGHTNINGBOLT
+        }
+        
+        if let currentPreview = engine.toolPreview {
+            let t = currentPreview.getTile(x, y)
+            if t != TileConstants.CLEAR {
+                tile = t
+            }
+        }
+        
+        let imageInfo = tileImages.getTileImageInfo(Int(tile), acycle: engine.city.getAnimationCycle())
+        let texture = tileImages.atlas.textureNamed(String(imageInfo.imageNumber))
+        
+        sprite.texture = texture
+    }
+    
+    private func redrawToolPreview(stroke: ToolStroke, oldPreview: ToolPreview?, newPreview: ToolPreview) {
+        // Only redraw the preview if we have to
+        if oldPreview == nil || (oldPreview!.width != newPreview.width || oldPreview!.height != newPreview.height) {
+            for var offsetY = 0; offsetY < newPreview.height; offsetY++ {
+                for var offsetX = 0; offsetX < newPreview.width; offsetX++ {
+                    redrawTile(stroke.xSrc + offsetX, stroke.ySrc + offsetY)
+                }
+            }
+        }
+    }
     
     private func playSound(sound: Sound) {
         self.playSound(sound.getSoundFilename())

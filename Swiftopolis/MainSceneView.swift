@@ -74,6 +74,12 @@ class MainSceneView: SKView {
         }
     }
     
+    func onToolCleared() {
+        if let s = self.scene as? GameScene {
+            s.clearCurrentTool()
+        }
+    }
+    
     func getViewport() -> NSRect {
         return map.getViewport()
     }

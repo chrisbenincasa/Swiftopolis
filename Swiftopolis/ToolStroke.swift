@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class ToolStroke {
+class ToolStroke: Printable {
 
     private(set) var city: City
     var xSrc: Int
@@ -17,6 +17,10 @@ class ToolStroke {
     var yDest: Int
     private(set) var tool: Tool
     private(set) var previewing: Bool = false
+    
+    var description: String {
+        return "ToolPreview(xSrc: \(self.xSrc), ySrc: \(self.ySrc), xDest: \(self.xDest), yDest: \(self.yDest))"
+    }
     
     private var currentEffect: ToolEffect?
     

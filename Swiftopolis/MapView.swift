@@ -44,72 +44,72 @@ class MapView: NSView {
         self.tileImages = TileImages.instance(tileSize)
     }
     
-    override func drawRect(dirtyRect: NSRect) {
-        // Get the current visible rectangle based off of the current center point and viewport size
-        let generatedViewport = engine.mapRectForViewport(CGSize(width: VIEWPORT_WIDTH, height: VIEWPORT_HEIGHT))
-        
-        let origin = generatedViewport.origin +- (dirtyRect.origin / tileSize)
-        let size = dirtyRect.size / tileSize
-        let dRect = CGRect(origin: origin, size: size)
-        let minXPoint = Int(dRect.minX)
-        let minYPoint = max(0, Int(dRect.origin.y - dRect.height))
-        let maxXPoint = Int(dRect.maxX)
-        let maxYPoint = Int(dRect.origin.y)
-        
-        // for var y = 0, cameraY = yMax - 1; cameraY >= yMin; y++, cameraY-- { // inverted Y axis
-        for var y = 0, cameraY = minYPoint; cameraY < maxYPoint; y++, cameraY++ {
-            for var x = 0, cameraX = minXPoint; cameraX < maxXPoint; x++, cameraX++ {
-                // Camera positions have (0, 0) at the center of the map while
-                let (mapX, mapY) = (cameraX, cameraY)
-                if !engine.city.withinBounds(x: mapX, y: mapY) {
-                    continue
-                }
-                if var tile = engine.city.map.getTile(x: mapX, y: mapY) {
-                    // Calculate the draw position (bottom left) of the tile
-                    // (y + 1) to adjust for bottom vs. top
-                    let xDrawPosition = Int(dirtyRect.origin.x) + (x * tileSize)
-                    let yDrawPosition = Int(dirtyRect.origin.y) + Int(dirtyRect.height) - ((y + 1) * tileSize)
-                    let position = CGPoint(x: xDrawPosition, y: yDrawPosition)
-                    
-                    // Work around some awkwardness in Swift (setting tile in deep nested blocks doesn't take effect
-                    var tileToDraw = tile
-                    
-                    if TileConstants.isZoneCenter(tile) && !engine.city.isTilePowered(x: mapX, y: mapY) {
-                        blinkingTiles.append(CGPoint(x: xDrawPosition, y: yDrawPosition))
-                        
-                        if blink {
-                            tileToDraw = TileConstants.LIGHTNINGBOLT
-                        }
-                    }
-                    
-                    if let currentPreview = engine.toolPreview {
-                        let t = currentPreview.getTile(mapX, mapY)
-                        if t != TileConstants.CLEAR {
-                            tileToDraw = t
-                        }
-                    }
-                    
-                    let imageInfo = self.tileImages.getTileImageInfo(Int(tileToDraw), acycle: engine.city.getAnimationCycle())
-                    let image = self.tileImages.getImage(imageInfo.imageNumber)
-                    
-                    image.drawAtPoint(position, fromRect: NSRect.zeroRect, operation: .CompositeSourceOver, fraction: 1.0)
-                    
-                    if imageInfo.animated {
-                        self.animatedTiles.append(CGPoint(x: xDrawPosition, y: yDrawPosition))
-                    }
-                } else {
-                    println("tile not found. \(mapX, mapY)")
-                }
-            }
-        }
-        
-        if let cursor = engine.toolCursor {
-            let normalizedX = cursor.rect.origin.x - generatedViewport.minX
-            let normalizedY = cursor.rect.origin.y - generatedViewport.origin.y
-            
-//            let context =
-        }
-    }
+//    override func drawRect(dirtyRect: NSRect) {
+//        // Get the current visible rectangle based off of the current center point and viewport size
+//        let generatedViewport = engine.mapRectForViewport(CGSize(width: VIEWPORT_WIDTH, height: VIEWPORT_HEIGHT))
+//        
+//        let origin = generatedViewport.origin +- (dirtyRect.origin / tileSize)
+//        let size = dirtyRect.size / tileSize
+//        let dRect = CGRect(origin: origin, size: size)
+//        let minXPoint = Int(dRect.minX)
+//        let minYPoint = max(0, Int(dRect.origin.y - dRect.height))
+//        let maxXPoint = Int(dRect.maxX)
+//        let maxYPoint = Int(dRect.origin.y)
+//        
+//        // for var y = 0, cameraY = yMax - 1; cameraY >= yMin; y++, cameraY-- { // inverted Y axis
+//        for var y = 0, cameraY = minYPoint; cameraY < maxYPoint; y++, cameraY++ {
+//            for var x = 0, cameraX = minXPoint; cameraX < maxXPoint; x++, cameraX++ {
+//                // Camera positions have (0, 0) at the center of the map while
+//                let (mapX, mapY) = (cameraX, cameraY)
+//                if !engine.city.withinBounds(x: mapX, y: mapY) {
+//                    continue
+//                }
+//                if var tile = engine.city.map.getTile(x: mapX, y: mapY) {
+//                    // Calculate the draw position (bottom left) of the tile
+//                    // (y + 1) to adjust for bottom vs. top
+//                    let xDrawPosition = Int(dirtyRect.origin.x) + (x * tileSize)
+//                    let yDrawPosition = Int(dirtyRect.origin.y) + Int(dirtyRect.height) - ((y + 1) * tileSize)
+//                    let position = CGPoint(x: xDrawPosition, y: yDrawPosition)
+//                    
+//                    // Work around some awkwardness in Swift (setting tile in deep nested blocks doesn't take effect
+//                    var tileToDraw = tile
+//                    
+//                    if TileConstants.isZoneCenter(tile) && !engine.city.isTilePowered(x: mapX, y: mapY) {
+//                        blinkingTiles.append(CGPoint(x: xDrawPosition, y: yDrawPosition))
+//                        
+//                        if blink {
+//                            tileToDraw = TileConstants.LIGHTNINGBOLT
+//                        }
+//                    }
+//                    
+//                    if let currentPreview = engine.toolPreview {
+//                        let t = currentPreview.getTile(mapX, mapY)
+//                        if t != TileConstants.CLEAR {
+//                            tileToDraw = t
+//                        }
+//                    }
+//                    
+//                    let imageInfo = self.tileImages.getTileImageInfo(Int(tileToDraw), acycle: engine.city.getAnimationCycle())
+//                    let image = self.tileImages.getImage(imageInfo.imageNumber)
+//                    
+//                    image.drawAtPoint(position, fromRect: NSRect.zeroRect, operation: .CompositeSourceOver, fraction: 1.0)
+//                    
+//                    if imageInfo.animated {
+//                        self.animatedTiles.append(CGPoint(x: xDrawPosition, y: yDrawPosition))
+//                    }
+//                } else {
+//                    println("tile not found. \(mapX, mapY)")
+//                }
+//            }
+//        }
+//        
+//        if let cursor = engine.toolCursor {
+//            let normalizedX = cursor.rect.origin.x - generatedViewport.minX
+//            let normalizedY = cursor.rect.origin.y - generatedViewport.origin.y
+//            
+////            let context =
+//        }
+//    }
     
     func doBlink() {
         blink = !blink

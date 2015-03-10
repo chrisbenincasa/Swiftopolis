@@ -42,6 +42,7 @@
 		143059D21A5A1CFF009AF7C2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 143059D11A5A1CFF009AF7C2 /* Cocoa.framework */; };
 		143059D41A5A5C04009AF7C2 /* Tiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143059D31A5A5C04009AF7C2 /* Tiles.swift */; };
 		143059D61A5A5CE7009AF7C2 /* TileLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143059D51A5A5CE7009AF7C2 /* TileLoader.swift */; };
+		1430F8A71AACB8D000ED4B91 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1430F8A61AACB8D000ED4B91 /* QuartzCore.framework */; };
 		143F70F71A9F807400077AA4 /* CGPoint-Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143F70F61A9F807400077AA4 /* CGPoint-Extensions.swift */; };
 		143F70F91A9F881900077AA4 /* CGSize-Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143F70F81A9F881900077AA4 /* CGSize-Extensions.swift */; };
 		14450D181A5CAF7C00218A5E /* Zone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14450D171A5CAF7C00218A5E /* Zone.swift */; };
@@ -225,6 +226,8 @@
 		143059D11A5A1CFF009AF7C2 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		143059D31A5A5C04009AF7C2 /* Tiles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tiles.swift; sourceTree = "<group>"; };
 		143059D51A5A5CE7009AF7C2 /* TileLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileLoader.swift; sourceTree = "<group>"; };
+		1430F8A61AACB8D000ED4B91 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		1430F8A91AACC3D800ED4B91 /* shader01.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shader01.vsh; sourceTree = "<group>"; };
 		143F70F61A9F807400077AA4 /* CGPoint-Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint-Extensions.swift"; sourceTree = "<group>"; };
 		143F70F81A9F881900077AA4 /* CGSize-Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGSize-Extensions.swift"; sourceTree = "<group>"; };
 		14450D171A5CAF7C00218A5E /* Zone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Zone.swift; sourceTree = "<group>"; };
@@ -308,6 +311,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1430F8A71AACB8D000ED4B91 /* QuartzCore.framework in Frameworks */,
 				14B8AC2D1A6AA59200BF10FE /* SpriteKit.framework in Frameworks */,
 				143059D21A5A1CFF009AF7C2 /* Cocoa.framework in Frameworks */,
 			);
@@ -369,9 +373,18 @@
 			name = Tools;
 			sourceTree = "<group>";
 		};
+		1430F8A81AACC38E00ED4B91 /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				1430F8A91AACC3D800ED4B91 /* shader01.vsh */,
+			);
+			name = Shaders;
+			sourceTree = "<group>";
+		};
 		146ABA571A4F0EE0002A1B6B = {
 			isa = PBXGroup;
 			children = (
+				1430F8A81AACC38E00ED4B91 /* Shaders */,
 				1423A9071A9A6C6D00480828 /* sounds */,
 				1489D1231A5A1C490055EF58 /* tiles.json */,
 				14A599601A6D4CF00092714A /* build */,
@@ -509,6 +522,7 @@
 		14A599651A6D5E6D0092714A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1430F8A61AACB8D000ED4B91 /* QuartzCore.framework */,
 				146C6C131A6ACE9C008B14E6 /* AppKit.framework */,
 				14B8AC2C1A6AA59200BF10FE /* SpriteKit.framework */,
 				143059D11A5A1CFF009AF7C2 /* Cocoa.framework */,

@@ -14,10 +14,10 @@ private var GlobalTileImages: [Int : TileImages] = [:]
 class TileImages {
     private(set) var name: String
     private(set) var size: Int
-    private(set) var spriteByName: [String : SKSpriteNode] = [:]
     private(set) var spriteImages: [SpriteKind : [Int : NSImage]] = [:]
     private(set) var tileImages: [TileImage!] = []
     private(set) var images: [NSImage] = []
+    private(set) var atlas: SKTextureAtlas!
     
     class func instance(size: Int) -> TileImages {
         if let images = GlobalTileImages[size] {
@@ -26,6 +26,16 @@ class TileImages {
             let this = TileImages(name: "\(size)x\(size)", size: size)
             this.initTileImages()
             GlobalTileImages[size] = this
+            
+            var atlasDict: [NSObject: AnyObject] = [:]
+            for i in 0..<this.images.count {
+                let key = String(i) as NSString
+                let value = this.images[i]
+                atlasDict[key] = value
+            }
+            
+            this.atlas = SKTextureAtlas(dictionary: atlasDict)
+            
             return this
         }
     }
@@ -33,6 +43,7 @@ class TileImages {
     init(name: String, size: Int) {
         self.name = name
         self.size = size
+        
         initTileImageMap()
     }
     
