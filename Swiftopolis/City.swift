@@ -1065,8 +1065,14 @@ class City {
     }
     
     private func onDemandChanged() {
+        let data: [NSObject : AnyObject] = [
+            NSString(string: "res") : self.demand.residentialDemand,
+            NSString(string: "com") : self.demand.commercialDemand,
+            NSString(string: "ind") : self.demand.industrialDemand
+        ]
+        
         for subscriber in self.subscribers {
-            subscriber.demandChanged?([:])
+            subscriber.demandChanged?(data)
         }
     }
     

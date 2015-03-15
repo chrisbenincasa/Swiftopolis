@@ -116,6 +116,8 @@
 		14BD96291AB112B500E13502 /* OverlayMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BD96281AB112B500E13502 /* OverlayMap.swift */; };
 		14BD962B1AB1E40500E13502 /* TileTextures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BD962A1AB1E40500E13502 /* TileTextures.swift */; };
 		14BD962D1AB1EB4B00E13502 /* TileImageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BD962C1AB1EB4B00E13502 /* TileImageInfo.swift */; };
+		14D6DDAC1AB517DB008D5E7B /* CityDateNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D6DDAB1AB517DB008D5E7B /* CityDateNode.swift */; };
+		14D6DDAE1AB51CF3008D5E7B /* DemandIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D6DDAD1AB51CF3008D5E7B /* DemandIndicator.swift */; };
 		14DBB94A1A6AB7AE006DD969 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DBB9491A6AB7AE006DD969 /* main.swift */; };
 		14DBB9501A6ABCAC006DD969 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DFA6FB1A59BD75008A43E7 /* SwiftyJSON.swift */; };
 		14DBB9521A6ABE01006DD969 /* TileReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DBB9511A6ABE01006DD969 /* TileReader.swift */; };
@@ -312,6 +314,8 @@
 		14BD96281AB112B500E13502 /* OverlayMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayMap.swift; sourceTree = "<group>"; };
 		14BD962A1AB1E40500E13502 /* TileTextures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileTextures.swift; sourceTree = "<group>"; };
 		14BD962C1AB1EB4B00E13502 /* TileImageInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileImageInfo.swift; sourceTree = "<group>"; };
+		14D6DDAB1AB517DB008D5E7B /* CityDateNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityDateNode.swift; sourceTree = "<group>"; };
+		14D6DDAD1AB51CF3008D5E7B /* DemandIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemandIndicator.swift; sourceTree = "<group>"; };
 		14DBB9471A6AB7AE006DD969 /* TileGenerator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TileGenerator; sourceTree = BUILT_PRODUCTS_DIR; };
 		14DBB9491A6AB7AE006DD969 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		14DBB9511A6ABE01006DD969 /* TileReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileReader.swift; sourceTree = "<group>"; };
@@ -525,6 +529,8 @@
 				14BD962A1AB1E40500E13502 /* TileTextures.swift */,
 				14BD962C1AB1EB4B00E13502 /* TileImageInfo.swift */,
 				1451ED961AB48FE200D51278 /* CachedTextureAtlas.swift */,
+				14D6DDAB1AB517DB008D5E7B /* CityDateNode.swift */,
+				14D6DDAD1AB51CF3008D5E7B /* DemandIndicator.swift */,
 			);
 			name = "User Interface";
 			sourceTree = "<group>";
@@ -781,6 +787,7 @@
 				1454AC781A5EEA1F008F35B6 /* NuclearTileBehavior.swift in Sources */,
 				14999ADB1A674E6E00BF9F20 /* CityWorld.swift in Sources */,
 				14BD96231AB108A100E13502 /* ToolButton.swift in Sources */,
+				14D6DDAC1AB517DB008D5E7B /* CityDateNode.swift in Sources */,
 				14E489671A7E96A00099287F /* Engine.swift in Sources */,
 				146ABAB81A509640002A1B6B /* ToolStroke.swift in Sources */,
 				14BD96251AB108EE00E13502 /* ToolButtonPanel.swift in Sources */,
@@ -824,6 +831,7 @@
 				143F70F71A9F807400077AA4 /* CGPoint-Extensions.swift in Sources */,
 				147F2F321A6364F700E4039E /* Sprite.swift in Sources */,
 				141617A21A5C664A0066E8F1 /* ResidentialTileBehavior.swift in Sources */,
+				14D6DDAE1AB51CF3008D5E7B /* DemandIndicator.swift in Sources */,
 				147F2F351A6394EC00E4039E /* TornadoSprite.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

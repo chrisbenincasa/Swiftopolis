@@ -43,23 +43,6 @@ class GameViewController: NSViewController, EngineEventListener {
         initGameScene()
     }
     
-    private func updateDateLabel() {
-        let formatter = NSDateFormatter()
-        formatter.dateFormat = "MMM yyyy"
-        let calendar = NSCalendar.currentCalendar()
-        let components = NSDateComponents()
-        let time = self.engine.city.cityTime
-        components.year = 1900 + time / 48
-        components.month = (time % 48) / 4
-        components.day = (time % 4) * 7 + 1
-//        println(components)
-        
-        // Ensure UI update happens on main thread
-        dispatch_async(dispatch_get_main_queue()) { [unowned self] in
-            self.dateLabel.stringValue = formatter.stringFromDate(calendar.dateFromComponents(components)!)
-        }
-    }
-    
     private func initGameScene() {
         let scene = GameScene(engine: engine, size: mainView.frame.size)
         // Set up SKView

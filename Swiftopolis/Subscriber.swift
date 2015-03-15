@@ -20,7 +20,7 @@ protocol Subscriber {
     
     optional func censusChanged(data: [NSObject: AnyObject]) -> Void
     
-    optional func demandChanged(data: [NSObject: AnyObject]) -> Void
+    optional func demandChanged(data: [NSObject: AnyObject])
     
     optional func evaluationChanged(data: [NSObject: AnyObject]) -> Void
     

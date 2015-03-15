@@ -8,7 +8,7 @@
 
 import Cocoa
 
-public let noop: () -> () = { _ in }
+public func noop<T>(arg: T) {}
 
 class Utils {
 

@@ -31,11 +31,14 @@ class GameScene: SKScene, Subscriber, EngineEventListener {
     private let barrier = dispatch_queue_create("com.chrisbenincasa.micropolis", DISPATCH_QUEUE_SERIAL)
     private var _timer: dispatch_source_t!
     private var blinkTimer: dispatch_source_t!
+    private var dateTimer: dispatch_source_t!
     
     private var debugOverlay = DebugOverlay()
     private var world: CityWorld!
     private var overlayMap: OverlayMap!
     private var camera: Camera = Camera()
+    private var cityDate: CityDateNode!
+    private var demandIndicator: DemandIndicator!
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -57,9 +60,12 @@ class GameScene: SKScene, Subscriber, EngineEventListener {
     private func commonInit() {
         _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, barrier)
         blinkTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue())
+        dateTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue())
         
         world = CityWorld(engine: engine)
         overlayMap = OverlayMap(engine: engine, connectedMap: world)
+        cityDate = CityDateNode(initialCityTime: engine.city.cityTime)
+        cityDate.verticalAlignmentMode = .Bottom
         
         // Make the background clear to the drawn map underneath shows
         backgroundColor = NSColor.clearColor()
@@ -70,13 +76,10 @@ class GameScene: SKScene, Subscriber, EngineEventListener {
         engine.registerListener(self)
         
         // Start the simulation
-//        startSimulationTimer()
+        startSimulationTimer()
         
         // Turn off gravity
         physicsWorld.gravity = CGVectorMake(0, 0)
-        
-        // Set anchor point to the middle of the screen
-//        self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         
         // DEBUG
 //        debugOverlay.buildGrid(TILE_SIZE)
@@ -98,8 +101,15 @@ class GameScene: SKScene, Subscriber, EngineEventListener {
         overlayMap.position = CGPoint(x: 0, y: frame.height - 400)
         addChild(overlayMap)
         overlayMap.draw()
-        
         overlayMap.connectedMap = world
+        
+        cityDate.position = CGPoint(x: overlayMap.position.x + 320, y: overlayMap.position.y + 300 + 10)
+        addChild(cityDate)
+        
+        demandIndicator = DemandIndicator(texture: SKTexture(imageNamed: "demandg"), color: NSColor.clearColor(), size: CGSize(width: 39, height: 47))
+        demandIndicator.position = CGPoint(x: overlayMap.position.x, y: overlayMap.position.y + 300 + 10)
+        engine.city.addSubscriber(demandIndicator)
+        addChild(demandIndicator)
     }
     
     // MARK: Mouse Events
@@ -116,12 +126,10 @@ class GameScene: SKScene, Subscriber, EngineEventListener {
         
         let delayNano = UInt64(city.speed.delay) * NSEC_PER_MSEC
         dispatch_source_set_timer(_timer, DISPATCH_TIME_NOW, delayNano, delayNano / 2)
-        dispatch_source_set_event_handler(_timer) { [weak self] in
-            if let s = self {
-                let speed = s.city.speed
-                for _ in 0...speed.steps - 1 {
-                    s.city.animate()
-                }
+        dispatch_source_set_event_handler(_timer) { [unowned self] in
+            let speed = self.city.speed
+            for _ in 0...speed.steps - 1 {
+                self.city.animate()
             }
         }
         // Start the timer
@@ -129,12 +137,19 @@ class GameScene: SKScene, Subscriber, EngineEventListener {
         
         dispatch_source_set_timer(blinkTimer, DISPATCH_TIME_NOW, 500 * NSEC_PER_MSEC, 10)
         dispatch_source_set_event_handler(blinkTimer) { [unowned self] in
-            if let v = self.view as? MainSceneView {
-//                v.doBlink()
-            }
+
         }
         
         dispatch_resume(blinkTimer)
+        
+        let cityAnimDelay = UInt64((Double(city.speed.delay) / 1000.0) * Double(NSEC_PER_SEC))
+        let other = UInt64(0.25 * Double(NSEC_PER_SEC))
+        dispatch_source_set_timer(dateTimer, DISPATCH_TIME_NOW, cityAnimDelay, other)
+        dispatch_source_set_event_handler(dateTimer) { [unowned self] in
+            self.cityDate.updateText(self.engine.city.cityTime)
+        }
+        
+        dispatch_resume(dateTimer)
     }
     
     private func stopSimulationTimer() {
@@ -148,23 +163,6 @@ class GameScene: SKScene, Subscriber, EngineEventListener {
     
     func clearCurrentTool() {
         self.currentTool = nil
-    }
-    
-    private func showToolResult(location: CityLocation, result: ToolResult) {
-        switch result {
-        case .Success:
-            // TODO: should this be in ToolEffect?
-//            playSound(currentTool == .Bulldozer ? ExplosionSound(isHigh: true) : BuildSound())
-            break
-        case .None: break
-        case .InvalidPosition:
-            // TODO show message about bad position
-            break
-        case .InsufficientFunds:
-            // TODO sound + message
-            break
-        default: break
-        }
     }
     
     // MARK: Subscriber Protocol
