@@ -8,28 +8,28 @@
 
 import Cocoa
 
-enum Tool {
+enum Tool: String {
     // Zones
-    case Residential
-    case Commercial
-    case Industrial
+    case Residential = "residential"
+    case Commercial = "commercial"
+    case Industrial = "industrial"
     // Misc
-    case Bulldozer
-    case Query
+    case Bulldozer = "bulldozer"
+    case Query = "query"
     // Road-like
-    case Wire
-    case Road
-    case Rail
+    case Wire = "wire"
+    case Road = "road"
+    case Rail = "rail"
     // Power plants
-    case Coal
-    case Nuclear
+    case Coal = "coal"
+    case Nuclear = "nuclear"
     // Special
-    case PoliceStation
-    case FireStation
-    case Stadium
-    case Park
-    case Seaport
-    case Airport
+    case PoliceStation = "police_station"
+    case FireStation = "fire_station"
+    case Stadium = "stadium"
+    case Park = "park"
+    case Seaport = "seaport"
+    case Airport = "airport"
     
     func cost() -> Int {
         switch self {

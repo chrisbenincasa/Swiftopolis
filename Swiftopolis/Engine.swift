@@ -15,13 +15,18 @@ class Engine {
     
     private let _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue())
     
+    var toolCursor: ToolCursor?
+    var currentTool: Tool? {
+        didSet {
+            onToolChanged()
+        }
+    }
+    
     private(set) var city: City
     
     private(set) var currentMapPoint: CGPoint
-    
+
     private(set) var toolPreview: ToolPreview?
-    
-    var toolCursor: ToolCursor?
     
     private var eventListeners: [EngineEventListener] = []
     
@@ -37,6 +42,9 @@ class Engine {
     // TODO: make this super safe
     func setCurrentMapPoint(point: CGPoint) {
         self.currentMapPoint = point
+        dispatch_async(dispatch_get_main_queue()) {
+            self.onMapCenterChanged()
+        }
     }
     
     func setToolPreview(preview: ToolPreview?) {
@@ -49,7 +57,7 @@ class Engine {
         dispatch_source_set_timer(_timer, DISPATCH_TIME_NOW, cityAnimDelay, other)
         dispatch_source_set_event_handler(_timer) {
             for listener in self.eventListeners {
-                listener.timerFired()
+                listener.timerFired?()
             }
         }
         
@@ -65,6 +73,23 @@ class Engine {
         self.eventListeners.append(listener)
     }
     
+    func onMapCenterChanged() {
+        for listener in eventListeners {
+            listener.mapCenterChanged?()
+        }
+    }
+    
+    func onToolChanged() {
+        var dict: [NSObject : AnyObject] = [:]
+        if let tool = currentTool {
+            dict["tool"] = NSString(UTF8String: tool.rawValue)
+        }
+        
+        for listener in eventListeners {
+            listener.toolChanged?(dict)
+        }
+    }
+    
     // Utility Functions
     
     // NOTE: origin is bottom left
@@ -75,6 +100,11 @@ class Engine {
     }
 }
 
+@objc
 protocol EngineEventListener {
-    func timerFired() -> Void
+    optional func timerFired() -> Void
+    
+    optional func mapCenterChanged() -> Void
+    
+    optional func toolChanged(data: [NSObject : AnyObject]) -> Void
 }

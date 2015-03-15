@@ -1041,7 +1041,7 @@ class City {
     
     private func onTileChanged(#x: Int, y: Int) {
         for subscriber in self.subscribers {
-            subscriber.tileChanged?(x, y)
+            subscriber.tileChanged?(x, y: y)
         }
     }
     
