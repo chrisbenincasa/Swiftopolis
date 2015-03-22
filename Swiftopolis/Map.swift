@@ -132,8 +132,14 @@ class Map {
         return powerMap[ypos][xpos]
     }
     
-    func setTilePower(x xpos: Int, y ypos: Int, power: Bool) {
+    func setTilePower(x xpos: Int, y ypos: Int, power: Bool) -> Bool {
+        if isTilePowered(x: xpos, y: ypos) == power {
+            return false
+        }
+        
         map[ypos][xpos] = map[ypos][xpos] & (~TileConstants.POWERBIT) | (power ? TileConstants.POWERBIT : 0)
+        
+        return true
     }
     
     // Used in powerScan

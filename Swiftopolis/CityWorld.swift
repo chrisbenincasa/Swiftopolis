@@ -34,7 +34,11 @@ class CityWorld: SKNode, EngineEventListener, Subscriber {
     
     // Map
     private(set) var tiles: [[SKSpriteNode!]] = []
+    private(set) var animatedTiles: [CityLocation] = []
+    private(set) var unpoweredTiles: [CityLocation] = []
     
+    private var blink = false
+    private let blinkTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue())
     private var dragInProgress = false
     private var lastDragPoint: CityLocation?
     
@@ -45,6 +49,10 @@ class CityWorld: SKNode, EngineEventListener, Subscriber {
         engine.city.addSubscriber(self)
         
         userInteractionEnabled = true
+        
+        dispatch_source_set_timer(blinkTimer, DISPATCH_TIME_NOW, 500 * NSEC_PER_MSEC, 10)
+        dispatch_source_set_event_handler(blinkTimer) { [unowned self] in self.doBlink() }
+        dispatch_resume(blinkTimer)
         
         tileTextures = TileTextureFactory.vend(WorldConstants.TILE_SIZE) {
             println("-- preloaded 16px tile textures --")
@@ -128,12 +136,9 @@ class CityWorld: SKNode, EngineEventListener, Subscriber {
         let location = theEvent.locationInNode(self)
         
         // convert to map point
-        // TODO: fix this up because this implementation is terrible.
-        // There's no way we should have to do calculations like this in each method
-        // Normalize coordinate systems and make them easily convertable between each other
         let cityLocation = cityLocationFromClickPoint(location)
-        
         let pressedButtons = NSEvent.pressedMouseButtons()
+        
         switch pressedButtons {
         case 1: // left mouse
             if currentTool == nil {
@@ -144,8 +149,6 @@ class CityWorld: SKNode, EngineEventListener, Subscriber {
                 //
             } else {
                 // Start the current stroke
-                // The point that was clicked represents the center of the current tool, but strokes begin in the top-left
-                // of the tool. Because of this, we adjust the point passed in so it matches what the preview is showing
                 let currentPreview = engine.toolPreview
 //                println("-- began ToolStroke at (\(cityLocation.x), \(cityLocation.y)) --")
                 currentStroke = currentTool.beginStroke(engine.city, x: cityLocation.x, y: cityLocation.y)
@@ -217,6 +220,7 @@ class CityWorld: SKNode, EngineEventListener, Subscriber {
         dragInProgress = false
         
         if let stroke = currentStroke {
+            engine.setToolPreview(nil)
             let location = stroke.getLocation()
             let result = stroke.apply()
             showToolResult(location, result: result)
@@ -246,6 +250,14 @@ class CityWorld: SKNode, EngineEventListener, Subscriber {
     
     // MARK: Protocol implementations
     
+    func mapAnimation(data: [NSObject : AnyObject]) {
+        for animatedTile in animatedTiles {
+            redrawTile(animatedTile.x, animatedTile.y)
+        }
+        
+        animatedTiles.removeAll(keepCapacity: true)
+    }
+    
     func tileChanged(x: Int, y: Int) {
         redrawTile(x, y)
     }
@@ -256,11 +268,7 @@ class CityWorld: SKNode, EngineEventListener, Subscriber {
         
         for var y = Int(topLeft.y), i = 0; y < Int(topLeft.y) + Int(viewport.height); y++, i++ {
             for var x = Int(topLeft.x), j = 0; x < Int(topLeft.x) + Int(viewport.width); x++, j++ {
-                if let tile = engine.city.map.getTile(x: x, y: y) {
-                    let (imageNumber, _) = tileTextures.tileImageInfo.getTileImageInfo(tile, acycle: engine.city.getAnimationCycle())
-                    
-                    tiles[i][j].texture = tileTextures.textures[imageNumber]
-                }
+                redrawTile(x, y)
             }
         }
     }
@@ -273,7 +281,10 @@ class CityWorld: SKNode, EngineEventListener, Subscriber {
         var tile = engine.city.getTile(x: x, y: y)
         
         if TileConstants.isZoneCenter(tile) && !engine.city.isTilePowered(x: x, y: y) {
-            tile = TileConstants.LIGHTNINGBOLT
+            unpoweredTiles.append(CityLocation(x: x, y: y))
+            if blink {
+                tile = TileConstants.LIGHTNINGBOLT
+            }
         }
         
         if let currentPreview = engine.toolPreview {
@@ -283,7 +294,11 @@ class CityWorld: SKNode, EngineEventListener, Subscriber {
             }
         }
         
-        let (imageNumber, _) = tileTextures.tileImageInfo.getTileImageInfo(tile, acycle: engine.city.getAnimationCycle())
+        let (imageNumber, isAnimated) = tileTextures.tileImageInfo.getTileImageInfo(tile, acycle: engine.city.getAnimationCycle())
+        
+        if isAnimated {
+            animatedTiles.append(CityLocation(x: x, y: y))
+        }
         
         sprite.texture = tileTextures.textures[imageNumber]
     }
@@ -360,6 +375,17 @@ class CityWorld: SKNode, EngineEventListener, Subscriber {
             // TODO sound + message
             break
         default: break
+        }
+    }
+    
+    private func doBlink() {
+        if unpoweredTiles.nonEmpty {
+            blink = !blink
+            for location in unpoweredTiles {
+                redrawTile(location.x, location.y)
+            }
+            
+            unpoweredTiles.removeAll(keepCapacity: true)
         }
     }
     
