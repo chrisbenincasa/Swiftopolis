@@ -675,7 +675,7 @@ class City {
 
         census.crimeAverage = count != 0 ? (sum / count) : 0
         
-        // TODO: send Police overlay map change event
+        onMapOverlayDataChanged(.Police)
     }
     
     private func populationDensityScan() {
