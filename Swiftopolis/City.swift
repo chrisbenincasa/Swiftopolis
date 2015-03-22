@@ -172,9 +172,9 @@ class City {
             break
         case 9:
             if cityTime % CensusConstants.CENSUS_RATE == 0 {
-                 takeCensus(false)
+                takeCensus(historical: false)
                 if cityTime % (CensusConstants.CENSUS_RATE * 12) == 0 {
-                    takeCensus(true) // historical census
+                    takeCensus(historical: true)
                 }
                 
                 onCensusChanged()
@@ -326,7 +326,7 @@ class City {
         onDemandChanged()
     }
     
-    private func takeCensus(historical: Bool) {
+    private func takeCensus(#historical: Bool) {
         var resMax = 0, comMax = 0, indMax = 0
         let (start, end) = historical ? (238, 120) : (118, 0)
         
