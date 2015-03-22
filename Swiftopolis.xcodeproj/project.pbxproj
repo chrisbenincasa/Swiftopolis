@@ -421,10 +421,13 @@
 		146ABA621A4F0EE0002A1B6B /* Swiftopolis */ = {
 			isa = PBXGroup;
 			children = (
+				14BD96261AB10B3500E13502 /* Icons.atlas */,
 				146ABA651A4F0EE0002A1B6B /* AppDelegate.swift */,
 				148069361A5B6CC40004A7B0 /* ArrayExtensions.swift */,
 				141D9C571A56FABD00B053DF /* Budget.swift */,
 				1454AC751A5EE7F5008F35B6 /* Census.swift */,
+				143F70F61A9F807400077AA4 /* CGPoint-Extensions.swift */,
+				143F70F81A9F881900077AA4 /* CGSize-Extensions.swift */,
 				146ABAC31A54958A002A1B6B /* City.swift */,
 				1419E8CE1A5B3F2600F725D2 /* CityEvaluation.swift */,
 				14938FF91A64850B0093AC02 /* CityHistory.swift */,
@@ -435,6 +438,7 @@
 				145A7F671A5DECBB00B7F0F6 /* Demand.swift */,
 				142420BB1A658BD800CB273C /* DifficultyLevel.swift */,
 				147F2F2F1A63058500E4039E /* DisasterEngine.swift */,
+				14E489661A7E96A00099287F /* Engine.swift */,
 				146ABABD1A511E55002A1B6B /* Map.swift */,
 				145351471A62BEB8004F8C46 /* MapGenerator.swift */,
 				142420B91A6575F200CB273C /* Option_Extensions.swift */,
@@ -449,16 +453,12 @@
 				141617A51A5C725E0066E8F1 /* TrafficGenerator.swift */,
 				147F2F2D1A62DC9E00E4039E /* Utils.swift */,
 				14450D171A5CAF7C00218A5E /* Zone.swift */,
-				14BD96261AB10B3500E13502 /* Icons.atlas */,
 				146ABA6B1A4F0EE0002A1B6B /* Images.xcassets */,
 				147F2F331A63949F00E4039E /* Sprites */,
 				146ABA631A4F0EE0002A1B6B /* Supporting Files */,
 				14AB41A71A5B4BEE003A4F7D /* Tile Behaviors */,
 				142F22F61A71AF1C00663165 /* Tools */,
 				14999AD91A674E5800BF9F20 /* User Interface */,
-				14E489661A7E96A00099287F /* Engine.swift */,
-				143F70F61A9F807400077AA4 /* CGPoint-Extensions.swift */,
-				143F70F81A9F881900077AA4 /* CGSize-Extensions.swift */,
 			);
 			path = Swiftopolis;
 			sourceTree = "<group>";
