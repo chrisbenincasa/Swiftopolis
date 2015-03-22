@@ -235,7 +235,6 @@
 		143059D31A5A5C04009AF7C2 /* Tiles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tiles.swift; sourceTree = "<group>"; };
 		143059D51A5A5CE7009AF7C2 /* TileLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileLoader.swift; sourceTree = "<group>"; };
 		1430F8A61AACB8D000ED4B91 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		1430F8A91AACC3D800ED4B91 /* shader01.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shader01.vsh; sourceTree = "<group>"; };
 		143F70F61A9F807400077AA4 /* CGPoint-Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint-Extensions.swift"; sourceTree = "<group>"; };
 		143F70F81A9F881900077AA4 /* CGSize-Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGSize-Extensions.swift"; sourceTree = "<group>"; };
 		14450D171A5CAF7C00218A5E /* Zone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Zone.swift; sourceTree = "<group>"; };
@@ -391,14 +390,6 @@
 			name = Tools;
 			sourceTree = "<group>";
 		};
-		1430F8A81AACC38E00ED4B91 /* Shaders */ = {
-			isa = PBXGroup;
-			children = (
-				1430F8A91AACC3D800ED4B91 /* shader01.vsh */,
-			);
-			name = Shaders;
-			sourceTree = "<group>";
-		};
 		146ABA571A4F0EE0002A1B6B = {
 			isa = PBXGroup;
 			children = (
@@ -406,7 +397,6 @@
 				14EFF6F61ABE5312002A4E35 /* final-16x16.png */,
 				14EFF6F71ABE5312002A4E35 /* final-8x8.png */,
 				14EFF6F81ABE5312002A4E35 /* final-3x3.png */,
-				1430F8A81AACC38E00ED4B91 /* Shaders */,
 				1423A9071A9A6C6D00480828 /* sounds */,
 				1489D1231A5A1C490055EF58 /* tiles.json */,
 				14A599651A6D5E6D0092714A /* Frameworks */,
