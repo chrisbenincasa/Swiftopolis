@@ -232,7 +232,7 @@ class City {
                 if let info = Tiles.get(Int(tile! & TileConstants.LOMASK)) {
                     if let animNext = info.nextAnimationTile {
                         let flags = tile! & TileConstants.ALLBITS
-                        map.setTile(x: x, y: y, tile: UInt16(animNext) | flags)
+                        setTile(x: x, y: y, tile: UInt16(animNext) | flags)
                     }
                 }
             }
@@ -854,7 +854,9 @@ class City {
     }
     
     func setTilePower(x xpos: Int, y ypos: Int, power: Bool) {
-        map.setTilePower(x: xpos, y: ypos, power: power)
+        if map.setTilePower(x: xpos, y: ypos, power: power) {
+            onTileChanged(x: xpos, y: ypos)
+        }
     }
     
     func turnOnZonePower(x xpos: Int, y ypos: Int, width: Int, height: Int) {
@@ -868,7 +870,7 @@ class City {
                 if let t = map.getRawTile(x: x, y: y) {
                     if let tile = Tiles.get(Int(t & TileConstants.LOMASK)) {
                         if (tile.onPower != nil) {
-                            map.setTile(x: x, y: y, tile: UInt16(tile.onPower!) | (t & TileConstants.ALLBITS))
+                            setTile(x: x, y: y, tile: UInt16(tile.onPower!) | (t & TileConstants.ALLBITS))
                         }
                     }
                 }
@@ -887,7 +889,7 @@ class City {
                 if let t = map.getRawTile(x: x, y: y) {
                     if let tile = Tiles.get(Int(t & TileConstants.LOMASK)) {
                         if (tile.onShutdown != nil) {
-                            map.setTile(x: x, y: y, tile: UInt16(tile.onShutdown!) | (t & TileConstants.ALLBITS))
+                            setTile(x: x, y: y, tile: UInt16(tile.onShutdown!) | (t & TileConstants.ALLBITS))
                         }
                     }
                 }
