@@ -62,7 +62,7 @@ class ToolButtonPanel: SKNode {
             makeButton(tool, size: ToolButtonHelpers.MEDIUM_BUTTON_SIZE, offset: idx, baseline: baseline)
         }
         
-        baseline.x += SPACE_BETWEEN_BUTTONS * 1.5
+        baseline.x += SPACE_BETWEEN_BUTTONS * 2
         baseline.y -= ToolButtonHelpers.LARGE_BUTTON_SIZE.height + SPACE_BETWEEN_BUTTONS
         
         makeButton(Tool.Airport, size: ToolButtonHelpers.LARGE_BUTTON_SIZE, offset: 0, baseline: baseline)
