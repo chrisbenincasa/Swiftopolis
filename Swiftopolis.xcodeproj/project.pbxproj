@@ -696,8 +696,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				14DBB9461A6AB7AE006DD969 /* TileGenerator */,
 				146ABA5F1A4F0EE0002A1B6B /* Swiftopolis */,
+				14DBB9461A6AB7AE006DD969 /* TileGenerator */,
 				146ABA731A4F0EE0002A1B6B /* SwiftopolisTests */,
 			);
 		};
