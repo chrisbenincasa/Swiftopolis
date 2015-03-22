@@ -58,7 +58,7 @@ class DemandIndicator : SKSpriteNode, Subscriber {
         let ind = data["ind"] as? Int
         
         if res != nil && com != nil && ind != nil {
-            println("-- Demand changed...updating DemandIndicator (res \(res!), com \(com!), ind \(ind!)) --")
+//            println("-- Demand changed...updating DemandIndicator (res \(res!), com \(com!), ind \(ind!)) --")
             
             updateBars(res!, comDemand: com!, indDemand: ind!)
         }
