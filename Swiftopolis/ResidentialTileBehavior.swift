@@ -192,17 +192,18 @@ class ResidentialTileBehavior: BuildingZoneBehavior {
         let value = city.getLandValue(x: xPos, y: yPos)
         
         var landValue = value &- pollution
+        var intLandValue = 0
         
-        if landValue < 0 {
-            landValue = 0
+        if landValue == UInt16.max {
+            intLandValue = 0
         } else {
-            landValue *= 32
+            intLandValue *= Int(landValue) * 32
         }
         
-        if landValue > 6000 {
-            landValue = 6000
+        if intLandValue > 6000 {
+            intLandValue = 6000
         }
         
-        return Int(landValue) - 3000
+        return intLandValue - 3000
     }
 }
