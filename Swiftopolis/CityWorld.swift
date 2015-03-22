@@ -279,7 +279,7 @@ class CityWorld: SKNode, EngineEventListener, Subscriber {
         let (arrX, arrY) = (Int(point.x), Int(point.y))
         
         // Bail if tile changed is outside of the viewport (this usually happens due to animation)
-        if point.x < 0 || point.y < 0 {
+        if arrX < 0 || arrY < 0 || arrX > WorldConstants.TILE_WIDTH || arrY > WorldConstants.TILE_WIDTH {
             return
         }
         
