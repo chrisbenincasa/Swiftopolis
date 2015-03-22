@@ -128,8 +128,10 @@ class GameScene: SKScene, Subscriber, EngineEventListener {
         dispatch_source_set_timer(_timer, DISPATCH_TIME_NOW, delayNano, delayNano / 2)
         dispatch_source_set_event_handler(_timer) { [unowned self] in
             let speed = self.city.speed
-            for _ in 0...speed.steps - 1 {
-                self.city.animate()
+            if !(speed is PausedSpeed) {
+                for _ in 0...speed.steps - 1 {
+                    self.city.animate()
+                }
             }
         }
         // Start the timer
