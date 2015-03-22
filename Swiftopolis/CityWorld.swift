@@ -277,6 +277,12 @@ class CityWorld: SKNode, EngineEventListener, Subscriber {
         let topLeft = PointUtils.topLeftMapPoint(engine.currentMapPoint, viewport: viewportSize)
         let point = CGPoint(x: x, y: y) - topLeft
         let (arrX, arrY) = (Int(point.x), Int(point.y))
+        
+        // Bail if tile changed is outside of the viewport (this usually happens due to animation)
+        if point.x < 0 || point.y < 0 {
+            return
+        }
+        
         let sprite = tiles[arrY][arrX]
         var tile = engine.city.getTile(x: x, y: y)
         
