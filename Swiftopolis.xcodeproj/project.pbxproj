@@ -86,8 +86,6 @@
 		147F2F321A6364F700E4039E /* Sprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147F2F311A6364F700E4039E /* Sprite.swift */; };
 		147F2F351A6394EC00E4039E /* TornadoSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147F2F341A6394EC00E4039E /* TornadoSprite.swift */; };
 		148069371A5B6CC40004A7B0 /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148069361A5B6CC40004A7B0 /* ArrayExtensions.swift */; };
-		1481F12E1A757A15005B5A16 /* final-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 1481F12C1A757A15005B5A16 /* final-8x8.png */; };
-		1481F12F1A757A15005B5A16 /* final-16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 1481F12D1A757A15005B5A16 /* final-16x16.png */; };
 		1481F1311A757C95005B5A16 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481F1301A757C95005B5A16 /* GameView.swift */; };
 		1481F1371A75A901005B5A16 /* MainSceneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481F1361A75A900005B5A16 /* MainSceneView.swift */; };
 		1489D1241A5A1C490055EF58 /* tiles.json in Resources */ = {isa = PBXBuildFile; fileRef = 1489D1231A5A1C490055EF58 /* tiles.json */; };
@@ -98,7 +96,6 @@
 		14999ADB1A674E6E00BF9F20 /* CityWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14999ADA1A674E6E00BF9F20 /* CityWorld.swift */; };
 		14999ADD1A674EEF00BF9F20 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14999ADC1A674EEF00BF9F20 /* Camera.swift */; };
 		14999ADF1A674F7300BF9F20 /* DebugOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14999ADE1A674F7300BF9F20 /* DebugOverlay.swift */; };
-		14A599641A6D4D020092714A /* tiles_index.json in Resources */ = {isa = PBXBuildFile; fileRef = 14A599621A6D4CF00092714A /* tiles_index.json */; };
 		14A822FA1A71630500F1590B /* ToolCursor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A822F91A71630500F1590B /* ToolCursor.swift */; };
 		14AB41A91A5B4C02003A4F7D /* FireTerrainBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AB41A81A5B4C02003A4F7D /* FireTerrainBehavior.swift */; };
 		14AB41AB1A5B4C2D003A4F7D /* FloodTerrainBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AB41AA1A5B4C2D003A4F7D /* FloodTerrainBehavior.swift */; };
@@ -106,7 +103,6 @@
 		14AB41AF1A5B5C43003A4F7D /* RoadTileBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AB41AE1A5B5C43003A4F7D /* RoadTileBehavior.swift */; };
 		14AB41B31A5B5ED0003A4F7D /* CityMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AB41B21A5B5ED0003A4F7D /* CityMessage.swift */; };
 		14AB41B51A5B5F21003A4F7D /* CityLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AB41B41A5B5F21003A4F7D /* CityLocation.swift */; };
-		14B822F81A761A9A0071F299 /* final-3x3.png in Resources */ = {isa = PBXBuildFile; fileRef = 14B822F71A761A9A0071F299 /* final-3x3.png */; };
 		14B8AC2D1A6AA59200BF10FE /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14B8AC2C1A6AA59200BF10FE /* SpriteKit.framework */; };
 		14BD961F1AB0F4BE00E13502 /* PointUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BD961E1AB0F4BE00E13502 /* PointUtils.swift */; };
 		14BD96211AB0FD0100E13502 /* ToolNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BD96201AB0FD0100E13502 /* ToolNode.swift */; };
@@ -123,6 +119,10 @@
 		14DBB9521A6ABE01006DD969 /* TileReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DBB9511A6ABE01006DD969 /* TileReader.swift */; };
 		14DFA6FC1A59BD75008A43E7 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DFA6FB1A59BD75008A43E7 /* SwiftyJSON.swift */; };
 		14E489671A7E96A00099287F /* Engine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E489661A7E96A00099287F /* Engine.swift */; };
+		14EFF6F91ABE5312002A4E35 /* final-16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 14EFF6F61ABE5312002A4E35 /* final-16x16.png */; };
+		14EFF6FA1ABE5312002A4E35 /* final-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 14EFF6F71ABE5312002A4E35 /* final-8x8.png */; };
+		14EFF6FB1ABE5312002A4E35 /* final-3x3.png in Resources */ = {isa = PBXBuildFile; fileRef = 14EFF6F81ABE5312002A4E35 /* final-3x3.png */; };
+		14EFF6FD1ABE5328002A4E35 /* tiles_index.json in Resources */ = {isa = PBXBuildFile; fileRef = 14EFF6FC1ABE5328002A4E35 /* tiles_index.json */; };
 		14FB3BF81A704634000DA4E7 /* Option_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142420B91A6575F200CB273C /* Option_Extensions.swift */; };
 		14FB3BF91A70478F000DA4E7 /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148069361A5B6CC40004A7B0 /* ArrayExtensions.swift */; };
 /* End PBXBuildFile section */
@@ -284,8 +284,6 @@
 		147F2F311A6364F700E4039E /* Sprite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sprite.swift; sourceTree = "<group>"; };
 		147F2F341A6394EC00E4039E /* TornadoSprite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TornadoSprite.swift; sourceTree = "<group>"; };
 		148069361A5B6CC40004A7B0 /* ArrayExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtensions.swift; sourceTree = "<group>"; };
-		1481F12C1A757A15005B5A16 /* final-8x8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "final-8x8.png"; sourceTree = "<group>"; };
-		1481F12D1A757A15005B5A16 /* final-16x16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "final-16x16.png"; sourceTree = "<group>"; };
 		1481F1301A757C95005B5A16 /* GameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		1481F1361A75A900005B5A16 /* MainSceneView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainSceneView.swift; sourceTree = "<group>"; };
 		1489D1231A5A1C490055EF58 /* tiles.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = tiles.json; path = Swiftopolis/tiles.json; sourceTree = "<group>"; };
@@ -296,7 +294,6 @@
 		14999ADA1A674E6E00BF9F20 /* CityWorld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityWorld.swift; sourceTree = "<group>"; };
 		14999ADC1A674EEF00BF9F20 /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		14999ADE1A674F7300BF9F20 /* DebugOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugOverlay.swift; sourceTree = "<group>"; };
-		14A599621A6D4CF00092714A /* tiles_index.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = tiles_index.json; sourceTree = "<group>"; };
 		14A822F91A71630500F1590B /* ToolCursor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolCursor.swift; sourceTree = "<group>"; };
 		14AB41A81A5B4C02003A4F7D /* FireTerrainBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireTerrainBehavior.swift; sourceTree = "<group>"; };
 		14AB41AA1A5B4C2D003A4F7D /* FloodTerrainBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloodTerrainBehavior.swift; sourceTree = "<group>"; };
@@ -304,7 +301,6 @@
 		14AB41AE1A5B5C43003A4F7D /* RoadTileBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoadTileBehavior.swift; sourceTree = "<group>"; };
 		14AB41B21A5B5ED0003A4F7D /* CityMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityMessage.swift; sourceTree = "<group>"; };
 		14AB41B41A5B5F21003A4F7D /* CityLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityLocation.swift; sourceTree = "<group>"; };
-		14B822F71A761A9A0071F299 /* final-3x3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "final-3x3.png"; sourceTree = "<group>"; };
 		14B8AC2C1A6AA59200BF10FE /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
 		14BD961E1AB0F4BE00E13502 /* PointUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointUtils.swift; sourceTree = "<group>"; };
 		14BD96201AB0FD0100E13502 /* ToolNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolNode.swift; sourceTree = "<group>"; };
@@ -322,6 +318,10 @@
 		14DFA6FA1A59BD75008A43E7 /* SwiftyJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwiftyJSON.h; sourceTree = "<group>"; };
 		14DFA6FB1A59BD75008A43E7 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		14E489661A7E96A00099287F /* Engine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Engine.swift; sourceTree = "<group>"; };
+		14EFF6F61ABE5312002A4E35 /* final-16x16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "final-16x16.png"; path = "build/final-16x16.png"; sourceTree = "<group>"; };
+		14EFF6F71ABE5312002A4E35 /* final-8x8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "final-8x8.png"; path = "build/final-8x8.png"; sourceTree = "<group>"; };
+		14EFF6F81ABE5312002A4E35 /* final-3x3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "final-3x3.png"; path = "build/final-3x3.png"; sourceTree = "<group>"; };
+		14EFF6FC1ABE5328002A4E35 /* tiles_index.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = tiles_index.json; path = build/tiles_index.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -402,10 +402,13 @@
 		146ABA571A4F0EE0002A1B6B = {
 			isa = PBXGroup;
 			children = (
+				14EFF6FC1ABE5328002A4E35 /* tiles_index.json */,
+				14EFF6F61ABE5312002A4E35 /* final-16x16.png */,
+				14EFF6F71ABE5312002A4E35 /* final-8x8.png */,
+				14EFF6F81ABE5312002A4E35 /* final-3x3.png */,
 				1430F8A81AACC38E00ED4B91 /* Shaders */,
 				1423A9071A9A6C6D00480828 /* sounds */,
 				1489D1231A5A1C490055EF58 /* tiles.json */,
-				14A599601A6D4CF00092714A /* build */,
 				14A599651A6D5E6D0092714A /* Frameworks */,
 				14DFA6F91A59BD75008A43E7 /* Libraries */,
 				146ABA611A4F0EE0002A1B6B /* Products */,
@@ -535,17 +538,6 @@
 			name = "User Interface";
 			sourceTree = "<group>";
 		};
-		14A599601A6D4CF00092714A /* build */ = {
-			isa = PBXGroup;
-			children = (
-				14B822F71A761A9A0071F299 /* final-3x3.png */,
-				1481F12C1A757A15005B5A16 /* final-8x8.png */,
-				1481F12D1A757A15005B5A16 /* final-16x16.png */,
-				14A599621A6D4CF00092714A /* tiles_index.json */,
-			);
-			path = build;
-			sourceTree = "<group>";
-		};
 		14A599651A6D5E6D0092714A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -609,7 +601,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 146ABA7E1A4F0EE0002A1B6B /* Build configuration list for PBXNativeTarget "Swiftopolis" */;
 			buildPhases = (
-				14DBB94E1A6AB83B006DD969 /* ShellScript */,
+				14DBB94E1A6AB83B006DD969 /* Run Script */,
 				146ABA5C1A4F0EE0002A1B6B /* Sources */,
 				146ABA5D1A4F0EE0002A1B6B /* Frameworks */,
 				146ABA5E1A4F0EE0002A1B6B /* Resources */,
@@ -708,16 +700,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1481F12E1A757A15005B5A16 /* final-8x8.png in Resources */,
-				1481F12F1A757A15005B5A16 /* final-16x16.png in Resources */,
+				14EFF6FD1ABE5328002A4E35 /* tiles_index.json in Resources */,
+				14EFF6F91ABE5312002A4E35 /* final-16x16.png in Resources */,
+				14EFF6FA1ABE5312002A4E35 /* final-8x8.png in Resources */,
+				14EFF6FB1ABE5312002A4E35 /* final-3x3.png in Resources */,
 				14BD96271AB10B3500E13502 /* Icons.atlas in Resources */,
-				14A599641A6D4D020092714A /* tiles_index.json in Resources */,
 				146987B01A7574C40029F630 /* GameWindow.xib in Resources */,
 				1489D1241A5A1C490055EF58 /* tiles.json in Resources */,
 				146ABA6A1A4F0EE0002A1B6B /* GameScene.sks in Resources */,
 				1451ED991AB4A7D300D51278 /* GUIStrings.strings in Resources */,
 				146ABA6C1A4F0EE0002A1B6B /* Images.xcassets in Resources */,
-				14B822F81A761A9A0071F299 /* final-3x3.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -731,18 +723,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		14DBB94E1A6AB83B006DD969 /* ShellScript */ = {
+		14DBB94E1A6AB83B006DD969 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Run Script";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = "/bin/sh ./generate-tiles.sh";
-			shellScript = "";
+			shellPath = /bin/sh;
+			shellScript = "make all";
 		};
 /* End PBXShellScriptBuildPhase section */
 

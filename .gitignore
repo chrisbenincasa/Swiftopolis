@@ -21,3 +21,6 @@ Pods
 *.o
 
 .DS_Store
+
+# Output from Makefile
+TileGenerator/out/

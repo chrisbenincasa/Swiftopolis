@@ -14,6 +14,11 @@
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
+		<key>TileGenerator2.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
@@ -28,6 +33,11 @@
 			<true/>
 		</dict>
 		<key>14DBB9461A6AB7AE006DD969</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>14EFF6FF1ABE5A77002A4E35</key>
 		<dict>
 			<key>primary</key>
 			<true/>
