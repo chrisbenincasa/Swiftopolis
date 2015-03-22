@@ -148,6 +148,16 @@ class ResidentialTileBehavior: BuildingZoneBehavior {
                 }
             }
         }
+        
+        if bestLocation != 0 {
+            let xx = xPos + ZeX[bestLocation]
+            let yy = yPos + ZeX[bestLocation]
+            
+            let houseNumber = value * 3 + Int(arc4random_uniform(3))
+            assert(houseNumber >= 0 && houseNumber < 12, "Assertion Failed")
+            
+            city.setTile(x: xx, y: yy, tile: TileConstants.HOUSE + UInt16(houseNumber))
+        }
     }
     
     /**
@@ -188,22 +198,12 @@ class ResidentialTileBehavior: BuildingZoneBehavior {
             return -3000
         }
         
-        let pollution = city.getPollution(x: xPos, y: yPos)
-        let value = city.getLandValue(x: xPos, y: yPos)
+        var value = city.getLandValue(x: xPos, y: yPos) - city.getPollution(x: xPos, y: yPos)
         
-        var landValue = value &- pollution
-        var intLandValue = 0
+        value = max(0, value)
+        value *= 32
+        value = min(value, 6000)
         
-        if landValue == UInt16.max {
-            intLandValue = 0
-        } else {
-            intLandValue *= Int(landValue) * 32
-        }
-        
-        if intLandValue > 6000 {
-            intLandValue = 6000
-        }
-        
-        return intLandValue - 3000
+        return value - 3000
     }
 }

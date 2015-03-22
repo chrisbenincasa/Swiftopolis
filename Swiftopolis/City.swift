@@ -991,14 +991,14 @@ class City {
     
     // MARK: Land Value API
     
-    func getLandValue(x xpos: Int, y ypos: Int) -> UInt16 {
-        return map.getLandValueAtLocation(x: xpos, y: ypos)
+    func getLandValue(x xpos: Int, y ypos: Int) -> Int {
+        return Int(map.getLandValueAtLocation(x: xpos, y: ypos))
     }
     
     // MARK: Pollution API
     
-    func getPollution(x xpos: Int, y ypos: Int) -> UInt16 {
-        return map.getPollutionLevelAtLocation(x: xpos, y: ypos)
+    func getPollution(x xpos: Int, y ypos: Int) -> Int {
+        return Int(map.getPollutionLevelAtLocation(x: xpos, y: ypos))
     }
     
     // MARK: Rate of Growth
