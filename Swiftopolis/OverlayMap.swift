@@ -12,9 +12,7 @@ import SpriteKit
 func debounce(delay: NSTimeInterval, action: () -> ()) -> (() -> ()) {
     var lastFireTime: dispatch_time_t = 0
     let dispatchDelay = UInt64(delay * Double(NSEC_PER_SEC))
-    
-    println("-- initiliazing debounced function --")
-    
+        
     return {
         let now = dispatch_time(DISPATCH_TIME_NOW, 0)
         
@@ -23,6 +21,20 @@ func debounce(delay: NSTimeInterval, action: () -> ()) -> (() -> ()) {
         }
         
         lastFireTime = now
+    }
+}
+
+func throttle(delay: NSTimeInterval, action: () -> ()) -> (() -> ()) {
+    var lastFireTime: dispatch_time_t = 0
+    let dispatchDelay = UInt64(delay * Double(NSEC_PER_SEC))
+    
+    return {
+        let now = dispatch_time(DISPATCH_TIME_NOW, 0)
+        
+        if now - lastFireTime >= dispatchDelay {
+            action()
+            lastFireTime = now
+        }
     }
 }
 
@@ -92,7 +104,8 @@ class OverlayMap: SKNode, Subscriber {
     }
     
     func draw() {
-        println("-- redrawing overlay map --")
+
+//        println("-- redrawing overlay map \(NSDate())--")
         
         // Draw the new overlay map image asynchronously and update the texture
         // The updated texture will get picked up on the next render cycle by SpriteKit
@@ -148,8 +161,9 @@ class OverlayMap: SKNode, Subscriber {
     }
     
     private lazy var debouncedDraw: () -> () = debounce(1.0, self.draw)
+    private lazy var throttledDraw: () -> () = throttle(1.0, self.draw)
     
     func tileChanged(x: Int, y: Int) {
-        debouncedDraw()
+        throttledDraw()
     }
 }
