@@ -97,6 +97,118 @@
                         </items>
                     </menu>
                 </menuItem>
+                <menuItem title="Game" id="eub-Ao-rEU">
+                    <attributedString key="attributedTitle">
+                        <fragment content="Game">
+                            <attributes>
+                                <font key="NSFont" metaFont="smallSystem"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                            </attributes>
+                        </fragment>
+                    </attributedString>
+                    <menu key="submenu" title="Game" id="X18-Fk-SZW">
+                        <items>
+                            <menuItem title="New City" keyEquivalent="n" id="x1j-Cu-EMC"/>
+                            <menuItem title="Load City" keyEquivalent="o" id="cfv-cM-2Pd"/>
+                            <menuItem title="Save City" keyEquivalent="s" id="TM9-fh-UFV"/>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Options" id="aIQ-Lz-6Iw">
+                    <attributedString key="attributedTitle">
+                        <fragment content="Game">
+                            <attributes>
+                                <font key="NSFont" metaFont="smallSystem"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                            </attributes>
+                        </fragment>
+                    </attributedString>
+                    <menu key="submenu" title="Options" id="oNU-vU-mLi">
+                        <items>
+                            <menuItem title="Difficulty" id="6Jh-cv-kJ9">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Difficulty" id="yqw-tR-5F6">
+                                    <items>
+                                        <menuItem title="Item" id="J7x-6h-zsV">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem title="Item 1" id="tOQ-Ol-BIs">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem title="Item 2" id="iQg-3A-R09">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem title="Item 3" id="FFO-LQ-WDB">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Disasters" id="TFI-n8-UHL">
+                    <attributedString key="attributedTitle">
+                        <fragment content="Game">
+                            <attributes>
+                                <font key="NSFont" metaFont="smallSystem"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                            </attributes>
+                        </fragment>
+                    </attributedString>
+                    <menu key="submenu" title="Disasters" id="bCl-Va-set">
+                        <items>
+                            <menuItem title="Item 1" id="Gcv-R9-QA1">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem title="Item 2" id="7vs-1V-nQ2">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem title="Item 3" id="Ibv-iT-UPU">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Speed" id="aFW-KR-3oD">
+                    <attributedString key="attributedTitle">
+                        <fragment content="Game">
+                            <attributes>
+                                <font key="NSFont" metaFont="smallSystem"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                            </attributes>
+                        </fragment>
+                    </attributedString>
+                    <menu key="submenu" title="Speed" id="C4B-kM-BCT">
+                        <items>
+                            <menuItem title="Super Fast" keyEquivalent="4" id="flD-Pz-qqq">
+                                <connections>
+                                    <action selector="setSuperFastGameSpeed:" target="JOD-MV-PV4" id="E4G-Vd-F6a"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Fast" keyEquivalent="3" id="I8P-rd-w6t">
+                                <connections>
+                                    <action selector="setFastGameSpeed:" target="JOD-MV-PV4" id="pYV-CR-cVE"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Normal" keyEquivalent="2" id="ZQY-Nx-KOE">
+                                <connections>
+                                    <action selector="setNormalGameSpeed:" target="JOD-MV-PV4" id="xGT-0s-kN1"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Slow" keyEquivalent="1" id="7r1-pH-G6z">
+                                <connections>
+                                    <action selector="setSlowGameSpeed:" target="JOD-MV-PV4" id="eax-Ft-l3a"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Paused" keyEquivalent="0" id="ctq-QH-CmH">
+                                <connections>
+                                    <action selector="setPausedGameSpeed:" target="JOD-MV-PV4" id="zzZ-wZ-Pa6"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
                 <menuItem title="Window" id="ATV-mC-ljK">
                     <menu key="submenu" title="Window" systemMenu="window" id="qRa-Mw-sTf">
                         <items>
@@ -144,7 +256,12 @@
         <viewController id="JOD-MV-PV4" customClass="GameViewController" customModule="Swiftopolis" customModuleProvider="target">
             <connections>
                 <outlet property="dateLabel" destination="f0f-rw-JnQ" id="Bc0-kG-WDd"/>
+                <outlet property="fastItem" destination="I8P-rd-w6t" id="PVZ-Ss-BA7"/>
                 <outlet property="mainView" destination="rks-f7-uiq" id="be9-ay-9sZ"/>
+                <outlet property="normalItem" destination="ZQY-Nx-KOE" id="gSC-UX-pSx"/>
+                <outlet property="pausedItem" destination="ctq-QH-CmH" id="3ux-h6-25X"/>
+                <outlet property="slowItem" destination="7r1-pH-G6z" id="mAU-Yu-JeL"/>
+                <outlet property="superFastItem" destination="flD-Pz-qqq" id="5hY-hS-kNb"/>
                 <outlet property="view" destination="EiT-Mj-1SZ" id="cs9-e3-9T1"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="qa1-n2-pE2"/>
             </connections>

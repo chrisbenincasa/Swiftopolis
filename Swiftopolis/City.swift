@@ -90,6 +90,12 @@ class City {
         return false
     }
     
+    // MARK: City API
+    
+    func setGameSpeed(speed: Speed) {
+        self.speed = speed
+    }
+    
     // MARK: Populations
     
     func adjustResidentialPopulation(amount: Int = 1) {

@@ -16,6 +16,13 @@ class GameViewController: NSViewController, EngineEventListener {
     
     @IBOutlet weak var dateLabel: NSTextField!
     
+    private var currentSpeedMenuItem: NSMenuItem?
+    @IBOutlet weak var superFastItem: NSMenuItem!
+    @IBOutlet weak var fastItem: NSMenuItem!
+    @IBOutlet weak var normalItem: NSMenuItem!
+    @IBOutlet weak var slowItem: NSMenuItem!
+    @IBOutlet weak var pausedItem: NSMenuItem!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,6 +48,63 @@ class GameViewController: NSViewController, EngineEventListener {
         
         // Set up game scene
         initGameScene()
+        
+        gameSpeedChanged(engine.city.speed)
+    }
+    
+    @IBAction func setSuperFastGameSpeed(sender: AnyObject!) {
+        gameSpeedChanged(ExtremeSpeed())
+    }
+    
+    @IBAction func setFastGameSpeed(sender: AnyObject!) {
+        gameSpeedChanged(FastSpeed())
+    }
+    
+    @IBAction func setNormalGameSpeed(sender: AnyObject!) {
+        gameSpeedChanged(NormalSpeed())
+    }
+    
+    @IBAction func setSlowGameSpeed(sender: AnyObject!) {
+        gameSpeedChanged(SlowSpeed())
+    }
+    
+    @IBAction func setPausedGameSpeed(sender: AnyObject!) {
+        gameSpeedChanged(PausedSpeed())
+    }
+    
+    func gameSpeedChanged(newSpeed: Speed) {
+        let lastSpeedItem = currentSpeedMenuItem
+        engine.city.setGameSpeed(newSpeed)
+        if setCurrentSpeedItem() {
+            lastSpeedItem?.state = 0
+            currentSpeedMenuItem?.state = 1
+        }
+    }
+    
+    private func setCurrentSpeedItem() -> Bool {
+        var changed = true
+        switch engine.city.speed {
+        case is PausedSpeed:
+            currentSpeedMenuItem = pausedItem
+            break
+        case is SlowSpeed:
+            currentSpeedMenuItem = slowItem
+            break
+        case is NormalSpeed:
+            currentSpeedMenuItem = normalItem
+            break
+        case is FastSpeed:
+            currentSpeedMenuItem = fastItem
+            break
+        case is ExtremeSpeed:
+            currentSpeedMenuItem = superFastItem
+            break
+        default:
+            changed = false
+            break
+        }
+        
+        return changed
     }
     
     private func initGameScene() {
