@@ -57,8 +57,8 @@ class City {
         return map.getTile(x: xpos, y: ypos)!
     }
 
-    func setTile(x xpos: Int, y ypos: Int, tile newTile: UInt16) {
-        if map.setTile(x: xpos, y: ypos, tile: newTile) {
+    func setTile(x xpos: Int, y ypos: Int, tile newTile: UInt16, silent: Bool = false) {
+        if map.setTile(x: xpos, y: ypos, tile: newTile) && !silent {
             onTileChanged(x: xpos, y: ypos)
         }
     }
