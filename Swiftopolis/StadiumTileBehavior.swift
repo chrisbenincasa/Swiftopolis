@@ -15,6 +15,10 @@ class StadiumTileBehavior: BuildingZoneBehavior {
         super.init(city: city)
         self.isEmpty = isEmpty
     }
+
+    required init(city: City) {
+        fatalError("init(city:) has not been implemented")
+    }
     
     override func apply() {
         if isEmpty {

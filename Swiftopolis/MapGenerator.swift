@@ -200,7 +200,7 @@ class MapGenerator {
     }
     
     private func treeSplash(#x: Int, y: Int) {
-        let dis = treeLevel < 0 ? Int(arc4random_uniform(151) + 50) : Int(arc4random_uniform(101 + (treeLevel * 2)) + 50)
+        let dis = treeLevel < 0 ? Int(arc4random_uniform(151) + 50) : Int(arc4random_uniform(UInt32(101 + (treeLevel * 2))) + 50)
         
         currentX = x
         currentY = y
@@ -271,13 +271,13 @@ class MapGenerator {
         while city.withinBounds(x: currentX + 4, y: currentY + 4) {
             BRiverPlop()
             
-            if arc4random_uniform(r1 + 1) < 10 {
+            if arc4random_uniform(UInt32(r1 + 1)) < 10 {
                 currentDir = lastDir
             } else {
-                if arc4random_uniform(r2 + 1) > 90 {
+                if arc4random_uniform(UInt32(r2 + 1)) > 90 {
                     currentDir++
                 }
-                if arc4random_uniform(r2 + 1) > 90 {
+                if arc4random_uniform(UInt32(r2 + 1)) > 90 {
                     currentDir--
                 }
             }
@@ -299,13 +299,13 @@ class MapGenerator {
         while city.withinBounds(x: currentX + 3, y: currentY + 3) {
             SRiverPlop()
             
-            if arc4random_uniform(r1 + 1) < 10 {
+            if arc4random_uniform(UInt32(r1 + 1)) < 10 {
                 currentDir = lastDir
             } else {
-                if arc4random_uniform(r2 + 1) > 90 {
+                if arc4random_uniform(UInt32(r2 + 1)) > 90 {
                     currentDir++
                 }
-                if arc4random_uniform(r2 + 1) > 90 {
+                if arc4random_uniform(UInt32(r2 + 1)) > 90 {
                     currentDir--
                 }
             }
@@ -400,10 +400,10 @@ class MapGenerator {
         currentY += DIRECTION_TABY[dir]
     }
     
-    private func minRand(limit: UInt32) -> Int {
+    private func minRand(limit: Int) -> Int {
         return min(
-            Int(arc4random_uniform(limit)),
-            Int(arc4random_uniform(limit))
+            Int(arc4random_uniform(UInt32(limit))),
+            Int(arc4random_uniform(UInt32(limit)))
         )
     }
 }

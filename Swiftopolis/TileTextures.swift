@@ -58,7 +58,7 @@ class TileTextures {
     
     func preloadTextures(cb: () -> Void = { _ in }) {
         atlas.preloadWithCompletionHandler {
-            for name in self.atlas.textureNames as [String] {
+            for name in self.atlas.textureNames as! [String] {
                 if let nameAsInt = name.toInt() {
                     self.textures[nameAsInt] = self.atlas.textureNamed(name)
                 }

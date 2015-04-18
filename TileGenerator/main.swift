@@ -13,22 +13,22 @@ var tileSize: Int = 0
 var inputFile: String?
 var outputDir: String?
 
-for var i = 1; i < Int(C_ARGC); i++ {
+for var i = 1; i < Int(Process.argc); i++ {
     let index = Int(i)
     let next = Int(i + 1)
     
-    let arg = String.fromCString(C_ARGV[index])!
+    let arg = String.fromCString(Process.unsafeArgv[index])!
     switch arg {
         case "--tile-size":
-            tileSize = String.fromCString(C_ARGV[next])!.toInt()!
+            tileSize = String.fromCString(Process.unsafeArgv[next])!.toInt()!
             i++
             break;
         case "--input-file":
-            inputFile = String.fromCString(C_ARGV[next])
+            inputFile = String.fromCString(Process.unsafeArgv[next])
             i++
             break;
         case "--output-dir":
-            let dir = String.fromCString(C_ARGV[next])
+            let dir = String.fromCString(Process.unsafeArgv[next])
             outputDir = dir?.stringByReplacingOccurrencesOfString("\n", withString: "", options: .CaseInsensitiveSearch, range: nil)
             i++
             break
@@ -61,7 +61,7 @@ if let data: NSData = NSFileManager.defaultManager().contentsAtPath(inputFile!) 
         
         manager.changeCurrentDirectoryPath(manager.currentDirectoryPath + "/" + outputDir!)
         
-        let fileName: String = NSString(format: "final-%dx%d.png", tileSize, tileSize)
+        let fileName: String = NSString(format: "final-%dx%d.png", String(tileSize), tileSize) as! String
         
         manager.removeItemAtPath(manager.currentDirectoryPath + "/" + fileName, error: nil)
         data.writeToFile(manager.currentDirectoryPath + "/" + fileName, atomically: false)

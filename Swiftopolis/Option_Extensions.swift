@@ -21,7 +21,7 @@ extension Optional {
         return self!
     }
     
-    func getOrElse(f: @autoclosure () -> T) -> T {
+    func getOrElse(@autoclosure f:  () -> T) -> T {
         switch (self) {
         case let .Some(x): return x
         case .None: return f()

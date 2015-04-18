@@ -118,12 +118,12 @@ class TileReader {
             
             if let animation = mapping.dest as? Animation {
                 let frames = animation.frames.map({ (frame: Animation.Frame) -> [String : String] in
-                    let sprite = frame.image as TileImageSprite
+                    let sprite = frame.image as! TileImageSprite
                     return ["offsetY" : String(sprite.offsetY / self.tileSize)]
                 })
                 jsonMapping["animation"] = frames
             } else {
-                let sprite = mapping.dest as TileImageSprite
+                let sprite = mapping.dest as! TileImageSprite
                 jsonMapping["image"] = ["offsetY" : String(sprite.offsetY / tileSize)]
             }
             

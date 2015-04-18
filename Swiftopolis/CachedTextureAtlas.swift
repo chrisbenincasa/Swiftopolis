@@ -45,7 +45,7 @@ class CachedTextureAtlas {
     
     private func preloadCachedTextures(callback: () -> ()) {
         atlas.preloadWithCompletionHandler {
-            for name in self.atlas.textureNames as [String] {
+            for name in self.atlas.textureNames as! [String] {
                 self.cachedTextures[name] = self.atlas.textureNamed(name)
             }
             

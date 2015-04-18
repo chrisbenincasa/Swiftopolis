@@ -95,7 +95,7 @@ class ResidentialTileBehavior: BuildingZoneBehavior {
             for var x = xPos - 1; x <= xPos + 1; x++ {
                 for var y = yPos - 1; y <= yPos + 1; y++ {
                     if city.withinBounds(x: x, y: y) && !(x == xPos && y == yPos) {
-                        city.setTile(x: x, y: y, tile: TileConstants.HOUSE + UInt16(value * 3 + arc4random_uniform(3)))
+                        city.setTile(x: x, y: y, tile: TileConstants.HOUSE + UInt16(value * 3 + Int(arc4random_uniform(3))))
                     }
                 }
             }
@@ -119,7 +119,7 @@ class ResidentialTileBehavior: BuildingZoneBehavior {
     }
     
     private func residentialPlop(density: Int, value: Int) {
-        let base = (value * 4 + density) * 9 + TileConstants.RZB
+        let base = (value * 4 + density) * 9 + Int(TileConstants.RZB)
         zonePlop(Tiles.load(Int(base)))
     }
 

@@ -9,7 +9,7 @@
 import Cocoa
 
 struct MapConstants {
-    static let MAX_TRAFFIC: UInt16 = 240
+    static let MAX_TRAFFIC: Int = 240
 }
 
 class Map {
@@ -165,15 +165,15 @@ class Map {
     
     func increaseTrafficDensity(x xpos: Int, y ypos: Int, amount: Int = 1) -> UInt16 {
         let currentDensity = trafficDensity[ypos / 2][xpos / 2]
-        var newDensity = currentDensity + amount
+        var newDensity = Int(currentDensity) + amount
         
         if newDensity > MapConstants.MAX_TRAFFIC {
             newDensity = MapConstants.MAX_TRAFFIC
         }
         
-        trafficDensity[ypos / 2][xpos / 2] = newDensity
+        trafficDensity[ypos / 2][xpos / 2] = UInt16(newDensity)
         
-        return newDensity
+        return trafficDensity[ypos / 2][xpos / 2]
     }
     
     func foreachTrafficDensity(f: (Int, Int, inout UInt16) -> Void) {
@@ -202,7 +202,7 @@ class Map {
     
     func increaseLandValueAtLocation(x xpos: Int, y ypos: Int, amount: Int = 1, factor: Int = 2) {
         if withinBounds(x: xpos, y: ypos) {
-            landValueMem[ypos / factor][xpos / factor] += amount
+            landValueMem[ypos / factor][xpos / factor] += (amount < 0 ? 0 : UInt16(amount))
         }
     }
     

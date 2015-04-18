@@ -966,7 +966,7 @@ class City {
     }
     
     func addTraffic(x xpos: Int, y ypos: Int, amount: Int) {
-        let newTraffic = map.increaseTrafficDensity(x: xpos, y: ypos, amount: amount)
+        let newTraffic = Int(map.increaseTrafficDensity(x: xpos, y: ypos, amount: amount))
         
         if newTraffic == MapConstants.MAX_TRAFFIC && arc4random_uniform(6) == 0 {
             // Spawn helicopter

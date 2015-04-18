@@ -63,7 +63,7 @@ class TileImageInfo {
             var tileImage: TileImage? = nil
             if let offset = subJson["image"]["offsetY"].string {
                 tileImage = SimpleTileImage()
-                (tileImage! as SimpleTileImage).imageNumber = offset.toInt()!
+                (tileImage! as! SimpleTileImage).imageNumber = offset.toInt()!
             } else if let animation = subJson["animation"].array {
                 var frames: [SimpleTileImage] = []
                 for frame in animation {

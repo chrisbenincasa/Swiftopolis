@@ -42,6 +42,8 @@
 		143059D41A5A5C04009AF7C2 /* Tiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143059D31A5A5C04009AF7C2 /* Tiles.swift */; };
 		143059D61A5A5CE7009AF7C2 /* TileLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143059D51A5A5CE7009AF7C2 /* TileLoader.swift */; };
 		1430F8A71AACB8D000ED4B91 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1430F8A61AACB8D000ED4B91 /* QuartzCore.framework */; };
+		1432362A1AE1FE6B005B612F /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143236291AE1FE6B005B612F /* SwiftyJSON.swift */; };
+		1432362B1AE1FECD005B612F /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143236291AE1FE6B005B612F /* SwiftyJSON.swift */; };
 		143F70F71A9F807400077AA4 /* CGPoint-Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143F70F61A9F807400077AA4 /* CGPoint-Extensions.swift */; };
 		143F70F91A9F881900077AA4 /* CGSize-Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143F70F81A9F881900077AA4 /* CGSize-Extensions.swift */; };
 		14450D181A5CAF7C00218A5E /* Zone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14450D171A5CAF7C00218A5E /* Zone.swift */; };
@@ -115,9 +117,7 @@
 		14D6DDAC1AB517DB008D5E7B /* CityDateNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D6DDAB1AB517DB008D5E7B /* CityDateNode.swift */; };
 		14D6DDAE1AB51CF3008D5E7B /* DemandIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D6DDAD1AB51CF3008D5E7B /* DemandIndicator.swift */; };
 		14DBB94A1A6AB7AE006DD969 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DBB9491A6AB7AE006DD969 /* main.swift */; };
-		14DBB9501A6ABCAC006DD969 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DFA6FB1A59BD75008A43E7 /* SwiftyJSON.swift */; };
 		14DBB9521A6ABE01006DD969 /* TileReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DBB9511A6ABE01006DD969 /* TileReader.swift */; };
-		14DFA6FC1A59BD75008A43E7 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DFA6FB1A59BD75008A43E7 /* SwiftyJSON.swift */; };
 		14E489671A7E96A00099287F /* Engine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E489661A7E96A00099287F /* Engine.swift */; };
 		14EFF6F91ABE5312002A4E35 /* final-16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 14EFF6F61ABE5312002A4E35 /* final-16x16.png */; };
 		14EFF6FA1ABE5312002A4E35 /* final-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 14EFF6F71ABE5312002A4E35 /* final-8x8.png */; };
@@ -235,6 +235,8 @@
 		143059D31A5A5C04009AF7C2 /* Tiles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tiles.swift; sourceTree = "<group>"; };
 		143059D51A5A5CE7009AF7C2 /* TileLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileLoader.swift; sourceTree = "<group>"; };
 		1430F8A61AACB8D000ED4B91 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		143236281AE1FE6B005B612F /* SwiftyJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwiftyJSON.h; sourceTree = "<group>"; };
+		143236291AE1FE6B005B612F /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		143F70F61A9F807400077AA4 /* CGPoint-Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint-Extensions.swift"; sourceTree = "<group>"; };
 		143F70F81A9F881900077AA4 /* CGSize-Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGSize-Extensions.swift"; sourceTree = "<group>"; };
 		14450D171A5CAF7C00218A5E /* Zone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Zone.swift; sourceTree = "<group>"; };
@@ -314,8 +316,6 @@
 		14DBB9471A6AB7AE006DD969 /* TileGenerator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TileGenerator; sourceTree = BUILT_PRODUCTS_DIR; };
 		14DBB9491A6AB7AE006DD969 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		14DBB9511A6ABE01006DD969 /* TileReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileReader.swift; sourceTree = "<group>"; };
-		14DFA6FA1A59BD75008A43E7 /* SwiftyJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwiftyJSON.h; sourceTree = "<group>"; };
-		14DFA6FB1A59BD75008A43E7 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		14E489661A7E96A00099287F /* Engine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Engine.swift; sourceTree = "<group>"; };
 		14EFF6F61ABE5312002A4E35 /* final-16x16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "final-16x16.png"; path = "build/final-16x16.png"; sourceTree = "<group>"; };
 		14EFF6F71ABE5312002A4E35 /* final-8x8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "final-8x8.png"; path = "build/final-8x8.png"; sourceTree = "<group>"; };
@@ -578,8 +578,8 @@
 		14DFA6F91A59BD75008A43E7 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				14DFA6FA1A59BD75008A43E7 /* SwiftyJSON.h */,
-				14DFA6FB1A59BD75008A43E7 /* SwiftyJSON.swift */,
+				143236281AE1FE6B005B612F /* SwiftyJSON.h */,
+				143236291AE1FE6B005B612F /* SwiftyJSON.swift */,
 			);
 			path = Libraries;
 			sourceTree = "<group>";
@@ -755,6 +755,7 @@
 				141617A81A5CA5B00066E8F1 /* ExplosionTerrainEffect.swift in Sources */,
 				14938FF61A647F270093AC02 /* CitySound.swift in Sources */,
 				1454AC6E1A5E1703008F35B6 /* HospitalChurchTerrainBehavior.swift in Sources */,
+				1432362A1AE1FE6B005B612F /* SwiftyJSON.swift in Sources */,
 				146ABABE1A511E55002A1B6B /* Map.swift in Sources */,
 				14AB41A91A5B4C02003A4F7D /* FireTerrainBehavior.swift in Sources */,
 				1419E8D11A5B402B00F725D2 /* TileBehavior.swift in Sources */,
@@ -807,7 +808,6 @@
 				146987AA1A753CE30029F630 /* AirportTileBehavior.swift in Sources */,
 				141D9C5A1A56FBCE00B053DF /* Speed.swift in Sources */,
 				146987AC1A753E1D0029F630 /* SeaportTileBehavior.swift in Sources */,
-				14DFA6FC1A59BD75008A43E7 /* SwiftyJSON.swift in Sources */,
 				146ABAB61A50954A002A1B6B /* ToolEffect.swift in Sources */,
 				145351481A62BEB8004F8C46 /* MapGenerator.swift in Sources */,
 				146ABA661A4F0EE0002A1B6B /* AppDelegate.swift in Sources */,
@@ -831,11 +831,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1432362B1AE1FECD005B612F /* SwiftyJSON.swift in Sources */,
 				14FB3BF91A70478F000DA4E7 /* ArrayExtensions.swift in Sources */,
 				14FB3BF81A704634000DA4E7 /* Option_Extensions.swift in Sources */,
 				146C6C121A6AC5E7008B14E6 /* TileImage.swift in Sources */,
 				14DBB9521A6ABE01006DD969 /* TileReader.swift in Sources */,
-				14DBB9501A6ABCAC006DD969 /* SwiftyJSON.swift in Sources */,
 				146C6C101A6AC5CA008B14E6 /* TileMapping.swift in Sources */,
 				14DBB94A1A6AB7AE006DD969 /* main.swift in Sources */,
 			);
