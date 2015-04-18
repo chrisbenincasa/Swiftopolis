@@ -6,3 +6,6 @@ before_install:
 
 script: 
 - xctool clean build -project Swiftopolis.xcodeproj -scheme Release
+
+notifications:
+  email: false
