@@ -5,7 +5,7 @@ before_install:
 - if brew outdated | grep -qx xctool; then brew upgrade xctool; fi
 
 script: 
-- xctool clean build -project Swiftopolis.xcodeproj -scheme Release
+- xctool clean build -project Swiftopolis.xcodeproj -scheme Swiftopolis
 
 notifications:
   email: false
