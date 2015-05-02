@@ -26,6 +26,10 @@ class Tiles {
         }
     }
     
+    class func get(idx: UInt16) -> Tile? {
+        return get(Int(idx))
+    }
+    
     class func load(tileNumber: Int) -> Tile {
         return sharedInstance.tilesByName[String(tileNumber)]!
     }

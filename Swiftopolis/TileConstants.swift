@@ -297,53 +297,30 @@ struct TileConstants {
     static func industrialZonePopulation(tile: UInt16) -> Int {
         assert(tile & LOMASK == tile, "Upper bits set!")
         
-        if let tile = Tiles.get(Int(tile)) {
-            return tile.population() / 8
-        } else {
-            return 0
-        }
+        return Tiles.get(tile).flatMap { t in t.population() / 8 }.getOrElse(0)
     }
     
     static func getZoneSize(tile: UInt16) -> NSSize? {
         assert(isZoneCenter(tile), "Not zone center!")
         assert(tile & LOMASK == tile, "Upper bits set!")
         
-        if let tile = Tiles.get(Int(tile)) {
-            return tile.getBuildingSize()
-        } else {
-            return nil
-        }
+        return Tiles.get(tile).flatMap { t in t.getBuildingSize() }
     }
     
     static func getPollutionValue(tile: UInt16) -> Int {
         assert(tile & LOMASK == tile, "Upper bits set!")
         
-        if let tile = Tiles.get(Int(tile)) {
-            return tile.pollution()
-        } else {
-            return 0
-        }
+        return Tiles.get(tile).flatMap({ t in t.pollution() }).getOrElse(0)
     }
     
     static func getTileBehavior(tile: UInt16) -> String? {
         assert(tile & LOMASK == tile, "Upper bits set!")
         
-        if let tile = Tiles.get(Int(tile)) {
-            return tile.getAttribute("behavior")
-        } else {
-            return nil
-        }
+        return Tiles.get(tile).flatMap { t in t.getAttribute("behavior") }
     }
     
     static func getZoneSizeFor(tile: UInt16) -> NSSize? {
-        assert(isZoneCenter(tile), "Not zone center!")
-        assert(tile & LOMASK == tile, "Upper bits set!")
-        
-        if let tile = Tiles.get(Int(tile)) {
-            return tile.getBuildingSize()
-        } else {
-            return nil
-        }
+        return getZoneSize(tile)
     }
     
     // MARK: Tile Property helpers
@@ -357,43 +334,31 @@ struct TileConstants {
     static func isResidentialZoneAny(tile: UInt16) -> Bool {
         assert(tile & LOMASK == tile, "Upper bits set!")
         
-        if var tile = Tiles.get(Int(tile)) {
-            if let owner = tile.owner {
-                tile = owner
-            }
-            
-            return tile.getAttribute("residential-zone") == "true"
-        } else {
-            return false
-        }
+        return Tiles.get(tile).map({ t in
+            t.owner != nil ? t.owner! : t
+        }).exists({ t in
+            t.getAttribute("residential-zone") == "true"
+        })
     }
     
     static func isCommercialZone(tile: UInt16) -> Bool {
         assert(tile & LOMASK == tile, "Upper bits set!")
         
-        if var tile = Tiles.get(Int(tile)) {
-            if let owner = tile.owner {
-                tile = owner
-            }
-            
-            return tile.getAttribute("commercial-zone") == "true"
-        } else {
-            return false
-        }
+        return Tiles.get(tile).map({ t in
+            t.owner != nil ? t.owner! : t
+        }).exists({ t in
+            t.getAttribute("commercial-zone") == "true"
+        })
     }
     
     static func isIndustrialZone(tile: UInt16) -> Bool {
         assert(tile & LOMASK == tile, "Upper bits set!")
         
-        if var tile = Tiles.get(Int(tile)) {
-            if let owner = tile.owner {
-                tile = owner
-            }
-            
-            return tile.getAttribute("industrial-zone") == "true"
-        } else {
-            return false
-        }
+        return Tiles.get(tile).map({ t in
+            t.owner != nil ? t.owner! : t
+        }).exists({ t in
+            t.getAttribute("industrial-zone") == "true"
+        })
     }
     
     static func isIndustructible(tile: UInt16) -> Bool {
@@ -451,19 +416,11 @@ struct TileConstants {
     }
 
     static func isZoneCenter(tile: UInt16) -> Bool {
-        if let t = Tiles.get(Int(tile)) {
-            return t.isZone
-        } else {
-            return false
-        }
+        return Tiles.get(tile).exists { t in t.isZone }
     }
     
     static func isAnimated(tile: UInt16) -> Bool {
-        if let t = Tiles.get(Int(tile)) {
-            return t.nextAnimationTile != nil
-        } else {
-            return false
-        }
+        return Tiles.get(tile).exists { t in t.nextAnimationTile != nil }
     }
     
     static func isResidentialClear(tile: UInt16) -> Bool {

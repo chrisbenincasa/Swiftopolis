@@ -21,7 +21,7 @@ extension Optional {
         return self!
     }
     
-    func getOrElse(@autoclosure f:  () -> T) -> T {
+    func getOrElse(@autoclosure f: () -> T) -> T {
         switch (self) {
         case let .Some(x): return x
         case .None: return f()
@@ -46,6 +46,10 @@ extension Optional {
         }
     }
     
+    func exists(@noescape f: T -> Bool) -> Bool {
+        return self.map(f).getOrElse(false)
+    }
+    
     func toArray() -> Array<T> {
         switch self {
         case .Some(let a): return [T](arrayLiteral: a)
@@ -53,3 +57,5 @@ extension Optional {
         }
     }
 }
+
+func identity<T>(i: T) -> T { return i }

@@ -235,11 +235,9 @@ class City {
         for var y = 0; y < map.height; y++ {
             for var x = 0; x < map.width; x++ {
                 let tile = map.getTile(x: x, y: y)
-                if let info = Tiles.get(Int(tile! & TileConstants.LOMASK)) {
-                    if let animNext = info.nextAnimationTile {
-                        let flags = tile! & TileConstants.ALLBITS
-                        setTile(x: x, y: y, tile: UInt16(animNext) | flags)
-                    }
+                if let info = Tiles.get(Int(tile! & TileConstants.LOMASK)), animNext = info.nextAnimationTile {
+                    let flags = tile! & TileConstants.ALLBITS
+                    setTile(x: x, y: y, tile: UInt16(animNext) | flags)
                 }
             }
         }
@@ -258,10 +256,8 @@ class City {
     
     private func mapScanTile(#x: Int, y: Int) {
         let tile = getTile(x: x, y: y)
-        if let behaviorString = TileConstants.getTileBehavior(tile) {
-            if let behavior = tileBehaviors[behaviorString] {
-                behavior.processTile(x, y: y)
-            }
+        if let behaviorString = TileConstants.getTileBehavior(tile), behavior = tileBehaviors[behaviorString] {
+            behavior.processTile(x, y: y)
         }
     }
     
@@ -873,11 +869,9 @@ class City {
             for dy in 0...height - 1 {
                 let x = xpos - 1 + dx
                 let y = ypos - 1 + dy
-                if let t = map.getRawTile(x: x, y: y) {
-                    if let tile = Tiles.get(Int(t & TileConstants.LOMASK)) {
-                        if (tile.onPower != nil) {
-                            setTile(x: x, y: y, tile: UInt16(tile.onPower!) | (t & TileConstants.ALLBITS))
-                        }
+                if let t = map.getRawTile(x: x, y: y), tile = Tiles.get(Int(t & TileConstants.LOMASK)) {
+                    if (tile.onPower != nil) {
+                        setTile(x: x, y: y, tile: UInt16(tile.onPower!) | (t & TileConstants.ALLBITS))
                     }
                 }
             }
@@ -892,11 +886,9 @@ class City {
             for dy in 0...height - 1 {
                 let x = xpos - 1 + dx
                 let y = ypos - 1 + dy
-                if let t = map.getRawTile(x: x, y: y) {
-                    if let tile = Tiles.get(Int(t & TileConstants.LOMASK)) {
-                        if (tile.onShutdown != nil) {
-                            setTile(x: x, y: y, tile: UInt16(tile.onShutdown!) | (t & TileConstants.ALLBITS))
-                        }
+                if let t = map.getRawTile(x: x, y: y), tile = Tiles.get(Int(t & TileConstants.LOMASK)) {
+                    if (tile.onShutdown != nil) {
+                        setTile(x: x, y: y, tile: UInt16(tile.onShutdown!) | (t & TileConstants.ALLBITS))
                     }
                 }
             }
