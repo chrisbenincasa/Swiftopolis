@@ -1,0 +1,41 @@
+/* 
+  GUIStrings.strings
+  Swiftopolis
+
+  Created by Christian Benincasa on 3/14/15.
+  Copyright (c) 2015 Christian Benincasa. All rights reserved.
+*/
+
+// Button icons
+
+"bulldozer.button.name"="icdozr";
+
+"wire.button.name"="icwire";
+
+"park.button.name"="icpark";
+
+"road.button.name"="icroad";
+
+"rail.button.name"="icrail";
+
+"residential.button.name"="icres";
+
+"commercial.button.name"="iccom";
+
+"industrial.button.name"="icind";
+
+"police_station.button.name"="icpol";
+
+"fire_station.button.name"="icfire";
+
+"query.button.name"="icqry";
+
+"coal.button.name"="iccoal";
+
+"nuclear.button.name"="icnuc";
+
+"airport.button.name"="icairp";
+
+"seaport.button.name"="icseap";
+
+"stadium.button.name"="icstad";

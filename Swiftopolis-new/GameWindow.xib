@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9532"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
+            <connections>
+                <outlet property="delegate" destination="7kN-SC-agC" id="TPw-xa-Nk5"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Micropolis" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="135" y="37" width="1200" height="800"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <value key="minSize" type="size" width="1200" height="800"/>
+            <value key="maxSize" type="size" width="1200" height="800"/>
+            <view key="contentView" id="EiT-Mj-1SZ" customClass="GameView" customModule="Swiftopolis" customModuleProvider="target">
+                <rect key="frame" x="0.0" y="0.0" width="1200" height="800"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="rks-f7-uiq" customClass="MainSceneView" customModule="Swiftopolis">
+                        <rect key="frame" x="0.0" y="0.0" width="1200" height="800"/>
+                    </customView>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f0f-rw-JnQ">
+                        <rect key="frame" x="250" y="783" width="112" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" id="kxd-Yg-Ews">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="rks-f7-uiq" secondAttribute="bottom" id="TTv-Ck-3qc"/>
+                    <constraint firstItem="rks-f7-uiq" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" id="aDr-Yx-jyA"/>
+                    <constraint firstAttribute="trailing" secondItem="rks-f7-uiq" secondAttribute="trailing" id="cmQ-Ld-7RO"/>
+                    <constraint firstItem="rks-f7-uiq" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" id="egw-Ut-Pee"/>
+                </constraints>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="7kN-SC-agC" id="dSC-AB-DAU"/>
+            </connections>
+            <point key="canvasLocation" x="308" y="239"/>
+        </window>
+        <menu title="AMainMenu" systemMenu="main" id="KWh-fe-Oqg">
+            <items>
+                <menuItem title="Swiftopolis" id="BmT-zr-f4e">
+                    <menu key="submenu" title="Swiftopolis" systemMenu="apple" id="fr7-up-z1B">
+                        <items>
+                            <menuItem title="About Swiftopolis" id="2OO-1t-hmu">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="orderFrontStandardAboutPanel:" target="-2" id="040-eH-FyR"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="PkT-xQ-BrG">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Preferences…" keyEquivalent="," id="vNl-DR-8v4"/>
+                            <menuItem isSeparatorItem="YES" id="Zed-ZW-DUE">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Services" id="JQx-Bi-fqG">
+                                <menu key="submenu" title="Services" systemMenu="services" id="dWn-1a-tXM"/>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="GVx-5h-Je0">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Hide Swiftopolis" keyEquivalent="h" id="eut-kF-CQr">
+                                <connections>
+                                    <action selector="hide:" target="-1" id="VhX-ZC-3aX"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Hide Others" keyEquivalent="h" id="cCx-NJ-rc4">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="hideOtherApplications:" target="-1" id="urB-Ur-BhN"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Show All" id="eqV-Nb-xVU">
+                                <connections>
+                                    <action selector="unhideAllApplications:" target="-1" id="ksb-ym-kQD"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="lHj-ho-xse">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Quit Swiftopolis" keyEquivalent="q" id="JZ9-na-OM9">
+                                <connections>
+                                    <action selector="terminate:" target="-1" id="OW2-lY-qMP"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Game" id="eub-Ao-rEU">
+                    <attributedString key="attributedTitle">
+                        <fragment content="Game">
+                            <attributes>
+                                <font key="NSFont" metaFont="smallSystem"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                            </attributes>
+                        </fragment>
+                    </attributedString>
+                    <menu key="submenu" title="Game" id="X18-Fk-SZW">
+                        <items>
+                            <menuItem title="New City" keyEquivalent="n" id="x1j-Cu-EMC"/>
+                            <menuItem title="Load City" keyEquivalent="o" id="cfv-cM-2Pd"/>
+                            <menuItem title="Save City" keyEquivalent="s" id="TM9-fh-UFV"/>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Game" id="aIQ-Lz-6Iw">
+                    <attributedString key="attributedTitle">
+                        <fragment content="Game">
+                            <attributes>
+                                <font key="NSFont" metaFont="smallSystem"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                            </attributes>
+                        </fragment>
+                    </attributedString>
+                    <menu key="submenu" title="Options" id="oNU-vU-mLi">
+                        <items>
+                            <menuItem title="Difficulty" id="6Jh-cv-kJ9">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Difficulty" id="yqw-tR-5F6">
+                                    <items>
+                                        <menuItem title="Item" id="J7x-6h-zsV">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem title="Item 1" id="tOQ-Ol-BIs">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem title="Item 2" id="iQg-3A-R09">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem title="Item 3" id="FFO-LQ-WDB">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Game" id="TFI-n8-UHL">
+                    <attributedString key="attributedTitle">
+                        <fragment content="Game">
+                            <attributes>
+                                <font key="NSFont" metaFont="smallSystem"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                            </attributes>
+                        </fragment>
+                    </attributedString>
+                    <menu key="submenu" title="Disasters" id="bCl-Va-set">
+                        <items>
+                            <menuItem title="Item 1" id="Gcv-R9-QA1">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem title="Item 2" id="7vs-1V-nQ2">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem title="Item 3" id="Ibv-iT-UPU">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Game" id="aFW-KR-3oD">
+                    <attributedString key="attributedTitle">
+                        <fragment content="Game">
+                            <attributes>
+                                <font key="NSFont" metaFont="smallSystem"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                            </attributes>
+                        </fragment>
+                    </attributedString>
+                    <menu key="submenu" title="Speed" id="C4B-kM-BCT">
+                        <items>
+                            <menuItem title="Super Fast" keyEquivalent="4" id="flD-Pz-qqq">
+                                <connections>
+                                    <action selector="setSuperFastGameSpeed:" target="JOD-MV-PV4" id="E4G-Vd-F6a"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Fast" keyEquivalent="3" id="I8P-rd-w6t">
+                                <connections>
+                                    <action selector="setFastGameSpeed:" target="JOD-MV-PV4" id="pYV-CR-cVE"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Normal" keyEquivalent="2" id="ZQY-Nx-KOE">
+                                <connections>
+                                    <action selector="setNormalGameSpeed:" target="JOD-MV-PV4" id="xGT-0s-kN1"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Slow" keyEquivalent="1" id="7r1-pH-G6z">
+                                <connections>
+                                    <action selector="setSlowGameSpeed:" target="JOD-MV-PV4" id="eax-Ft-l3a"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Paused" keyEquivalent="0" id="ctq-QH-CmH">
+                                <connections>
+                                    <action selector="setPausedGameSpeed:" target="JOD-MV-PV4" id="zzZ-wZ-Pa6"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Window" id="ATV-mC-ljK">
+                    <menu key="submenu" title="Window" systemMenu="window" id="qRa-Mw-sTf">
+                        <items>
+                            <menuItem title="Minimize" keyEquivalent="m" id="o8b-4k-Jn8">
+                                <connections>
+                                    <action selector="performMiniaturize:" target="-1" id="lGR-2W-hbn"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Zoom" id="cLb-4a-rJo">
+                                <connections>
+                                    <action selector="performZoom:" target="-1" id="tsd-bc-eJX"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="gHK-jD-49d">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Bring All to Front" id="SVk-0E-UqI">
+                                <connections>
+                                    <action selector="arrangeInFront:" target="-1" id="PfE-J9-gWc"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Help" id="QEX-7H-KTg">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Help" systemMenu="help" id="jwW-ba-mgc">
+                        <items>
+                            <menuItem title="Tim Help" keyEquivalent="?" id="2WE-al-8dp">
+                                <connections>
+                                    <action selector="showHelp:" target="-1" id="uVp-R1-8l9"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+            </items>
+        </menu>
+        <customObject id="7kN-SC-agC" customClass="AppDelegate" customModule="Swiftopolis" customModuleProvider="target">
+            <connections>
+                <outlet property="gameViewController" destination="JOD-MV-PV4" id="9hf-b4-MFy"/>
+                <outlet property="window" destination="QvC-M9-y7g" id="UTR-AW-6Bt"/>
+            </connections>
+        </customObject>
+        <viewController id="JOD-MV-PV4" customClass="GameViewController" customModule="Swiftopolis" customModuleProvider="target">
+            <connections>
+                <outlet property="dateLabel" destination="f0f-rw-JnQ" id="Bc0-kG-WDd"/>
+                <outlet property="fastItem" destination="I8P-rd-w6t" id="PVZ-Ss-BA7"/>
+                <outlet property="mainView" destination="rks-f7-uiq" id="be9-ay-9sZ"/>
+                <outlet property="normalItem" destination="ZQY-Nx-KOE" id="gSC-UX-pSx"/>
+                <outlet property="pausedItem" destination="ctq-QH-CmH" id="3ux-h6-25X"/>
+                <outlet property="slowItem" destination="7r1-pH-G6z" id="mAU-Yu-JeL"/>
+                <outlet property="superFastItem" destination="flD-Pz-qqq" id="5hY-hS-kNb"/>
+                <outlet property="view" destination="EiT-Mj-1SZ" id="cs9-e3-9T1"/>
+                <outlet property="window" destination="QvC-M9-y7g" id="qa1-n2-pE2"/>
+            </connections>
+        </viewController>
+    </objects>
+</document>
