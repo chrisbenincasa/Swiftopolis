@@ -11,7 +11,6 @@
 		147DACB61CB9AE0800EFC2CC /* final-16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 147DACB21CB9AE0800EFC2CC /* final-16x16.png */; };
 		147DACB71CB9AE0800EFC2CC /* final-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 147DACB31CB9AE0800EFC2CC /* final-8x8.png */; };
 		147DACB81CB9AE0800EFC2CC /* final-3x3.png in Resources */ = {isa = PBXBuildFile; fileRef = 147DACB41CB9AE0800EFC2CC /* final-3x3.png */; };
-		147DACC91CBA8D4F00EFC2CC /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147DACC81CBA8D4F00EFC2CC /* main.swift */; };
 		1480F15B1CB978CE00E79C0A /* AbstractToolEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1480F1011CB978CE00E79C0A /* AbstractToolEffect.swift */; };
 		1480F15C1CB978CE00E79C0A /* AirportTileBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1480F1021CB978CE00E79C0A /* AirportTileBehavior.swift */; };
 		1480F15D1CB978CE00E79C0A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1480F1031CB978CE00E79C0A /* AppDelegate.swift */; };
@@ -102,16 +101,11 @@
 		1480F1B21CB978CE00E79C0A /* TrafficGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1480F1581CB978CE00E79C0A /* TrafficGenerator.swift */; };
 		1480F1B31CB978CE00E79C0A /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1480F1591CB978CE00E79C0A /* Utils.swift */; };
 		1480F1B41CB978CE00E79C0A /* Zone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1480F15A1CB978CE00E79C0A /* Zone.swift */; };
-		14F788CD1CB98D5E00803DC0 /* graphics in Resources */ = {isa = PBXBuildFile; fileRef = 14F788CB1CB98D5E00803DC0 /* graphics */; };
-		14F788CE1CB98D5E00803DC0 /* resources in Resources */ = {isa = PBXBuildFile; fileRef = 14F788CC1CB98D5E00803DC0 /* resources */; };
-		CF586A12B04136BC691665FB /* Pods_Swiftopolis_new.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F76E43EA266FB3A44DF724 /* Pods_Swiftopolis_new.framework */; };
+		5D208C3E67E8D83B6C2A297B /* Pods_Swiftopolis_new.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02D83948EABEAC8F6C376923 /* Pods_Swiftopolis_new.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		14542A441CB98F55009E80A8 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		14542A451CB98F55009E80A8 /* TileImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileImage.swift; sourceTree = "<group>"; };
-		14542A461CB98F55009E80A8 /* TileMapping.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileMapping.swift; sourceTree = "<group>"; };
-		14542A471CB98F55009E80A8 /* TileReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileReader.swift; sourceTree = "<group>"; };
+		02D83948EABEAC8F6C376923 /* Pods_Swiftopolis_new.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Swiftopolis_new.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		147DACA81CB9956800EFC2CC /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = "../../../Library/Developer/Xcode/DerivedData/Swiftopolis-new-cjhvbudylheqshghehikrqircnwf/Build/Products/Debug/SwiftyJSON.framework"; sourceTree = "<group>"; };
 		147DACAA1CB9A27100EFC2CC /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		147DACAC1CB9A27E00EFC2CC /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = "../../../Library/Developer/Xcode/DerivedData/Swiftopolis-new-cjhvbudylheqshghehikrqircnwf/Build/Products/Debug/SwiftyJSON/SwiftyJSON.framework"; sourceTree = "<group>"; };
@@ -119,7 +113,6 @@
 		147DACB21CB9AE0800EFC2CC /* final-16x16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "final-16x16.png"; path = "build/final-16x16.png"; sourceTree = "<group>"; };
 		147DACB31CB9AE0800EFC2CC /* final-8x8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "final-8x8.png"; path = "build/final-8x8.png"; sourceTree = "<group>"; };
 		147DACB41CB9AE0800EFC2CC /* final-3x3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "final-3x3.png"; path = "build/final-3x3.png"; sourceTree = "<group>"; };
-		147DACC81CBA8D4F00EFC2CC /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		1480EF801CB977A900E79C0A /* Swiftopolis-new.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Swiftopolis-new.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1480F1001CB978C900E79C0A /* Swiftopolis-new-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Swiftopolis-new-Bridging-Header.h"; sourceTree = "<group>"; };
 		1480F1011CB978CE00E79C0A /* AbstractToolEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AbstractToolEffect.swift; sourceTree = "<group>"; };
@@ -214,12 +207,8 @@
 		1480F15A1CB978CE00E79C0A /* Zone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Zone.swift; sourceTree = "<group>"; };
 		14F788CB1CB98D5E00803DC0 /* graphics */ = {isa = PBXFileReference; lastKnownFileType = folder; path = graphics; sourceTree = "<group>"; };
 		14F788CC1CB98D5E00803DC0 /* resources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = resources; sourceTree = "<group>"; };
-		3DF7F22F3030025A013C77F4 /* Pods-Swiftopolis-new.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swiftopolis-new.release.xcconfig"; path = "Pods/Target Support Files/Pods-Swiftopolis-new/Pods-Swiftopolis-new.release.xcconfig"; sourceTree = "<group>"; };
-		66F76E43EA266FB3A44DF724 /* Pods_Swiftopolis_new.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Swiftopolis_new.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8ED786CA1C33DFF20F01B7E5 /* Pods-TileGenerator.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TileGenerator.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TileGenerator/Pods-TileGenerator.debug.xcconfig"; sourceTree = "<group>"; };
-		A0F462B9ED005649E050C3B8 /* Pods-TileGenerator.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TileGenerator.release.xcconfig"; path = "Pods/Target Support Files/Pods-TileGenerator/Pods-TileGenerator.release.xcconfig"; sourceTree = "<group>"; };
-		A91A9370288A5E4652FB5B29 /* Pods_TileGenerator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TileGenerator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		DAB08C9466E637CF39F8A87B /* Pods-Swiftopolis-new.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swiftopolis-new.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Swiftopolis-new/Pods-Swiftopolis-new.debug.xcconfig"; sourceTree = "<group>"; };
+		8447201133A38A26BA95A9AD /* Pods-Swiftopolis-new.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swiftopolis-new.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Swiftopolis-new/Pods-Swiftopolis-new.debug.xcconfig"; sourceTree = "<group>"; };
+		BDCDDFD1A9417D0698950F37 /* Pods-Swiftopolis-new.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swiftopolis-new.release.xcconfig"; path = "Pods/Target Support Files/Pods-Swiftopolis-new/Pods-Swiftopolis-new.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -227,25 +216,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CF586A12B04136BC691665FB /* Pods_Swiftopolis_new.framework in Frameworks */,
+				5D208C3E67E8D83B6C2A297B /* Pods_Swiftopolis_new.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		14542A3E1CB98F47009E80A8 /* TileGenerator */ = {
-			isa = PBXGroup;
-			children = (
-				14542A441CB98F55009E80A8 /* main.swift */,
-				14542A451CB98F55009E80A8 /* TileImage.swift */,
-				14542A461CB98F55009E80A8 /* TileMapping.swift */,
-				14542A471CB98F55009E80A8 /* TileReader.swift */,
-				147DACC81CBA8D4F00EFC2CC /* main.swift */,
-			);
-			path = TileGenerator;
-			sourceTree = "<group>";
-		};
 		1480EF771CB977A900E79C0A = {
 			isa = PBXGroup;
 			children = (
@@ -256,10 +233,9 @@
 				14F788CB1CB98D5E00803DC0 /* graphics */,
 				14F788CC1CB98D5E00803DC0 /* resources */,
 				1480EF821CB977A900E79C0A /* Swiftopolis-new */,
-				14542A3E1CB98F47009E80A8 /* TileGenerator */,
 				1480EF811CB977A900E79C0A /* Products */,
 				55A9821371AE463950F93FB8 /* Frameworks */,
-				E1948D3DCBF3B4EE2D8CBDE3 /* Pods */,
+				6CC33D8DED19087FF8ABDD5F /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -375,19 +351,16 @@
 				147DACAC1CB9A27E00EFC2CC /* SwiftyJSON.framework */,
 				147DACAA1CB9A27100EFC2CC /* AppKit.framework */,
 				147DACA81CB9956800EFC2CC /* SwiftyJSON.framework */,
-				66F76E43EA266FB3A44DF724 /* Pods_Swiftopolis_new.framework */,
-				A91A9370288A5E4652FB5B29 /* Pods_TileGenerator.framework */,
+				02D83948EABEAC8F6C376923 /* Pods_Swiftopolis_new.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		E1948D3DCBF3B4EE2D8CBDE3 /* Pods */ = {
+		6CC33D8DED19087FF8ABDD5F /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				DAB08C9466E637CF39F8A87B /* Pods-Swiftopolis-new.debug.xcconfig */,
-				3DF7F22F3030025A013C77F4 /* Pods-Swiftopolis-new.release.xcconfig */,
-				8ED786CA1C33DFF20F01B7E5 /* Pods-TileGenerator.debug.xcconfig */,
-				A0F462B9ED005649E050C3B8 /* Pods-TileGenerator.release.xcconfig */,
+				8447201133A38A26BA95A9AD /* Pods-Swiftopolis-new.debug.xcconfig */,
+				BDCDDFD1A9417D0698950F37 /* Pods-Swiftopolis-new.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -399,12 +372,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1480EF911CB977A900E79C0A /* Build configuration list for PBXNativeTarget "Swiftopolis-new" */;
 			buildPhases = (
-				2C69F13C48688D72B49332AB /* Check Pods Manifest.lock */,
+				5F39033316D5E0B848AE254B /* Check Pods Manifest.lock */,
 				1480EF7C1CB977A900E79C0A /* Sources */,
 				1480EF7D1CB977A900E79C0A /* Frameworks */,
 				1480EF7E1CB977A900E79C0A /* Resources */,
-				7C76CDB4214B142019E11FD2 /* Embed Pods Frameworks */,
-				4DEBF3776970E4CB6DB3CE2C /* Copy Pods Resources */,
+				715E678016FA7F88476A74F9 /* Embed Pods Frameworks */,
+				514EFF4ABE37C78ACB659F7C /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -460,8 +433,6 @@
 				1480F1821CB978CE00E79C0A /* GUIStrings.strings in Resources */,
 				1480F17C1CB978CE00E79C0A /* GameScene.sks in Resources */,
 				1480F1851CB978CE00E79C0A /* images.atlas in Resources */,
-				14F788CE1CB98D5E00803DC0 /* resources in Resources */,
-				14F788CD1CB98D5E00803DC0 /* graphics in Resources */,
 				1480F1861CB978CE00E79C0A /* Images.xcassets in Resources */,
 				1480F1951CB978CE00E79C0A /* resources in Resources */,
 				1480F1841CB978CE00E79C0A /* Icons.atlas in Resources */,
@@ -474,22 +445,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2C69F13C48688D72B49332AB /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		4DEBF3776970E4CB6DB3CE2C /* Copy Pods Resources */ = {
+		514EFF4ABE37C78ACB659F7C /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -504,7 +460,22 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Swiftopolis-new/Pods-Swiftopolis-new-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		7C76CDB4214B142019E11FD2 /* Embed Pods Frameworks */ = {
+		5F39033316D5E0B848AE254B /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		715E678016FA7F88476A74F9 /* Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -584,7 +555,6 @@
 				1480F1B31CB978CE00E79C0A /* Utils.swift in Sources */,
 				1480F1901CB978CE00E79C0A /* PointUtils.swift in Sources */,
 				1480F1911CB978CE00E79C0A /* PoliceStationTileEffect.swift in Sources */,
-				147DACC91CBA8D4F00EFC2CC /* main.swift in Sources */,
 				1480F1611CB978CE00E79C0A /* BulldozerTool.swift in Sources */,
 				1480F18E1CB978CE00E79C0A /* Option_Extensions.swift in Sources */,
 				1480F1A31CB978CE00E79C0A /* TileImages.swift in Sources */,
@@ -698,7 +668,7 @@
 		};
 		1480EF921CB977A900E79C0A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DAB08C9466E637CF39F8A87B /* Pods-Swiftopolis-new.debug.xcconfig */;
+			baseConfigurationReference = 8447201133A38A26BA95A9AD /* Pods-Swiftopolis-new.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -714,7 +684,7 @@
 		};
 		1480EF931CB977A900E79C0A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3DF7F22F3030025A013C77F4 /* Pods-Swiftopolis-new.release.xcconfig */;
+			baseConfigurationReference = BDCDDFD1A9417D0698950F37 /* Pods-Swiftopolis-new.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
