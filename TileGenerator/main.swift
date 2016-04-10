@@ -19,20 +19,20 @@ for var i = 1; i < Int(Process.argc); i++ {
     
     let arg = String.fromCString(Process.unsafeArgv[index])!
     switch arg {
-        case "--tile-size":
-            tileSize = String.fromCString(Process.unsafeArgv[next])!.toInt()!
-            i++
-            break;
-        case "--input-file":
-            inputFile = String.fromCString(Process.unsafeArgv[next])
-            i++
-            break;
-        case "--output-dir":
-            let dir = String.fromCString(Process.unsafeArgv[next])
-            outputDir = dir?.stringByReplacingOccurrencesOfString("\n", withString: "", options: .CaseInsensitiveSearch, range: nil)
-            i++
-            break
-        default: break
+    case "--tile-size":
+        tileSize = String.fromCString(Process.unsafeArgv[next])!.toInt()!
+        i++
+        break;
+    case "--input-file":
+        inputFile = String.fromCString(Process.unsafeArgv[next])
+        i++
+        break;
+    case "--output-dir":
+        let dir = String.fromCString(Process.unsafeArgv[next])
+        outputDir = dir?.stringByReplacingOccurrencesOfString("\n", withString: "", options: .CaseInsensitiveSearch, range: nil)
+        i++
+        break
+    default: break
     }
 }
 
@@ -69,9 +69,8 @@ if let data: NSData = NSFileManager.defaultManager().contentsAtPath(inputFile!) 
     }
     
     let indexJSON = reader.generateIndexFile()
-
+    
     manager.changeCurrentDirectoryPath(manager.currentDirectoryPath + "/" + outputDir!)
     indexJSON.rawData(options: NSJSONWritingOptions.allZeros, error: nil)?.writeToFile(manager.currentDirectoryPath + "/tiles_index.json" , atomically: false)
 }
-
 

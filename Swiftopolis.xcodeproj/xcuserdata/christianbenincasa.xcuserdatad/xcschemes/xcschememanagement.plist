@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Swiftopolis.xcscheme</key>
+		<key>Swiftopolis-new.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
@@ -12,32 +12,22 @@
 		<key>TileGenerator.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>1</integer>
-		</dict>
-		<key>TileGenerator2.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>146ABA5F1A4F0EE0002A1B6B</key>
+		<key>14542A3C1CB98F47009E80A8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>146ABA731A4F0EE0002A1B6B</key>
+		<key>147DACBC1CBA8C6B00EFC2CC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>14DBB9461A6AB7AE006DD969</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>14EFF6FF1ABE5A77002A4E35</key>
+		<key>1480EF7F1CB977A900E79C0A</key>
 		<dict>
 			<key>primary</key>
 			<true/>

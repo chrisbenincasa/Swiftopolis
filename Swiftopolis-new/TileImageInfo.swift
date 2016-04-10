@@ -56,6 +56,7 @@ class TileImageInfo {
         var tileImages: [TileImage?] = []
         Utils.initializeArray(&tileImages, size: 1000, value: nil)
         let path = NSBundle.mainBundle().pathForResource("tiles_index", ofType: "json")
+        print(NSBundle.mainBundle().resourcePath)
         let data = NSFileManager.defaultManager().contentsAtPath(path!)
         let json = JSON(data: data!)
         

@@ -8,6 +8,7 @@
 
 import Foundation
 import AppKit
+import SwiftyJSON
 
 class TileReader {
     var json: JSON
@@ -23,18 +24,18 @@ class TileReader {
         var nextOffsetY = 0
         var mappings: [TileMapping] = []
         
-        for (_, subJson: JSON) in self.json {
+        for (_, subJson) : (String,JSON) in self.json {
             let rawDict = subJson.dictionaryObject
             if let images = rawDict?["images"] as? [String] {
                 // Load layers or frames
                 if let image = parseFrameSpec(images, frames: rawDict?["frames"] as? [String]) {
                     var dest: TileImage? = nil
                     if image.getFrameEndTime(0) > 0 {
-                        var animation = Animation()
+                        let animation = Animation()
                         var t = 0, n = image.getFrameEndTime(t)
                         
                         while n > 0 {
-                            var sprite = TileImageSprite()
+                            let sprite = TileImageSprite()
                             sprite.offsetY = nextOffsetY
                             nextOffsetY += tileSize
                             animation.frames.append(Animation.Frame(frame: sprite, duration: n - t))
@@ -108,7 +109,7 @@ class TileReader {
     
     func generateIndexFile() -> JSON {
         if mappings.count == 0 {
-            println("no mappings to generate indexes for!")
+            print("no mappings to generate indexes for!")
         }
         
         var json: JSON = []
@@ -135,7 +136,7 @@ class TileReader {
     
     func generateTileNames() -> [String] {
         var names = [String]()
-        for (_, subJson: JSON) in self.json {
+        for (_, subJson) : (String,JSON) in self.json {
             names.append(subJson["name"].string!)
         }
         
@@ -152,7 +153,7 @@ class TileReader {
             
             var result: TileImageLayer? = nil
             for layer in layers {
-                var l = TileImageLayer()
+                let l = TileImageLayer()
                 l.below = result
                 l.above = parseIndividualLayer(layer)
                 result = l
@@ -172,14 +173,14 @@ class TileReader {
         
         if parts.count >= 2 {
             let offset = parts[1].componentsSeparatedByString(",")
-            var sprite = TileImageSprite(source: image!)
+            let sprite = TileImageSprite(source: image!)
             
             if offset.count >= 1 {
-                sprite.offsetX = offset[0].toInt()!
+                sprite.offsetX = Int(offset[0])!
             }
             
             if offset.count >= 2 {
-                sprite.offsetY = offset[1].toInt()!
+                sprite.offsetY = Int(offset[1])!
             }
             
             return sprite
@@ -216,7 +217,7 @@ class TileReader {
         } else if let d = NSData(contentsOfFile: regularFileName) {
             data = d
         } else {
-            println("could not find file: \(sizedFileName) or \(regularFileName)")
+            print("could not find file: \(sizedFileName) or \(regularFileName)")
         }
         
         if let imageData = data {

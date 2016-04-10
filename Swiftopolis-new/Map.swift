@@ -85,6 +85,10 @@ class Map {
         }
     }
     
+    func tileExists(x xpos: Int, y ypos: Int) -> Bool {
+        return getRawTile(x: xpos, y: ypos) != nil
+    }
+    
     func setTile(x xpos: Int, y ypos: Int, tile newTile: UInt16) -> Bool {
         assert(newTile & TileConstants.LOMASK == newTile, "Don't set the upper bit")
         

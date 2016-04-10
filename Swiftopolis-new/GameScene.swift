@@ -57,7 +57,7 @@ class GameScene: SKScene, Subscriber, EngineEventListener {
     }
     
     private func commonInit() {
-        self.camera = Camera()
+//        camera = Camera()
         
         _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, barrier)
         blinkTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue())
@@ -92,8 +92,8 @@ class GameScene: SKScene, Subscriber, EngineEventListener {
         world.name = "world"
         world.position = CGPoint(x: 496, y: 96)
         addChild(world)
-        camera!.name = "camera"
-        world.addChild(camera!)
+//        camera!.name = "camera"
+//        world.addChild(camera!)
         
         let panel = ToolButtonPanel()
         panel.position = CGPoint(x: world.position.x - 127, y: frame.height - 100)

@@ -104,7 +104,7 @@ class SourceImage: TileImage {
             image.drawAtPoint(rect.origin, fromRect: basisRect, operation: .CompositeSourceOver, fraction: 1.0)
         } else {
             let scaled = scaleImage(basisRect)
-            scaled.drawAtPoint(rect.origin, fromRect: NSRect.zeroRect, operation: .CompositeSourceOver, fraction: 1.0)
+            scaled.drawAtPoint(rect.origin, fromRect: NSRect.zero, operation: .CompositeSourceOver, fraction: 1.0)
         }
     }
     

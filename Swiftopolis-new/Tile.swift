@@ -39,7 +39,7 @@ class Tile {
     // MARK: getters
     
     func population() -> Int {
-        if let pop = Int((self.getAttribute("population"))!) {
+        if let pop = self.getAttribute("population").flatMap({ t in Int(t) }) {
             return pop
         } else {
             return 0
@@ -47,7 +47,7 @@ class Tile {
     }
     
     func pollution() -> Int {
-        if let poll = Int(self.getAttribute("pollution")!) {
+        if let poll = self.getAttribute("pollution").flatMap({ t in Int(t) }) {
             return poll
         } else if let o = self.owner {
             return o.pollution()

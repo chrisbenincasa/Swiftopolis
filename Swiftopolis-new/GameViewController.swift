@@ -44,7 +44,7 @@ class GameViewController: NSViewController, EngineEventListener {
         // TODO: factor out view construction
         var baseFrame = mainView.frame
         baseFrame.origin = CGPoint.zero
-        mainView.engine = engine
+        mainView!.engine = engine
         
         // Set up game scene
         initGameScene()

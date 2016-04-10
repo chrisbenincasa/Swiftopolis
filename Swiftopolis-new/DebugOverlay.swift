@@ -19,7 +19,7 @@ class NaturalNumbersGenerator: GeneratorType {
         self.start = start
         self.inc = inc
         self.end = end
-        self.curr = start
+        self.curr = start - 1 // Next increment will be "start"
     }
     
     func next() -> Int? {

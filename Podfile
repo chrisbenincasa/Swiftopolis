@@ -3,6 +3,12 @@ use_frameworks!
 
 workspace 'Swiftopolis-new'
 
+link_with 'Swiftopolis-new', 'TileGenerator'
+
 target 'Swiftopolis-new' do
+    pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
+end
+
+target 'TileGenerator' do
     pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
 end

@@ -54,61 +54,31 @@ class CityWorld: SKNode, EngineEventListener, Subscriber {
         dispatch_source_set_event_handler(blinkTimer) { [unowned self] in self.doBlink() }
         dispatch_resume(blinkTimer)
         
-        tileTextures = TileTextureFactory.vend(WorldConstants.TILE_SIZE) {
-            print("-- preloaded 16px tile textures --")
-            self.mapCenterChanged()
-        }
-        
         let viewport = viewportSize
         Utils.initializeMatrix(&tiles, width: Int(viewport.height), height: Int(viewport.width), value: nil)
         let topLeft = PointUtils.topLeftMapPoint(engine.currentMapPoint, viewport: viewportSize)
         let topYPosition = Int(viewportSize.height) - 1
         
-        var y = Int(topLeft.y), arrY = 0, i = topYPosition
-        var x = Int(topLeft.x), j = 0
-        while y < Int(topLeft.y) + Int(viewport.height) {
-        
-            while x < Int(topLeft.x) + Int(viewport.width) {
-                if engine.city.map.getTile(x: x, y: y) != nil {
-                    let xDrawPosition = (j * WorldConstants.TILE_SIZE)
-                    let yDrawPosition = (Int(viewportSize.height)  * WorldConstants.TILE_SIZE) - ((i + 1) * WorldConstants.TILE_SIZE)
-                    
-                    _ = CGPoint(x: xDrawPosition, y: yDrawPosition)
-                    
+        var i = topYPosition
+        for (y, arrY) in Zip2Sequence(Int(topLeft.y)..<Int(topLeft.y + viewport.height), NaturalNumbers()) {
+            for (x, arrX) in Zip2Sequence(Int(topLeft.x)..<Int(topLeft.x + viewport.width), NaturalNumbers()) {
+                if engine.city.map.tileExists(x: x, y: y) {
                     let sprite = SKSpriteNode()
                     sprite.size = CGSize(width: WorldConstants.TILE_SIZE, height: WorldConstants.TILE_SIZE)
-                    sprite.position = CGPoint(x: j, y: i) * WorldConstants.TILE_SIZE
+                    sprite.position = CGPoint(x: arrX, y: i) * WorldConstants.TILE_SIZE
                     sprite.anchorPoint = CGPoint.zero
-                    tiles[arrY][j] = sprite
-                    addChild(tiles[arrY][j])
+                    tiles[arrY][arrX] = sprite
+                    addChild(tiles[arrY][arrX])
                 }
-                
-                x += 1
-                j += 1
             }
-        
-            y += 1
-            arrY += 1
+            
             i -= 1
         }
         
-//        for var y = Int(topLeft.y), arrY = 0, i = topYPosition; y < Int(topLeft.y) + Int(viewport.height); y++, arrY++, i-- {
-//            for var x = Int(topLeft.x), j = 0; x < Int(topLeft.x) + Int(viewport.width); x++, j++ {
-//                if let tile = engine.city.map.getTile(x: x, y: y) {
-//                    let xDrawPosition = (j * WorldConstants.TILE_SIZE)
-//                    let yDrawPosition = (Int(viewportSize.height)  * WorldConstants.TILE_SIZE) - ((i + 1) * WorldConstants.TILE_SIZE)
-//                    
-//                    let position = CGPoint(x: xDrawPosition, y: yDrawPosition)
-//                                        
-//                    let sprite = SKSpriteNode()
-//                    sprite.size = CGSize(width: WorldConstants.TILE_SIZE, height: WorldConstants.TILE_SIZE)
-//                    sprite.position = CGPoint(x: j, y: i) * WorldConstants.TILE_SIZE
-//                    sprite.anchorPoint = CGPoint.zero
-//                    tiles[arrY][j] = sprite
-//                    addChild(tiles[arrY][j])
-//                }
-//            }
-//        }
+        tileTextures = TileTextureFactory.vend(WorldConstants.TILE_SIZE) {
+            print("-- preloaded 16px tile textures --")
+            self.mapCenterChanged()
+        }
         
         currentTool = .Residential
     }
@@ -293,9 +263,9 @@ class CityWorld: SKNode, EngineEventListener, Subscriber {
     func mapCenterChanged() {
         let viewport = viewportSize
         let topLeft = PointUtils.topLeftMapPoint(engine.currentMapPoint, viewport: viewportSize)
-        
-        for y in Int(topLeft.y)..<Int(viewport.height) {
-            for x in Int(topLeft.x)..<Int(viewport.width) {
+
+        for y in Int(topLeft.y)..<Int(topLeft.y + viewport.height) {
+            for x in Int(topLeft.x)..<Int(topLeft.x + viewport.width) {
                 redrawTile(x, y)
             }
         }
